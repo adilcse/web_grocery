@@ -1,0 +1,132 @@
+a :hover{
+    text-decoration: none;
+}
+nav{
+	margin-bottom: auto;
+}
+  /* {
+	background: #252525;
+	display: -webkit-box;
+	display: -ms-flexbox;
+    display: flex;
+    color: white;
+    min-width: 100%;
+} */
+
+  .nav-depart {
+	float: left;
+}
+
+  .nav-depart .depart-btn {
+
+	color: #141313;
+	padding: 14px 50px 14px 18px;
+	cursor: pointer;
+	position: relative;
+}
+
+  .nav-depart .depart-btn:hover .depart-hover {
+	top: 52px;
+	opacity: 1;
+	visibility: visible;
+	z-index: 99;
+}
+
+
+  .nav-depart .depart-btn i {
+	color: #1b1818;
+	font-size: 16px;
+}
+
+  .nav-depart .depart-btn span {
+	font-size: 14px;
+	font-weight: 700;
+	text-transform: uppercase;
+	margin-left: 16px;
+}
+
+  .nav-depart .depart-btn .depart-hover {
+	position: absolute;
+	width: 100%;
+	background: #fff;
+	left: 0;
+	top: 62px;
+	opacity: 0;
+	visibility: hidden;
+	padding-bottom: 29px;
+	-webkit-box-shadow: 0 13px 32px rgba(51, 51, 51, 0.1);
+	box-shadow: 0 13px 32px rgba(51, 51, 51, 0.1);
+	-webkit-transition: all 0.3s;
+	-o-transition: all 0.3s;
+	transition: all 0.3s;
+}
+
+  .nav-depart .depart-btn .depart-hover li {
+	list-style: none;
+}
+
+  .nav-depart .depart-btn .depart-hover li.active a {
+	color:yellow;
+}
+.navbar .collapse .navbar-nav li a:hover  {
+	color: black;
+	background-color: #f5c84c;
+
+}
+.navbar .collapse .navbar-nav li  {
+	margin :0px 10px;
+}
+  .nav-depart .depart-btn .depart-hover li a {
+	display: block;
+	font-size: 16px;
+	color: #000000;
+	padding-left: 40px;
+	padding-top: 16px;
+	padding-right: 30px;
+	-webkit-transition: all 0.3s;
+	-o-transition: all 0.3s;
+    transition: all 0.3s;
+    text-decoration: none;
+}
+
+  .nav-depart .depart-btn .depart-hover li a:hover {
+	color: #e7ab3c;
+}
+
+ .nav-item :hover{
+	background-color: #e7ab3c;
+ }
+#navbarSupportedContent{
+	 
+	 transition: width 2s, height 4s;
+ }
+
+
+.row{
+    margin-left: 0px !important;
+}   
+@media only screen and (min-width: 1200px) and (max-width: 1920px) {
+      .nav-menu li a {
+		padding: 16px 45px 15px;
+	}
+}
+@media only screen and (min-width: 1200px) {
+	.container {
+		max-width: 1170px;
+	}
+}
+@media only screen and (min-width: 992px) and (max-width: 1199px) {
+      .nav-menu li a {
+		padding: 16px 26px 15px;
+    }
+}
+
+@media only screen  and (max-width: 991px) {
+      .nav-depart .depart-btn {
+		padding: 14px 40px 14px 18px;
+	}
+	  .nav-menu li a {
+		padding: 16px 10px 15px;
+	}
+	
+}
