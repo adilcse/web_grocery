@@ -9,6 +9,7 @@ import {
 } from "react-router-dom";
 import Home from './containers/Home';
 import SearchPage from './containers/SearchPage';
+import Signin from './containers/Signin';
 function App() {
   return (
     <Router>
@@ -23,6 +24,9 @@ function App() {
             </Route>
             <Route path='/Search/:id'>
              <SearchPage/>
+            </Route>
+            <Route path='/signin'>
+              <Signin/>
             </Route>
           </Switch>    
       </div>

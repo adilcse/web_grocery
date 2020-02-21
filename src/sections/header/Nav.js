@@ -4,6 +4,7 @@ import { IoIosArrowDown,IoIosHome,IoIosList,IoMdPeople,IoIosCart } from "react-i
 import { IconContext } from "react-icons";
 import {NavLink} from 'react-router-dom';
 import Search from '../../components/Search';
+import LoginLogout from '../../components/nav/LoginLogout';
 const MyNavbar = ()=>{
   let collapse = true;
     const toggle=()=>{
@@ -19,6 +20,8 @@ const MyNavbar = ()=>{
       collapse = !collapse;
 
     }
+
+
     return(
      
 <nav className="navbar navbar-expand-lg navbar-light bg-light sticky-top">
@@ -45,7 +48,7 @@ const MyNavbar = ()=>{
     <ul className="navbar-nav mr-auto">
      
       <li className="nav-item">
-        <NavLink className="nav-link" to="/Home">Home <IoIosHome/> <span className="sr-only">(current)</span></NavLink>
+        <NavLink className="nav-link" to="/Home">Home <IoIosHome/></NavLink>
       </li>
       <li className="nav-item">
         <NavLink className="nav-link" to="myOrder">My Order  <IoIosList/></NavLink>
@@ -56,6 +59,7 @@ const MyNavbar = ()=>{
       <li className="nav-item">
         <NavLink className="nav-link" to="cart">Cart <IoIosCart/> </NavLink>
       </li>
+      <LoginLogout/>
       
     </ul>
    
