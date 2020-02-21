@@ -6,7 +6,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import {Provider} from  'react-redux';
 import * as serviceWorker from './serviceWorker';
 import Store from './redux/store/mainStrore';
-
+import 'semantic-ui-css/semantic.min.css'
 const store=Store();
 ReactDOM.render(
     <Provider store = {store}>

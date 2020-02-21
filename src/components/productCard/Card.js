@@ -29,8 +29,8 @@ return(
 
   <Cardboot.Body>
     <Cardboot.Title><div className="title  font-weight-bold">{source.name}</div></Cardboot.Title>
-    <Cardboot.Text>
-   <h3><i><small><strike>MRP ₹{Math.floor(parseInt(source.price)*1.1)}</strike></small> </i>₹{source.price}</h3>
+    <Cardboot.Text style={{fontSize:'1.5rem'}}>
+  <i><small><strike>MRP ₹{Math.floor(parseInt(source.price)*1.1)}</strike></small> </i>₹{source.price}
     </Cardboot.Text>
   <div className="">
     <Button variant="primary card-btn ">Buy </Button> 
