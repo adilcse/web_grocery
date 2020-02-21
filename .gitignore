@@ -6,7 +6,7 @@
 .pnp.js
 
 #constants file
-/src/assets
+#/src/assets
 # testing
 /coverage
 #firebase configuration file

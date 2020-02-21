@@ -6,7 +6,6 @@ import { LoginSuccess } from '../../redux/actions/UserAction';
 import { useDispatch, useSelector} from 'react-redux';
 const LoginLogout = ()=>{
     const user = useSelector((state)=>state.userLogin);
-    console.log(user);
     if(user.loggedIn){
         return(
         <Signout/>
