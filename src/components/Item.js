@@ -1,5 +1,6 @@
 import React from 'react';
 const Item =(props)=>{
+    const {name,price,description,image}=props.Item;
     return(
         <div className="container">
             <div className="row">
