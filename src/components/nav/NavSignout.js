@@ -10,7 +10,7 @@ const Signout = ()=>{
 
     return(
         <li className="nav-item">
-        <NavLink className="nav-link" to="/Home" onClick={logout}>Logout </NavLink>
+        <NavLink className="nav-link" to="/Logout" onClick={logout}>Logout </NavLink>
       </li>
     )
 }

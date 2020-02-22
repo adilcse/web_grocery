@@ -21,6 +21,22 @@ export const Login=(email,password)=>dispatch=>{
         // ...
       });
 };
+//check user loggedin Status
+export const LoginStatus=()=>dispatch=>{
+  dispatch({ type: LOGIN_USER_PENDING});
+  firebase.auth().onAuthStateChanged(function(user) {
+    if (user) {
+      // User is signed in.
+      dispatch({type:LOGIN_USER_SUCCESS,payload:user})
+
+    } else {
+      // No user is signed in.
+      dispatch({type:LOGIN_USER_FAILED})
+
+    }
+  });
+}
+
 export const LoginSuccess=(user)=>({
 type:LOGIN_USER_SUCCESS,
 payload : user

@@ -5,13 +5,20 @@ import Nav from './sections/header/Nav';
 import {
   BrowserRouter as Router,
   Switch,
-  Route
+  Route,
+  Redirect
 } from "react-router-dom";
 import Home from './containers/Home';
 import SearchPage from './containers/SearchPage';
 import Signin from './containers/Signin';
+import Start from './app/Start';
+import Product from './containers/Product';
 function App() {
+  const Logout=()=>{
+    return <Redirect to='/home'/>
+  }
   return (
+    <Start>
     <Router>
       <div className="App text-center">
         <Nav/>
@@ -28,9 +35,16 @@ function App() {
             <Route path='/signin'>
               <Signin/>
             </Route>
+            <Route path='/Logout'>
+              <Logout/>
+            </Route>
+            <Route path='/Product/:id'>
+              <Product/>
+            </Route>
           </Switch>    
       </div>
     </Router>
+    </Start>
   );
 }
 

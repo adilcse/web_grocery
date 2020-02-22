@@ -5,6 +5,7 @@ import { IconContext } from "react-icons";
 import {NavLink} from 'react-router-dom';
 import Search from '../../components/Search';
 import LoginLogout from '../../components/nav/LoginLogout';
+import NavCart from '../../components/nav/NavCart';
 const MyNavbar = ()=>{
   let collapse = true;
     const toggle=()=>{
@@ -56,9 +57,7 @@ const MyNavbar = ()=>{
       <li className="nav-item">
         <NavLink className="nav-link" to="profile">Profile <IoMdPeople/></NavLink>
       </li>
-      <li className="nav-item">
-        <NavLink className="nav-link" to="cart">Cart <IoIosCart/> </NavLink>
-      </li>
+      <NavCart/>
       <LoginLogout/>
       
     </ul>
