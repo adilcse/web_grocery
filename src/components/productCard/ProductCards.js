@@ -7,13 +7,9 @@ import Loading from '../Loading';
 
 let source=[];
 const ProductCards =(props)=>{
-   
-
-
     const dispatch = useDispatch();
-    const[loaded,setLoaded]=useState(false);
-  
-  const onItemAdded = (itemId) => {
+    const[loaded,setLoaded]=useState(false);  
+  const onItemAdded = (itemId,item) => {
     dispatch(addToCart(itemId))
 }
     const loadItem=()=>{

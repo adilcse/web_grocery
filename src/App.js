@@ -13,6 +13,7 @@ import SearchPage from './containers/SearchPage';
 import Signin from './containers/Signin';
 import Start from './app/Start';
 import Product from './containers/Product';
+import Cart from './containers/Cart';
 function App() {
   const Logout=()=>{
     return <Redirect to='/home'/>
@@ -34,6 +35,9 @@ function App() {
             </Route>
             <Route path='/signin'>
               <Signin/>
+            </Route>
+            <Route path='/cart'>
+              <Cart/>
             </Route>
             <Route path='/Logout'>
               <Logout/>
