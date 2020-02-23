@@ -6,70 +6,26 @@ import slideimg3 from '../../assets/images/img4.jpg';
 
 
 const initialState={
-    source : [
-        {
-            imageurl: vegs,
-            name: 'vegs',
-            price: '500',
-            id : 1,
-            inCart : false
-
-           
-          }, {
-            imageurl: vegs,
-            name: 'maggie',
-            price: '800',
-            id : 2,
-            inCart : false
-           
-          } , {
-            imageurl: vegs,
-            name: 'maggie',
-            price: '800',
-            id : 3,
-            inCart : false
-           
-          } , {
-            imageurl: vegs,
-            name: 'maggie',
-            price: '800',
-            id : 4,
-            inCart : false
-           
-          } ,
-         {
-            imageurl: vegs,
-            name: 'maggie',
-            price: '800',
-            id : 5,
-            inCart : false
-           
-          } 
-    ],
-    slider:[{
-      imageurl : slideimg1
-    },
-    {
-      imageurl : slideimg2
-    },
-    {
-      imageurl : slideimg3
-    }]
+   cart:new Set()
+    
 }
 export const addItemsToCart = (state=initialState,action={})=>{
     switch(action.type){
         case  ADD_TO_CART:
-            const index = state.source.findIndex(function(element){
-                return (element.id === action.payload)
-            }) 
-            let Nstate=[...state.source];
-             Nstate[index]={
-                ...state.source[index],
-                inCart:true
-            }
+            // const index = state.source.findIndex(function(element){
+            //     return (element.id === action.payload)
+            // }) 
+            // let Nstate=[...state.source];
+            //  Nstate[index]={
+            //     ...state.source[index],
+            //     inCart:true
+            // }
 
             // console.log(Nstate);
-            return {...state,source :Nstate };
+             let Ncart =new Set([...state.cart]);
+            // console.log(Ncart)
+           Ncart.add(action.payload);
+            return {...state,cart:Ncart} ;
         default : 
         return state;
     }
