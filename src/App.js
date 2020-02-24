@@ -15,7 +15,7 @@ import Start from './app/Start';
 import Product from './containers/Product';
 function App() {
   const Logout=()=>{
-    return <Redirect to='/home'/>
+    return <Redirect to='/Home'/>
   }
   return (
     <Start>
