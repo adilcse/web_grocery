@@ -2,7 +2,11 @@ import {
     ADD_TO_CART_FAILED,
     ADD_TO_CART_SUCCESS,
     ADD_TO_CART_PENDING,
-    USER_NOT_SIGNED_IN
+    USER_NOT_SIGNED_IN,
+    REMOVE_FROM_CART_PENDING,
+    REMOVE_FROM_CART_SUCCESS,
+    REMOVE_FROM_CART_FAILED,
+    LOAD_CART
     } from '../../app/ActionConstants';
 import { db } from '../../firebaseConnect';
 
@@ -15,7 +19,7 @@ export const addToCart = (itemId,item,userId,quantity=1)=>dispatch=>{
         quantity:quantity
     })
     .then(function() {
-        dispatch({ type: ADD_TO_CART_SUCCESS,payload:itemId});
+        dispatch({ type: ADD_TO_CART_SUCCESS,payload:itemId,quantity:quantity});
         console.log("Document written");
     })
     .catch(function(error) {
@@ -25,4 +29,21 @@ export const addToCart = (itemId,item,userId,quantity=1)=>dispatch=>{
 }
     
 }
-
+export const removeFromCart=(userId,itemId)=>dispatch=>{
+    dispatch({type: REMOVE_FROM_CART_PENDING});
+    db.collection("user").doc(userId).collection('cart').doc(itemId).delete().then(function() {
+        console.log("Document successfully deleted!");
+        dispatch({type: REMOVE_FROM_CART_SUCCESS,payload:itemId});
+    }).catch(function(error) {
+        console.error("Error removing document: ", error);
+        dispatch({type: REMOVE_FROM_CART_FAILED});
+    });
+    
+}
+// export const LoadCart=(items)=>dispatch=>{
+//     dispatch({
+//         type:LOAD_CART,
+//         payload:items
+//     })
+   
+// }

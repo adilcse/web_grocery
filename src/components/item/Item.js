@@ -1,12 +1,50 @@
-import React from 'react';
-import {Button} from 'react-bootstrap';
+import React, { useState } from 'react';
+import {Button, Alert} from 'react-bootstrap';
 import './item.css';
 import ProductCards from "../../components/productCard/ProductCards";
 import '../../assets/images/img2.jpeg';
+import { useDispatch, useSelector, useStore } from 'react-redux';
+import { addToCart } from '../../redux/actions/CardAction';
 const Item =(props)=>{
+    console.log(props)
     const {name,price,description,image,quantity}=props.item;
+    const itemId=props.id;
+    const userId=useSelector(state=>state.userLogin.userId);
+    const [showMsg,setShowMessage]=useState(false); 
+    const dispatch = useDispatch();
+    let addToCartButton ={
+        style :'warning',
+        text : 'Add to Cart',
+        active : '',
+        disabled :false
+      }
+      
+     const cart=useSelector(state=>state.addItemsToCart.cart);
+     //change button color if item is on cart
+      if(cart.has(itemId)){
+       addToCartButton.style = 'success';
+       addToCartButton.active = 'disabled';
+       addToCartButton.disabled= true;
+       addToCartButton.text = 'Added to Cart';
+      }
+      const addItem = () => {
+        if(userId)
+          dispatch(addToCart(itemId,props.item,userId));
+      else
+          setShowMessage(true);
+    }
+    const ErrorMessage= ()=>{
+        if(showMsg)
+            return (  
+                <Alert variant='danger' onClose={()=>setShowMessage(false)} dismissible >
+                    <Alert.Heading>Please Login First</Alert.Heading>
+                </Alert>
+            )
+        return <> </>;    
+    }
     return(
         <div>
+           <ErrorMessage/> 
         <div className="container itm">
             <div className="row">
                 <div className="col-md-1 bkstyl" ></div>
@@ -30,8 +68,12 @@ const Item =(props)=>{
                 <div className="col-sm-3"></div>
                 <div className="col-sm-6">
                 <div className=" btn-group-vertical ">
-                <Button variant="primary card-btn ">Buy </Button>
-                <Button variant="warning card-btn  ">Add to cart </Button>
+                <Button variant="primary card-btn " >Buy </Button>
+                <Button variant={addToCartButton.style + " card-btn "+addToCartButton.active} 
+                    onClick={()=>addItem()}
+                    disabled={addToCartButton.disabled} >
+                    {addToCartButton.text}
+                </Button> 
                 </div>
                 </div>
                 <div className="col-sm-3"></div>

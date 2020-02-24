@@ -4,7 +4,7 @@ import {addToCart} from '../../redux/actions/CardAction';
 import Card from './Card';
 import { db } from '../../firebaseConnect';
 import Loading from '../Loading';
-import ErrorMessage from '../ErrorMessage';
+import { Alert } from 'react-bootstrap';
 let loading=false;
 let source=[];
 const ProductCards =(props)=>{
@@ -33,6 +33,15 @@ const ProductCards =(props)=>{
            loading=false;
         });}
     }
+    const ErrorMessage= ()=>{
+        if(showMsg)
+            return (  
+                <Alert variant='danger' onClose={()=>setShowMessage(false)} dismissible >
+                    <Alert.Heading>Please Login First</Alert.Heading>
+                </Alert>
+            )
+        return <> </>;    
+    }
    if(!loaded && source.length<1){
     loadItem();
     return(
@@ -42,7 +51,9 @@ const ProductCards =(props)=>{
 
     return (
         <div className="container ">
-            <ErrorMessage className={showMsg?'visible alert alert-danger':'invisible'} message={'please login first'}/>
+           <ErrorMessage/>
+          
+            {/* <ErrorMessage className={showMsg?'visible alert alert-danger':'invisible'} message={'please login first'}/> */}
             <div className="row text-center">
             {
                 source.map((item) =>{    

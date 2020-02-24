@@ -1,23 +1,32 @@
 import React from 'react';
-const CartTotal=()=>{
+const CartTotal=(props)=>{
+    const{item}=props;
+  const countItem=item.length;
+    let total=0;
+    item.forEach(element => {
+        total+=(element.item.price*element.quantity);
+    });
+const inRupee=(amount)=>{
+    return new Intl.NumberFormat('en-IN').format(amount)
+}
 return(
-    <div class="_3CKRe3">
-        <div class="_13wOiu">
-            <span class="_2huYiT">Price details</span>
-            <div class="_2twTWD"><div class="hJYgKM">
-                <div>Price (3 items)</div><span> ₹20,443</span></div>
-                <div class="hJYgKM">
+    <div className="_3CKRe3">
+        <div className="_13wOiu">
+            <span className="_2huYiT">Price details</span>
+            <div className="_2twTWD"><div className="hJYgKM">
+            <div>Price ({countItem} items)</div><span> ₹{inRupee(total)}</span></div>
+                <div className="hJYgKM">
                     <div>Delivery Fee</div>
-                <span><span class="_27kB8M _3Oa-sk">Free</span></span>
+                <span><span className="_27kB8M _3Oa-sk">Free</span></span>
                 </div>
-                <div class="_3xFQAD">
-                    <div class="hJYgKM">
+                <div className="_3xFQAD">
+                    <div className="hJYgKM">
                         <div>Total Payable</div>
-                        <span> ₹20,443</span>
+                        <span> ₹{inRupee(total)}</span>
                     </div>
                 </div>
             </div>
-            <div class="_22vQVX">You will save ₹15,542 on this order</div>
+            <div className="_22vQVX">You will save ₹{inRupee(total*0.1)} on this order</div>
         </div>
     </div>
 )

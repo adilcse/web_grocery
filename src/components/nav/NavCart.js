@@ -14,7 +14,7 @@ const NavCart =()=>{
     }
 return(
     <li className="nav-item">
-    <NavLink className="nav-link" to="cart">Cart <IoIosCart/><sup style={style}> {countItem}</sup> </NavLink>
+    <NavLink className="nav-link" to="/cart">Cart <IoIosCart/><sup style={style}> {countItem}</sup> </NavLink>
   </li>
 );
 }
