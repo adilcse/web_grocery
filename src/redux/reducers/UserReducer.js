@@ -10,6 +10,7 @@ import {
     USER_TYPE_LOCAL
  } from "../../app/constants";
  let initialState={
+     userId:null,
      userName:null,
      loggedIn:false,
      UserType:null,
@@ -22,7 +23,9 @@ export const userLogin=(state=initialState,action={})=>{
          case LOGIN_USER_PENDING:
              return {...state,loggingIn:true,loggedIn:false};
          case LOGIN_USER_SUCCESS:
+            
             return{...state,
+                userId:action.payload.uid,
                 userName:action.payload.email,
                 loggingIn:false,
                 loggedIn:true,

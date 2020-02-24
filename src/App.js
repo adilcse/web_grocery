@@ -45,6 +45,9 @@ function App() {
             <Route path='/Product/:id'>
               <Product/>
             </Route>
+            <Route path='/' exact={true}>
+                <Home/>
+            </Route>
           </Switch>    
       </div>
     </Router>

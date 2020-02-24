@@ -11,7 +11,8 @@ const initialState={
 }
 export const addItemsToCart = (state=initialState,action={})=>{
     switch(action.type){
-        case  ADD_TO_CART_PENDING:
+        case  ADD_TO_CART_SUCCESS:
+            console.log(action.payload)
              let Ncart =new Set([...state.cart]);
            Ncart.add(action.payload);
             return {...state,cart:Ncart} ;
