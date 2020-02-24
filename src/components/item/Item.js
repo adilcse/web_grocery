@@ -5,6 +5,8 @@ import ProductCards from "../../components/productCard/ProductCards";
 import '../../assets/images/img2.jpeg';
 import { useDispatch, useSelector, useStore } from 'react-redux';
 import { addToCart } from '../../redux/actions/CardAction';
+import { CarouselProvider, Slider, Slide, ButtonBack, ButtonNext } from 'pure-react-carousel';
+import 'pure-react-carousel/dist/react-carousel.es.css';
 const Item =(props)=>{
     console.log(props)
     const {name,price,description,image,quantity}=props.item;
@@ -111,6 +113,8 @@ const Item =(props)=>{
         <div className="alert alert-dark cntnt"><h3>Shop More</h3></div>
         <div><i className="dropdown-toggle"></i></div>
         <ProductCards/>
+        
+        
         </div>
     )
 }
