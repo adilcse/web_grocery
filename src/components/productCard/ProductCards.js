@@ -4,18 +4,23 @@ import {addToCart} from '../../redux/actions/CardAction';
 import Card from './Card';
 import { db } from '../../firebaseConnect';
 import Loading from '../Loading';
-let called=0;
+import ErrorMessage from '../ErrorMessage';
+let loading=false;
 let source=[];
 const ProductCards =(props)=>{
     const dispatch = useDispatch();
     const userid=useSelector(state=>state.userLogin.userId)
-    const[loaded,setLoaded]=useState(false);  
+    const[loaded,setLoaded]=useState(false); 
+    const [showMsg,setShowMessage]=useState(false); 
   const onItemAdded = (itemId,item) => {
-    dispatch(addToCart(itemId,item,userid));
-}
-let data;
+      if(userid)
+        dispatch(addToCart(itemId,item,userid));
+    else
+        setShowMessage(true);
+  }
     const loadItem=()=>{
-      console.log(++called)
+        if(!loading){
+           loading=true;
         db.collection("products").limit(5).get().then(function(querySnapshot) {
             console.log(querySnapshot,loaded)
             querySnapshot.forEach(function(doc) {
@@ -25,7 +30,8 @@ let data;
                
             });
             setLoaded(true);
-        });
+           loading=false;
+        });}
     }
    if(!loaded && source.length<1){
     loadItem();
@@ -33,9 +39,10 @@ let data;
        <Loading size={120}/>
     )
 }
-console.log(source)
+
     return (
         <div className="container ">
+            <ErrorMessage className={showMsg?'visible alert alert-danger':'invisible'} message={'please login first'}/>
             <div className="row text-center">
             {
                 source.map((item) =>{    

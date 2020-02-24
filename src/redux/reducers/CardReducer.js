@@ -1,7 +1,8 @@
 import {
     ADD_TO_CART_FAILED,
     ADD_TO_CART_SUCCESS,
-    ADD_TO_CART_PENDING
+    ADD_TO_CART_PENDING,
+    USER_NOT_SIGNED_IN
     } from '../../app/ActionConstants';
 
 
