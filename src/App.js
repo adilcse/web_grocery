@@ -13,6 +13,7 @@ import SearchPage from './containers/SearchPage';
 import Signin from './containers/Signin';
 import Start from './app/Start';
 import Product from './containers/Product';
+import Cart from './containers/Cart';
 function App() {
   const Logout=()=>{
     return <Redirect to='/Home'/>
@@ -35,11 +36,17 @@ function App() {
             <Route path='/signin'>
               <Signin/>
             </Route>
+            <Route path='/cart'>
+              <Cart/>
+            </Route>
             <Route path='/Logout'>
               <Logout/>
             </Route>
             <Route path='/Product/:id'>
               <Product/>
+            </Route>
+            <Route path='/' exact={true}>
+                <Home/>
             </Route>
           </Switch>    
       </div>

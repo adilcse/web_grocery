@@ -1,8 +1,12 @@
-import {ADD_TO_CART} from '../../app/ActionConstants';
-import vegs from '../../assets/images/vegs.png';
-import slideimg1 from '../../assets/images/img2.jpeg';
-import slideimg2 from '../../assets/images/img3.jpg';
-import slideimg3 from '../../assets/images/img4.jpg';
+import {
+    ADD_TO_CART_FAILED,
+    ADD_TO_CART_SUCCESS,
+    ADD_TO_CART_PENDING,
+    USER_NOT_SIGNED_IN,
+    LOGOUT_USER_SUCCESS,
+    REMOVE_FROM_CART_SUCCESS,
+    LOAD_CART
+    } from '../../app/ActionConstants';
 
 
 const initialState={
@@ -11,21 +15,24 @@ const initialState={
 }
 export const addItemsToCart = (state=initialState,action={})=>{
     switch(action.type){
-        case  ADD_TO_CART:
-            // const index = state.source.findIndex(function(element){
-            //     return (element.id === action.payload)
-            // }) 
-            // let Nstate=[...state.source];
-            //  Nstate[index]={
-            //     ...state.source[index],
-            //     inCart:true
-            // }
-
-            // console.log(Nstate);
+        case  ADD_TO_CART_SUCCESS:
+           { 
+             console.log(action.payload)
              let Ncart =new Set([...state.cart]);
-            // console.log(Ncart)
-           Ncart.add(action.payload);
-            return {...state,cart:Ncart} ;
+             Ncart.add(action.payload);
+             return {...state,cart:Ncart} ;
+        }
+        case REMOVE_FROM_CART_SUCCESS:
+           { 
+             let Ncart =new Set([...state.cart]);
+             Ncart.delete(action.payload);
+             return {...state,cart:Ncart} ;
+            }
+        case LOGOUT_USER_SUCCESS:
+            return {...state,cart:initialState.cart};
+
+        case LOAD_CART:
+            return {...state,cart:action.payload}  ;  
         default : 
         return state;
     }

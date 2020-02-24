@@ -52,10 +52,10 @@ const MyNavbar = ()=>{
         <NavLink className="nav-link" to="/Home">Home <IoIosHome/></NavLink>
       </li>
       <li className="nav-item">
-        <NavLink className="nav-link" to="myOrder">My Order  <IoIosList/></NavLink>
+        <NavLink className="nav-link" to="/myOrder">My Order  <IoIosList/></NavLink>
       </li>
       <li className="nav-item">
-        <NavLink className="nav-link" to="profile">Profile <IoMdPeople/></NavLink>
+        <NavLink className="nav-link" to="/profile">Profile <IoMdPeople/></NavLink>
       </li>
       <NavCart/>
       <LoginLogout/>

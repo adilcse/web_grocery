@@ -35,7 +35,7 @@ import Item from '../components/item/Item';
    else{
        if(item)
    return(
-      <Item item={item}/>
+      <Item item={item} id={id}/>
    )
 else
     return(
