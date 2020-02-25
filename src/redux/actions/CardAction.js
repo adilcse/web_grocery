@@ -6,9 +6,12 @@ import {
     REMOVE_FROM_CART_PENDING,
     REMOVE_FROM_CART_SUCCESS,
     REMOVE_FROM_CART_FAILED,
-    LOAD_CART
+    LOAD_CART,
+    ADD_TO_GUEST_CART,
+    REMOVE_FROM_GUEST_CART
     } from '../../app/ActionConstants';
 import { db } from '../../firebaseConnect';
+
 
 export const addToCart = (itemId,item,userId,quantity=1)=>dispatch=>{
     dispatch({ type: ADD_TO_CART_PENDING});
@@ -40,10 +43,12 @@ export const removeFromCart=(userId,itemId)=>dispatch=>{
     });
     
 }
-// export const LoadCart=(items)=>dispatch=>{
-//     dispatch({
-//         type:LOAD_CART,
-//         payload:items
-//     })
-   
-// }
+//guest cart
+export const addToGuestCart=(itemId,item,quantity=1)=>dispatch=>{
+    dispatch({type:ADD_TO_GUEST_CART,payload:{itemId:itemId,item:{item,quantity:quantity,id:itemId}}})
+}
+//remove from guest cart
+export const removeFromGuestCart=(itemId)=>({
+    type:REMOVE_FROM_GUEST_CART,
+    payload:itemId
+})

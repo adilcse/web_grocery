@@ -57,14 +57,16 @@ export const Logout=()=>dispatch=>{
 }
 const loadCart=(dispatch,userId)=>{
   let cart=new Set();
+  let item=[];
   console.log('cart loading')
   db.collection("user").doc(userId).collection('cart').get().then(function(querySnapshot) {
     querySnapshot.forEach(function(doc) {
         // doc.data() is never undefined for query doc snapshots
       
         cart.add(doc.id);
+        item.push(doc.data());
     });
 }).then(()=>{
-  dispatch({type:LOAD_CART,payload:cart})
+  dispatch({type:LOAD_CART,payload:cart,item:item})
 });
 }

@@ -1,6 +1,6 @@
 import React,{useState} from 'react';
 import { useDispatch, useSelector} from 'react-redux';
-import {addToCart} from '../../redux/actions/CardAction';
+import {addToCart, addToGuestCart} from '../../redux/actions/CardAction';
 import Card from './Card';
 import { db } from '../../firebaseConnect';
 import Loading from '../Loading';
@@ -12,11 +12,12 @@ const ProductCards =(props)=>{
     const userid=useSelector(state=>state.userLogin.userId)
     const[loaded,setLoaded]=useState(false); 
     const [showMsg,setShowMessage]=useState(false); 
-  const onItemAdded = (itemId,item) => {
-      if(userid)
-        dispatch(addToCart(itemId,item,userid));
+ const onItemAdded = (itemId,item,userId=userid) => {
+      if(userId)
+        dispatch(addToCart(itemId,item,userId));
     else
-        setShowMessage(true);
+    dispatch(addToGuestCart(itemId,item));
+       // setShowMessage(true);
   }
     const loadItem=()=>{
         if(!loading){

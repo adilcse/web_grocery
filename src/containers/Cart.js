@@ -6,7 +6,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import CartList from '../components/cart/CartList';
 import { db } from '../firebaseConnect';
 import Loading from '../components/Loading';
-import { removeFromCart } from '../redux/actions/CardAction';
+import { removeFromCart, removeFromGuestCart } from '../redux/actions/CardAction';
 let cart=[];
 const Cart =()=>{
     const userId=useSelector(state=>state.userLogin.userId);
@@ -19,71 +19,84 @@ const Cart =()=>{
     let loading=false;
     const [loaded,setLoaded]=useState(false);
     const [cartUpdated,setCartUpdated]=useState(false);
+    let guest=useSelector(state=>state.addItemsToCart.guest);
+    let guestCart=useSelector(state=>state.addItemsToCart.item);  
     const loadCart=()=>{
         cart=[];
         if(!loading){
             loading=true;
+            if(userId){
             db.collection("user").doc(userId).collection('cart').get().then(function(querySnapshot) {
                 querySnapshot.forEach(function(doc) {
-                    // doc.data() is never undefined for query doc snapshots
-                  
                     cart.push(doc.data());
                 });
             }).then(()=>{
                 setLoaded(true);
                 loading=false;
-            });}
+                });
+            }
+        }
     }
 //remove item from cart
 const removeItem=(id,index)=>{
     cart.splice(index,1);
     setCartUpdated(!cartUpdated);
-    dispatch(removeFromCart(userId,id));
+    if(userId)
+        dispatch(removeFromCart(userId,id));
+    else
+        dispatch(removeFromGuestCart(id))
 }
+//update quantity of an item
 const updateQuantity=(id,quantity)=>{
     console.log(id,quantity,cart);
     cart[id].quantity=quantity;
     setCartUpdated(!cartUpdated);
 }
-    if(userId){
         if(!loaded){
-        loadCart();
+            if(userId)
+                loadCart();
+            else{
+             cart=guestCart;
+             setLoaded(true);
+            
+        }
        return <Loading size={120}/>
     }else{
-        return(
-            <div className="container">
-                <div className='row'>
-                    <div className='col-md-8'>
-                       <CartList item={cart} 
-                       user={userId} 
-                       removeItem={removeItem}
-                       updateQuantity={updateQuantity}/>
-                    </div>
-                    <div className='col-md-4'>
+        if(cart.length===0){
+            return(
+                <Alert variant='info'>
+                   <Alert.Heading>No Item In Cart</Alert.Heading> 
+                </Alert>
+            )
+        }
+        else
+            return(
+                <div className="container">
                     <div className='row'>
-                        <CartTotal item={cart}/>       
-                    </div>
-                    <div className='row mt-5 mx-auto'>
-                    <button className="btn btn-primary " style={buttonStyle}>
-                        <span>Place Order</span>
-                    </button>   
-                    </div>
-                    </div>
+                        <div className='col-md-8'>
+                        <CartList item={cart} 
+                        user={userId} 
+                        removeItem={removeItem}
+                        updateQuantity={updateQuantity}/>
+                        </div>
+                        <div className='col-md-4'>
+                        <div className='row'>
+                            <CartTotal item={cart}/>       
+                        </div>
+                        <div className='row mt-5 mx-auto'>
+                        <button className="btn btn-primary " style={buttonStyle}>
+                            <span>Place Order</span>
+                        </button>   
+                        </div>
+                        </div>
+                        
                     
+                    </div>
                 
                 </div>
-               
-            </div>
-    
-        ) 
+        
+            ) 
     }
-    }
-   else{ 
-    return(
-        <Alert variant='danger'>
-        <Alert.Heading>Please Login First</Alert.Heading>
-    </Alert>
-    )
-   }
+
 }
 export default Cart;

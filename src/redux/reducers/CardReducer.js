@@ -5,22 +5,25 @@ import {
     USER_NOT_SIGNED_IN,
     LOGOUT_USER_SUCCESS,
     REMOVE_FROM_CART_SUCCESS,
-    LOAD_CART
+    LOAD_CART,
+    ADD_TO_GUEST_CART,
+    REMOVE_FROM_GUEST_CART
     } from '../../app/ActionConstants';
 
 
 const initialState={
-   cart:new Set()
+   cart:new Set(),
+    guest:false,
+    item:[]
     
 }
 export const addItemsToCart = (state=initialState,action={})=>{
     switch(action.type){
         case  ADD_TO_CART_SUCCESS:
            { 
-             console.log(action.payload)
              let Ncart =new Set([...state.cart]);
              Ncart.add(action.payload);
-             return {...state,cart:Ncart} ;
+             return {...state,cart:Ncart,guest:false} ;
         }
         case REMOVE_FROM_CART_SUCCESS:
            { 
@@ -29,10 +32,29 @@ export const addItemsToCart = (state=initialState,action={})=>{
              return {...state,cart:Ncart} ;
             }
         case LOGOUT_USER_SUCCESS:
-            return {...state,cart:initialState.cart};
-
+            return {...state,cart:initialState.cart,guest:true};
+        case ADD_TO_GUEST_CART:
+            {
+                let Ncart =new Set([...state.cart]);
+                Ncart.add(action.payload.itemId);
+                let Nitem=[...state.item];
+                Nitem.push(action.payload.item);
+                return{...state,guest:true,cart:Ncart,item:Nitem}
+            }
+        case REMOVE_FROM_GUEST_CART:
+            {
+                let Ncart =new Set([...state.cart]);
+                Ncart.delete(action.payload);
+                let Nitem=[...state.item];
+                Nitem.forEach((element,index)=>{
+                    if(element.id===action.payload){
+                        Nitem.splice(index,1)
+                    }
+                })
+                return{...state,guest:true,cart:Ncart,item:Nitem}
+            }    
         case LOAD_CART:
-            return {...state,cart:action.payload}  ;  
+            return {...state,cart:action.payload,item:action.item}  ;  
         default : 
         return state;
     }

@@ -3,8 +3,8 @@ import {Button, Alert} from 'react-bootstrap';
 import './item.css';
 import ProductCards from "../../components/productCard/ProductCards";
 import '../../assets/images/img2.jpeg';
-import { useDispatch, useSelector, useStore } from 'react-redux';
-import { addToCart } from '../../redux/actions/CardAction';
+import { useDispatch, useSelector } from 'react-redux';
+import { addToCart, addToGuestCart } from '../../redux/actions/CardAction';
 const Item =(props)=>{
     console.log(props)
     const {name,price,description,image,quantity}=props.item;
@@ -29,9 +29,9 @@ const Item =(props)=>{
       }
       const addItem = () => {
         if(userId)
-          dispatch(addToCart(itemId,props.item,userId));
-      else
-          setShowMessage(true);
+        dispatch(addToCart(itemId,props.item,userId));
+    else
+    dispatch(addToGuestCart(itemId,props.item));
     }
     const ErrorMessage= ()=>{
         if(showMsg)

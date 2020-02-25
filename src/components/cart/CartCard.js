@@ -9,7 +9,6 @@ const CartCard=(props)=>{
   const {id}=props.item;
   const {userId}=props;
   const[quant,setQuant]=useState(quantity);
- 
  //allow to add only quantity between 1 to 5
 
  const updateQuant=(element,num)=>{
@@ -18,7 +17,11 @@ const CartCard=(props)=>{
       return;
    else {
      let newQuant=quant+num;
-    updateQuantityInDB(newQuant,num);
+     setQuant(newQuant);
+     props.updateQuantity(props.index,newQuant);
+     //if user exist then only update user's cart
+     if(userId)
+        updateQuantityInDB(newQuant,num);
     }
  }
  const updateQuantityInDB=(q,num)=>{
@@ -28,8 +31,7 @@ const CartCard=(props)=>{
 })
 .then(function() {
     console.log("Document successfully written!");
-    setQuant(q);
-    props.updateQuantity(props.index,q);
+   
 })
 .catch(function(error) {
     console.error("Error writing document: ", error);
@@ -39,7 +41,7 @@ const CartCard=(props)=>{
 return(        
     <div className="row no-gutters">
       <div className="col-md-4">
-        <img src={item.image} className="card-img" alt={'image'}/>
+        <img src={item.image} className="card-img" alt={item.name}/>
       </div>
       <div className="col-md-8">
         <div className="card-body" align="left">

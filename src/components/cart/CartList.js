@@ -3,15 +3,7 @@ import CartCard from './CartCard';
 import Loading from '../Loading';
 import { Alert } from 'react-bootstrap';
 const CartList=(props)=>{
-    const {item,user}=props;
-    if(item.length===0){
-        return(
-            <Alert variant='info'>
-               <Alert.Heading>No Item In Cart</Alert.Heading> 
-            </Alert>
-        )
-    }
-    
+    const {item,user}=props;    
     if(item)
         return(
             <div>
