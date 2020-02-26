@@ -38,7 +38,7 @@
 .flexcss{
    border-bottom: 2px dashed grey;
    border-top: 2px dashed grey;
-  height: 100vh;
+  height: 60vh;
   width: 100%;
   display: flex;
   flex-direction: column;
