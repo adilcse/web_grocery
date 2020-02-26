@@ -23,7 +23,6 @@ const ProductCards =(props)=>{
         if(!loading){
            loading=true;
         db.collection("products").limit(5).get().then(function(querySnapshot) {
-            console.log(querySnapshot,loaded)
             querySnapshot.forEach(function(doc) {
                 // doc.data() is never undefined for query doc snapshots
                // console.log(doc.id, " => ", doc.data());

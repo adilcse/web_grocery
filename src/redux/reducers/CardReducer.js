@@ -18,6 +18,7 @@ const initialState={
     
 }
 export const addItemsToCart = (state=initialState,action={})=>{
+    console.log(state.item);
     switch(action.type){
         case  ADD_TO_CART_SUCCESS:
            { 
@@ -32,7 +33,7 @@ export const addItemsToCart = (state=initialState,action={})=>{
              return {...state,cart:Ncart} ;
             }
         case LOGOUT_USER_SUCCESS:
-            return {...state,cart:initialState.cart,guest:true};
+            return {...state,cart:initialState.cart,guest:true,item:[]};
         case ADD_TO_GUEST_CART:
             {
                 let Ncart =new Set([...state.cart]);

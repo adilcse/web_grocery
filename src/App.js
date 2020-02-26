@@ -14,6 +14,8 @@ import Signin from './containers/Signin';
 import Start from './app/Start';
 import Product from './containers/Product';
 import Cart from './containers/Cart';
+import MyOrder from './containers/MyOrder';
+import Checkout from './containers/Checkout';
 function App() {
   const Logout=()=>{
     return <Redirect to='/home'/>
@@ -38,6 +40,12 @@ function App() {
             </Route>
             <Route path='/cart'>
               <Cart/>
+            </Route>
+            <Route path='/myOrder'>
+              <MyOrder/>
+            </Route>
+            <Route path='/Checkout/:from'>
+              <Checkout/>
             </Route>
             <Route path='/Logout'>
               <Logout/>
