@@ -90,25 +90,25 @@ const Item =(props)=>{
         <div><i className="dropdown-toggle"></i></div>
             <div className="flexcss">
                 <div className="photobanner">
-            <img  className="first " src={image} alt="img1" />
-            <img  className="sec" src={image} alt="img1" />
-            <img  className="sec" src={image} alt="img1" />
-            <img  className="sec" src={image} alt="img1" />
-            <img  className="sec" src={image} alt="img1" />
-            <img  className="sec" src={image} alt="img1" />
-            <img  className="sec" src={image} alt="img1" />
-            <img  className="sec" src={image} alt="img1" />
-            <img  className="sec" src={image} alt="img1" />
-            <img  className="sec" src={image} alt="img1" />
-            <img  className="sec" src={image} alt="img1" />
-            <img  className="sec" src={image} alt="img1" />
-            <img  className="sec" src={image} alt="img1" />
-            <img  className="sec" src={image} alt="img1" />
-            <img  className="sec" src={image} alt="img1" />
-            <img  className="sec" src={image} alt="img1" />
-            <img  className="sec" src={image} alt="img1" />
-            <img  className="sec" src={image} alt="img1" />
-            <img  className="sec" src={image} alt="img1" />
+            <img   src={image} alt="img1" />
+            <img   src={image} alt="img1" />
+            <img   src={image} alt="img1" />
+            <img   src={image} alt="img1" />
+            <img   src={image} alt="img1" />
+            <img   src={image} alt="img1" />
+            <img   src={image} alt="img1" />
+            <img   src={image} alt="img1" />
+            <img   src={image} alt="img1" />
+            <img   src={image} alt="img1" />
+            <img   src={image} alt="img1" />
+            <img   src={image} alt="img1" />
+            <img   src={image} alt="img1" />
+            <img   src={image} alt="img1" />
+            <img   src={image} alt="img1" />
+            <img   src={image} alt="img1" />
+            <img   src={image} alt="img1" />
+            <img   src={image} alt="img1" />
+            <img   src={image} alt="img1" />
         </div>
         </div>
         <div className="alert alert-dark cntnt"><h3>Shop More</h3></div>
