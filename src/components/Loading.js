@@ -11,8 +11,8 @@ const Loading=(prop)=>{
         animation: 'spin 2s linear infinite',
     }
     return(
-        <div className="container mt-3">
-             <div className=" mx-auto" style={load}></div>
+        <div className="container mt-3 cntr ">
+             <div className=" mx-auto " style={load}></div>
         </div>
        
     ) 

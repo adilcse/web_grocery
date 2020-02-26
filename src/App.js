@@ -18,7 +18,7 @@ import MyOrder from './containers/MyOrder';
 import Checkout from './containers/Checkout';
 function App() {
   const Logout=()=>{
-    return <Redirect to='/home'/>
+    return <Redirect to='/Home'/>
   }
   return (
     <Start>

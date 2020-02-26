@@ -46,7 +46,7 @@ const Login = (props)=>{
       else 
       return(
          <Loading size={80}/>
-      )
+        )
     }
   
     return(
