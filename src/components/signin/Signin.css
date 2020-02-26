@@ -10,6 +10,7 @@ body{
      font-family: 'Kaushan Script', cursive;
      }
       .myform{
+        margin: auto;
     position: relative;
     display: -ms-flexbox;
     display: flex;

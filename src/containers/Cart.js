@@ -41,7 +41,7 @@ const Cart =()=>{
     }
     //place order
     const placeOrder=()=>{
-        const countItem=cart.length;
+        const countItems=cart.length;
         let total=0;
         let deleveryCharges=0;
         cart.forEach(element => {
@@ -49,7 +49,7 @@ const Cart =()=>{
         });
         total+=deleveryCharges;
         let obj={
-            countItem:countItem,
+            countItems:countItems,
             total:total,
             deleveryCharges:deleveryCharges
         }
@@ -58,7 +58,7 @@ const Cart =()=>{
 
     //total price of all items in cart
    const cardTotal=()=>{
-    const countItem=cart.length;
+    const countItems=cart.length;
     let total=0;
     let deleveryCharges=0;
     cart.forEach(element => {
@@ -66,7 +66,7 @@ const Cart =()=>{
     });
     total+=deleveryCharges;
     let obj={
-        countItems:countItem,
+        countItems:countItems,
         total:total,
         deleveryCharges:deleveryCharges
     }

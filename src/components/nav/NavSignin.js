@@ -4,7 +4,7 @@ import { FaUserAlt } from 'react-icons/fa';
 const NavSignin = ()=>{
     return(
         <li className="nav-item">
-        <NavLink className="nav-link" to="signin">Signin/Register <FaUserAlt/> </NavLink>
+        <NavLink className="nav-link" to="/signin">Signin/Register <FaUserAlt/> </NavLink>
       </li>
     )
 }

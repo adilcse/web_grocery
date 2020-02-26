@@ -26,7 +26,7 @@ const cart=useSelector(state=>state.addItemsToCart.cart);
   cardButton.text = 'Added to Cart';
  }
  //add item to cart and proceed to checkout
-const checkout=()=>{
+const checkout=(dispatch)=>{
   let cart = {
     id:source.id,
     item:source,
@@ -58,7 +58,7 @@ return(
     </Cardboot.Body>
   <div>
     <Link to='/Checkout/item'>
-      <Button variant="primary card-btn " onClick={checkout}>Buy </Button> 
+      <Button variant="primary card-btn " onClick={()=>checkout(dispatch)}>Buy </Button> 
     </Link>
 <Button variant={cardButton.style + " card-btn "+cardButton.active} onClick={()=>props.addItem(id,source)} disabled={cardButton.disabled} >{cardButton.text}</Button> 
   </div>
