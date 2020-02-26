@@ -4,6 +4,7 @@ import './Card.css';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { CheckoutCart } from '../../redux/actions/CheckoutAction';
+import { AddItemForCheckout } from '../../app/helper/AddItemForCheckout';
 // import { addItemsToCart } from '../../redux/reducers/CardReducer';
 // import {Link} from 'react-router-dom';
 
@@ -26,19 +27,6 @@ const cart=useSelector(state=>state.addItemsToCart.cart);
   cardButton.text = 'Added to Cart';
  }
  //add item to cart and proceed to checkout
-const checkout=(dispatch)=>{
-  let cart = {
-    id:source.id,
-    item:source,
-    quantity:1
-  };
-  let total={
-    deleveryCharges:0,
-    countItems:1,
-  }
-  total.total=source.price+total.deleveryCharges;
- dispatch(CheckoutCart([cart],total));
-}
 
 return(
 
@@ -58,7 +46,7 @@ return(
     </Cardboot.Body>
   <div>
     <Link to='/Checkout/item'>
-      <Button variant="primary card-btn " onClick={()=>checkout(dispatch)}>Buy </Button> 
+      <Button variant="primary card-btn " onClick={()=>AddItemForCheckout(dispatch,source)}>Buy </Button> 
     </Link>
 <Button variant={cardButton.style + " card-btn "+cardButton.active} onClick={()=>props.addItem(id,source)} disabled={cardButton.disabled} >{cardButton.text}</Button> 
   </div>

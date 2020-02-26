@@ -23,6 +23,8 @@ const Cart =()=>{
     const [loaded,setLoaded]=useState(false);
     const [cartUpdated,setCartUpdated]=useState(false);
     let guestCart=useSelector(state=>state.addItemsToCart.item);  
+    if(guestCart)
+        cart=guestCart;
     const loadCart=()=>{
         cart=[];
         if(!loading){
@@ -35,6 +37,7 @@ const Cart =()=>{
             }).then(()=>{
                 setLoaded(true);
                 loading=false;
+                
                 });
             }
         }
@@ -87,54 +90,56 @@ const updateQuantity=(id,quantity)=>{
     cart[id].quantity=quantity;
     setCartUpdated(!cartUpdated);
 }
-        if(!loaded){
-            if(userId)
-                loadCart();
-            else{
-             cart=guestCart;
-             setLoaded(true);
-            
-        }
-       return <Loading size={120}/>
-    }else{
-        if(cart.length===0){
-            return(
-                <Alert variant='info'>
-                   <Alert.Heading>No Item In Cart</Alert.Heading> 
-                </Alert>
-            )
-        }
-        else
-            return(
-                <div className="container">
-                    <div className='row'>
-                        <div className='col-md-8'>
-                        <CartList item={cart} 
-                        user={userId} 
-                        removeItem={removeItem}
-                        updateQuantity={updateQuantity}
-                       />
-                        </div>
-                        <div className='col-md-4'>
-                        <div className='row'>
-                            <CartTotal item={cardTotal()}/>       
-                        </div>
-                        <div className='row mt-5 mx-auto'>
-                         <Link to='/checkout/cart'>
-                            <button className="btn btn-primary " style={buttonStyle} onClick={placeOrder}>
-                                <span>Place Order</span>
-                            </button>   
-                        </Link>
-                        </div>
-                        </div>
-                        
-                    
-                    </div>
-                
+
+if(!loaded){
+    if(userId)
+        loadCart();
+    else{
+        cart=guestCart;
+        setLoaded(true);
+        setCartUpdated(!cartUpdated);
+    
+}
+return <Loading size={120}/>
+}else{
+if(cart.length===0){
+    return(
+        <Alert variant='info'>
+            <Alert.Heading>No Item In Cart</Alert.Heading> 
+        </Alert>
+    )
+}
+else
+    return(
+        <div className="container">
+            <div className='row'>
+                <div className='col-md-8'>
+                <CartList item={cart} 
+                user={userId} 
+                removeItem={removeItem}
+                updateQuantity={updateQuantity}
+                />
                 </div>
+                <div className='col-md-4'>
+                <div className='row'>
+                    <CartTotal item={cardTotal()}/>       
+                </div>
+                <div className='row mt-5 mx-auto'>
+                    <Link to='/checkout/cart'>
+                    <button className="btn btn-primary " style={buttonStyle} onClick={placeOrder}>
+                        <span>Place Order</span>
+                    </button>   
+                </Link>
+                </div>
+                </div>
+                
+            
+            </div>
         
-            ) 
-    }
+        </div>
+
+    ) 
+}
 
 }
 export default Cart;

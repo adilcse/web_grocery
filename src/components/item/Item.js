@@ -7,6 +7,8 @@ import '../../assets/images/img2.jpeg';
 import { useDispatch, useSelector, useStore } from 'react-redux';
 import { addToCart,addToGuestCart } from '../../redux/actions/CardAction';
 import 'pure-react-carousel/dist/react-carousel.es.css';
+import { AddItemForCheckout } from '../../app/helper/AddItemForCheckout';
+import { Link, Redirect } from 'react-router-dom';
 
 const Item =(props)=>{
     console.log(props)
@@ -23,6 +25,7 @@ const Item =(props)=>{
       }
       
      const cart=useSelector(state=>state.addItemsToCart.cart);
+     const [buy,setBuy]=useState(false);
      //change button color if item is on cart
       if(cart.has(itemId)){
        addToCartButton.style = 'success';
@@ -45,7 +48,16 @@ const Item =(props)=>{
             )
         return <> </>;    
     }
+    const checkout=()=>{
+        AddItemForCheckout(dispatch,props.item);
+        setBuy(true);
+         
+    }
+    if(buy){
+        return(<Redirect to='/checkout/item'/>)
+    }
     return(
+       
         <div>
            <ErrorMessage/> 
         <div className="container itm">
@@ -71,7 +83,9 @@ const Item =(props)=>{
                 <div className="col-sm-3"></div>
                 <div className="col-sm-6">
                 <div className=" btn-group-vertical ">
-                <Button variant="primary card-btn " >Buy </Button>
+               
+                  <Button variant="primary card-btn " onClick={checkout} > Buy</Button>
+             
                 <Button variant={addToCartButton.style + " card-btn "+addToCartButton.active} 
                     onClick={()=>addItem()}
                     disabled={addToCartButton.disabled} >

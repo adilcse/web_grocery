@@ -23,7 +23,7 @@ console.log(target)
 
     };
 return(
-<div class="address">
+<div className="address">
     <div>
     <Form noValidate onSubmit={handleSubmit}>
           <Form.Row>

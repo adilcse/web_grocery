@@ -4,7 +4,9 @@ import {
     LOGIN_USER_FAILED,
     LOGOUT_USER_FAILED,
     LOGOUT_USER_PENDING,
-    LOGOUT_USER_SUCCESS
+    LOGOUT_USER_SUCCESS,
+    REGISTER_USER_PENDING,
+    REGISTER_USER_SUCCESS
  } from "../../app/ActionConstants";
  import { 
     USER_TYPE_LOCAL
@@ -39,7 +41,18 @@ export const userLogin=(state=initialState,action={})=>{
             return initialState;
         case LOGOUT_USER_PENDING:
             return {...state,loggingIn:true}        
-        default:
+        
+        case REGISTER_USER_PENDING:
+            return {...state,loggingIn:true,loggedIn:false};
+        case REGISTER_USER_SUCCESS:
+            return{...state,
+                userId:action.payload.uid,
+                userName:action.payload.email,
+                loggingIn:false,
+                loggedIn:true,
+                UserType:USER_TYPE_LOCAL
+            } 
+        default:    
             return state;
      }
  }
