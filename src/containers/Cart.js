@@ -1,10 +1,8 @@
 import React, { useState } from 'react'
-import CartCard from '../components/cart/CartCard';
 import CartTotal from '../components/cart/CartTotal';
-import { Button, Alert } from 'react-bootstrap';
+import {  Alert } from 'react-bootstrap';
 import { useSelector, useDispatch } from 'react-redux';
 import CartList from '../components/cart/CartList';
-import { db } from '../firebaseConnect';
 import Loading from '../components/Loading';
 import { removeFromCart, removeFromGuestCart } from '../redux/actions/CardAction';
 import { CheckoutCart } from '../redux/actions/CheckoutAction';
@@ -19,29 +17,10 @@ const Cart =()=>{
         fontSize:'1.5rem',
         color:'white',
     }
-    let loading=false;
     const [loaded,setLoaded]=useState(false);
     const [cartUpdated,setCartUpdated]=useState(false);
-    let guestCart=useSelector(state=>state.addItemsToCart.item);  
-    if(guestCart)
+    let guestCart=useSelector(state=>state.addItemsToCart.item); 
         cart=guestCart;
-    const loadCart=()=>{
-        cart=[];
-        if(!loading){
-            loading=true;
-            if(userId){
-            db.collection("user").doc(userId).collection('cart').get().then(function(querySnapshot) {
-                querySnapshot.forEach(function(doc) {
-                    cart.push(doc.data());
-                });
-            }).then(()=>{
-                setLoaded(true);
-                loading=false;
-                
-                });
-            }
-        }
-    }
     //place order
     const placeOrder=()=>{
         const countItems=cart.length;
@@ -80,7 +59,7 @@ const removeItem=(id,index)=>{
     cart.splice(index,1);
     setCartUpdated(!cartUpdated);
     if(userId)
-        dispatch(removeFromCart(userId,id));
+        dispatch(removeFromCart(userId,id, dispatch))
     else
         dispatch(removeFromGuestCart(id))
 }
@@ -92,14 +71,7 @@ const updateQuantity=(id,quantity)=>{
 }
 
 if(!loaded){
-    if(userId)
-        loadCart();
-    else{
-        cart=guestCart;
-        setLoaded(true);
-        setCartUpdated(!cartUpdated);
-    
-}
+setLoaded(true);
 return <Loading size={120}/>
 }else{
 if(cart.length===0){

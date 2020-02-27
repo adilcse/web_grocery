@@ -1,6 +1,5 @@
 import React from 'react';
 import './App.css';
-import ProductCards from './components/productCard/ProductCards';
 import Nav from './sections/header/Nav';
 import {
   BrowserRouter as Router,
@@ -26,9 +25,7 @@ function App() {
       <div className="App text-center">
         <Nav/>
           <Switch>
-            <Route path='/Home'>
-                <Home/>
-            </Route>
+            <Route path='/Home' component={Home} />
             <Route path='/About'>
               <h2>about</h2>
             </Route>

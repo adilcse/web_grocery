@@ -13,7 +13,6 @@ import {
 
 const initialState={
    cart:new Set(),
-    guest:false,
     item:[]
     
 }
@@ -24,7 +23,7 @@ export const addItemsToCart = (state=initialState,action={})=>{
            { 
              let Ncart =new Set([...state.cart]);
              Ncart.add(action.payload);
-             return {...state,cart:Ncart,guest:false} ;
+             return {...state,cart:Ncart} ;
         }
         case REMOVE_FROM_CART_SUCCESS:
            { 
@@ -33,14 +32,14 @@ export const addItemsToCart = (state=initialState,action={})=>{
              return {...state,cart:Ncart} ;
             }
         case LOGOUT_USER_SUCCESS:
-            return {...state,cart:initialState.cart,guest:true,item:[]};
+            return {...state,cart:initialState.cart,item:[]};
         case ADD_TO_GUEST_CART:
             {
                 let Ncart =new Set([...state.cart]);
                 Ncart.add(action.payload.itemId);
                 let Nitem=[...state.item];
                 Nitem.push(action.payload.item);
-                return{...state,guest:true,cart:Ncart,item:Nitem}
+                return{...state,cart:Ncart,item:Nitem}
             }
         case REMOVE_FROM_GUEST_CART:
             {
@@ -52,7 +51,7 @@ export const addItemsToCart = (state=initialState,action={})=>{
                         Nitem.splice(index,1)
                     }
                 })
-                return{...state,guest:true,cart:Ncart,item:Nitem}
+                return{...state,cart:Ncart,item:Nitem}
             }    
         case LOAD_CART:
             return {...state,cart:action.payload,item:action.item}  ;  

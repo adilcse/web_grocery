@@ -2,16 +2,13 @@ import {
     ADD_TO_CART_FAILED,
     ADD_TO_CART_SUCCESS,
     ADD_TO_CART_PENDING,
-    USER_NOT_SIGNED_IN,
     REMOVE_FROM_CART_PENDING,
     REMOVE_FROM_CART_SUCCESS,
     REMOVE_FROM_CART_FAILED,
-    LOAD_CART,
     ADD_TO_GUEST_CART,
     REMOVE_FROM_GUEST_CART
     } from '../../app/ActionConstants';
 import { db } from '../../firebaseConnect';
-
 
 export const addToCart = (itemId,item,userId,quantity=1)=>dispatch=>{
     dispatch({ type: ADD_TO_CART_PENDING});
@@ -32,7 +29,7 @@ export const addToCart = (itemId,item,userId,quantity=1)=>dispatch=>{
 }
     
 }
-export const removeFromCart=(userId,itemId)=>dispatch=>{
+export const removeFromCart=(userId,itemId, dispatch)=>{
     dispatch({type: REMOVE_FROM_CART_PENDING});
     db.collection("user").doc(userId).collection('cart').doc(itemId).delete().then(function() {
         console.log("Document successfully deleted!");
