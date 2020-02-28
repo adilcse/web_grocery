@@ -1,4 +1,6 @@
-//cart constants
+/**
+ * it contains all the constants used for action
+ */
 export const ADD_TO_CART_PENDING = 'ADD_TO_CART_PENDING';
 export const ADD_TO_CART_SUCCESS = 'ADD_TO_CART_SUCCESS';
 export const ADD_TO_CART_FAILED='ADD_TO_CART_FAILED';
@@ -43,3 +45,7 @@ export const EMPTY_CART='EMPTY_CART';
 export const CHECKOUT_FROM_ITEM='CHECKOUT_FROM_ITEM';
 export const CHECKOUT_FROM_CART='CHECKOUT_FROM_CART';
 export const CHECKOUT='CHECKOUT';
+
+export const ORDER_PLACE_PENDING='ORDER_PLACE_PENDING';
+export const ORDER_PLACE_SUCCESS='ORDER_PLACE_SUCCESS';
+export const ORDER_PLACE_FAILED='ORDER_PLACE_FAILED';

@@ -1,6 +1,9 @@
 import React from 'react';
 import { Alert } from 'react-bootstrap';
-
+/**
+ * shows error message if anythng went wrong
+ * @param {message to show inside error} props 
+ */
  const ErrorMessage=(props)=>{
     if(props.isError)
     return(

@@ -19,7 +19,9 @@ import {
      UserType:null,
      loggingIn:false,
      error:false,
-     guest:true
+     guest:true,
+     address:{}
+
 
  }
 export const userLogin=(state=initialState,action={})=>{

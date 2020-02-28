@@ -8,7 +8,7 @@ import {
     REGISTER_USER_PENDING,
     REGISTER_USER_SUCCESS,
     REGISTER_USER_FAILED,
-    EMPTY_CART,
+   
     LOAD_CART
  } from "../../app/ActionConstants";
  import {firebase, db} from '../../firebaseConnect';
@@ -32,12 +32,8 @@ dispatch({type:REGISTER_USER_PENDING});
 firebase.auth().createUserWithEmailAndPassword(email, password)
 .then((data)=>{
   addUserToDb(dispatch,data.user.uid,data.user.email,name);
-  
 })
 .catch(function(error) {
-  // Handle Errors here.
-  var errorCode = error.code;
-  var errorMessage = error.message;
   console.log(error);
   dispatch({type:REGISTER_USER_FAILED,payload:error});
   // ...

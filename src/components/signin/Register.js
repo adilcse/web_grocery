@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {Register as RegisterWithFirebase } from '../../redux/actions/UserAction'
-import { Alert } from 'react-bootstrap';
 import { Redirect } from 'react-router';
 import Loading from '../Loading';
 import ErrorMessage from '../../app/helper/ErrorMessage';

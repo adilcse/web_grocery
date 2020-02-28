@@ -4,11 +4,10 @@ import './item.css';
 import ProductCards from "../../components/productCard/ProductCards";
 import '../../assets/images/img2.jpeg';
 
-import { useDispatch, useSelector, useStore } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { addToCart,addToGuestCart } from '../../redux/actions/CardAction';
-import 'pure-react-carousel/dist/react-carousel.es.css';
 import { AddItemForCheckout } from '../../app/helper/AddItemForCheckout';
-import { Link, Redirect } from 'react-router-dom';
+import {Redirect } from 'react-router-dom';
 
 const Item =(props)=>{
     console.log(props)
@@ -64,7 +63,7 @@ const Item =(props)=>{
             <div className="row">
                 <div className="col-md-1 bkstyl" ></div>
             <div className="col-md-5">
-                <img src={image} style={{width:'100%',height:'100%',maxWidth:'400px',maxHeight:'350px'}}></img>
+                <img src={image} style={{width:'100%',height:'100%',maxWidth:'400px',maxHeight:'350px'} }alt={name}></img>
             </div>
             <div className="col-md-4">
                 <div className="row">

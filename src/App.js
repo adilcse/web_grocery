@@ -10,17 +10,19 @@ import {
 import Home from './containers/Home';
 import SearchPage from './containers/SearchPage';
 import Signin from './containers/Signin';
-import Start from './app/Start';
 import Product from './containers/Product';
 import Cart from './containers/Cart';
 import MyOrder from './containers/MyOrder';
 import Checkout from './containers/Checkout';
+import { useDispatch } from 'react-redux';
+import { LoginStatus } from './redux/actions/UserAction';
 function App() {
+  let dispatch = useDispatch();
+  dispatch(LoginStatus());
   const Logout=()=>{
     return <Redirect to='/Home'/>
   }
   return (
-    <Start>
     <Router>
       <div className="App text-center">
         <Nav/>
@@ -56,7 +58,6 @@ function App() {
           </Switch>    
       </div>
     </Router>
-    </Start>
   );
 }
 

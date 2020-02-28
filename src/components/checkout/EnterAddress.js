@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './EditAddress.css'
 import { Form, Col, InputGroup, Button } from 'react-bootstrap';
-import {LOGIN, ADDRESS, PAYMENT, INPUT_NUMBER, INPUT_NAME, INPUT_PIN, INPUT_LANDMARK, INPUT_LOCALITY, INPUT_ADDRESS, INPUT_CITY, INPUT_STATE, INPUT_ALTERNATE} from '../../app/constants';
+import {INPUT_NUMBER, INPUT_NAME, INPUT_PIN, INPUT_LANDMARK, INPUT_LOCALITY, INPUT_ADDRESS, INPUT_CITY, INPUT_STATE, INPUT_ALTERNATE} from '../../app/constants';
 let touched={
   name:false,
   number:false,
@@ -27,15 +27,16 @@ let errors={
 
 };
 const EnterAddress=(props)=>{
-  const [name,setName]=useState('');
-  const [number,setNumber]=useState('')
-  const [pin,setPin]=useState('')
-  const [locality,setLocality]=useState('')
-  const [address,setAddress]=useState('')
-  const [city,setCity]=useState('')
-  const [state,setState]=useState('1')
-  const [landmark,setLandmark]=useState('')
-  const [alternate,setAlternate]=useState('')
+  const {fullAddress}=props;
+  const [name,setName]=useState(fullAddress?fullAddress.name:'');
+  const [number,setNumber]=useState(fullAddress?fullAddress.mobile:'')
+  const [pin,setPin]=useState(fullAddress?fullAddress.pin:'')
+  const [locality,setLocality]=useState(fullAddress?fullAddress.locality:'')
+  const [address,setAddress]=useState(fullAddress?fullAddress.address:'')
+  const [city,setCity]=useState(fullAddress?fullAddress.city:'')
+  const [state,setState]=useState(fullAddress?fullAddress.state:'1')
+  const [landmark,setLandmark]=useState(fullAddress?fullAddress.lsndmark:'')
+  const [alternate,setAlternate]=useState(fullAddress?fullAddress.alternate:'')
   const [updated,setUpdated]=useState(true);
     const handleSubmit=()=>{
       let correct=true;
@@ -123,7 +124,7 @@ const EnterAddress=(props)=>{
           break;            
         case INPUT_STATE:
           touched.state=true;
-          if(val!=1)
+          if(val!==1)
             errors.state=false;
             else
               errors.state=true;
@@ -137,12 +138,14 @@ const EnterAddress=(props)=>{
         case INPUT_ALTERNATE:
           regex = /^[0-9]{10}$/;
           touched.alternate=true;
-          if(regex.test(val)|| val=='')
+          if(regex.test(val)|| val==='')
             errors.alternate=false;
             else
               errors.alternate=true;
             setAlternate(val);
-          break;               
+          break;   
+          default:
+            return;            
           
       }
     }

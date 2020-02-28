@@ -7,38 +7,38 @@ import Loading from '../components/Loading';
 import { removeFromCart, removeFromGuestCart } from '../redux/actions/CardAction';
 import { CheckoutCart } from '../redux/actions/CheckoutAction';
 import { Link } from 'react-router-dom';
+//cart array holds all the items used in cart
 let cart=[];
+/**
+ * Cart component is a container routed by the cart in navbar
+ * it renders all the items in the cart and the total price user have to pay
+ */
 const Cart =()=>{
     const userId=useSelector(state=>state.userLogin.userId);
-
+    const guestCart=useSelector(state=>state.addItemsToCart.item); 
     const dispatch=useDispatch();
-    let buttonStyle={
+    const buttonStyle={
         padding : '10px 50px',
         fontSize:'1.5rem',
         color:'white',
     }
     const [loaded,setLoaded]=useState(false);
     const [cartUpdated,setCartUpdated]=useState(false);
-    let guestCart=useSelector(state=>state.addItemsToCart.item); 
-        cart=guestCart;
-    //place order
+ 
+    cart=guestCart;
+    /**
+     * when place order button is clicked 
+     * it calculates the total 
+     * and dispatches checkout action
+     */
     const placeOrder=()=>{
-        const countItems=cart.length;
-        let total=0;
-        let deleveryCharges=0;
-        cart.forEach(element => {
-            total+=(element.item.price*element.quantity);
-        });
-        total+=deleveryCharges;
-        let obj={
-            countItems:countItems,
-            total:total,
-            deleveryCharges:deleveryCharges
-        }
+        let obj=cardTotal();
         dispatch(CheckoutCart(cart,obj));
     }
 
-    //total price of all items in cart
+   /**
+    * calculates the total cart price
+    */
    const cardTotal=()=>{
     const countItems=cart.length;
     let total=0;
@@ -47,14 +47,19 @@ const Cart =()=>{
         total+=(element.item.price*element.quantity);
     });
     total+=deleveryCharges;
-    let obj={
+  let cardTotalObj={
         countItems:countItems,
         total:total,
         deleveryCharges:deleveryCharges
     }
-    return obj
+    return cardTotalObj;
    }
-//remove item from cart
+/**
+ * if user is loggedin it removes from local as well as from database
+ * if user is a guest then no need to update the database
+ * @param {id of item to remove} id 
+ * @param {index where to remove} index 
+ */
 const removeItem=(id,index)=>{
     cart.splice(index,1);
     setCartUpdated(!cartUpdated);
@@ -63,13 +68,17 @@ const removeItem=(id,index)=>{
     else
         dispatch(removeFromGuestCart(id))
 }
-//update quantity of an item
+/**
+ * updates the quantity of the item
+ * @param {id of item to update} id 
+ * @param {new updated qantity} quantity 
+ */
 const updateQuantity=(id,quantity)=>{
     console.log(id,quantity,cart);
     cart[id].quantity=quantity;
     setCartUpdated(!cartUpdated);
 }
-
+//if item is not loaded it returns the progress bar
 if(!loaded){
 setLoaded(true);
 return <Loading size={120}/>

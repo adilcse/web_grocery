@@ -1,8 +1,16 @@
 import React from 'react';
-const Payment =()=>{
+import { Button } from 'react-bootstrap';
+const Payment =(props)=>{
+    let styleContainer={
+        minHeight:'200px',
+       
+    }
+    let styleButton={
+        marginTop:'50%'
+    }
     return(
-        <div>
-            payment page...
+        <div style={styleContainer}>
+            <Button variant="info" style={styleButton} onClick={()=>props.status(true)} > Cash On Delevery</Button>
         </div>
     )
 }
