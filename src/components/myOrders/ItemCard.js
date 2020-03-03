@@ -9,7 +9,7 @@ const ItemCard=(props)=>{
                 {items.map((item,index)=>{
                     return(
                         <Row key={index}>
-                            {items.name}
+                            {item.name}
                         </Row>
                     )
                 })}
