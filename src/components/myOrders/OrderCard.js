@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { CardDeck, Card } from 'react-bootstrap';
+import { CardDeck, Card ,Media, Container, Row, Col, Button} from 'react-bootstrap';
 import ItemCard from './ItemCard';
 import StatusCard from './StatusCard';
 import { getItems } from '../../app/helper/getItems';
@@ -25,14 +25,28 @@ const OrderCard=(props)=>{
     }
     if(order){
     return (
-        <CardDeck className={props.className}>
-            <Card>
-            <Card.Body>
-             <ItemCard items={items}/>
-             <StatusCard className='border-top'/>
-            </Card.Body>
-            </Card>
-        </CardDeck>
+        <Media className="border">
+            <img 
+            width={200}
+            height={200}
+            className="mr-3"
+            src={Image}
+            alt={items}
+            />
+            <Media.Body>
+             <h1> <ItemCard items={items}/></h1>
+             <Container>
+                 <Row>
+                     <h3> Price</h3>
+                 </Row>
+                 <Row className="border-top">
+                     <Col xs-2><h4><StatusCard/></h4></Col>
+                     <Col xs-2><Button variant="link">Track order</Button></Col>
+                     <Col xs-8></Col>
+                 </Row>
+             </Container>
+            </Media.Body>
+        </Media>
         )
        }
     else{
