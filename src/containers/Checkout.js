@@ -61,7 +61,7 @@ const validateAddress=(tab,address)=>{
  */
 const paymentStatus=(status)=>{
     if(status){
-       PlaceOrder(fullAddress,details,from,userId,dispatch,cartIds);
+       PlaceOrder(fullAddress,details,from,userId,dispatch,cartIds,'COD');
     }
 }
 /**

@@ -1,6 +1,6 @@
 import {  CHECKOUT,ORDER_PLACE_PENDING,ORDER_PLACE_FAILED,ORDER_PLACE_SUCCESS, EMPTY_CART } from "../../app/ActionConstants";
 import { db } from "../../firebaseConnect";
-import {WriteBatch} from 'firebase';
+import firebase from 'firebase';
 export const CheckoutCart=(cart,total)=>({
 type:CHECKOUT,
 payload:cart,
@@ -13,7 +13,7 @@ total:total
  * @param {*} dispatch 
  * @param {'cart','item'} from from where the user is checking out
  */
-export const PlaceOrder=(address,order,from,userId,dispatch,cartIds)=>{
+export const PlaceOrder=(address,order,from,userId,dispatch,cartIds,payMode)=>{
     dispatch({type:ORDER_PLACE_PENDING});
     let items=[];
     order.items.forEach(value=>{
@@ -26,7 +26,9 @@ export const PlaceOrder=(address,order,from,userId,dispatch,cartIds)=>{
         uid:userId,
         item:items,
         total:order.total,
-        address:address
+        address:address,
+        paymentMode:payMode,
+        orderedOn:firebase.firestore.FieldValue.serverTimestamp()
     })
     .then(function() {
         updateAddress(userId,address,dispatch);
