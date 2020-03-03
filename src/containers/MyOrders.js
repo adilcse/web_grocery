@@ -1,9 +1,11 @@
 import React from 'react';
-const MyOrder=()=>{
+const MyOrders=()=>{
+    
 return(
+
     <>
     my orders
     </>
 )
 }
-export default MyOrder;
+export default MyOrders;

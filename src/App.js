@@ -17,7 +17,7 @@ const Signin=lazy(()=>import('./containers/Signin'));
 const Product=lazy(()=>import('./containers/Product'));
 const Cart=lazy(()=>import('./containers/Cart'));
 const Checkout=lazy(()=>import('./containers/Checkout'));
-const MyOrder=lazy(()=>import('./containers/MyOrder'));
+const MyOrders=lazy(()=>import('./containers/MyOrders'));
 function App() {
 
 
@@ -50,7 +50,7 @@ function App() {
               <Route path='/cart' component={Cart}/>
           
           
-            <Route path='/myOrder' component={MyOrder}/>
+            <Route path='/myOrder' component={MyOrders}/>
             
             <Route path='/Checkout/:from' component={Checkout}/>
               

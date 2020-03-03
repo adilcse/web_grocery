@@ -8,7 +8,6 @@ import {
     LOAD_CART,
     ADD_TO_GUEST_CART,
     REMOVE_FROM_GUEST_CART,
-    ORDER_PLACE_SUCCESS,
     EMPTY_CART
     } from '../../app/ActionConstants';
 
