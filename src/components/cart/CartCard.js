@@ -2,7 +2,10 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './Cart.css';
 import { db } from '../../firebaseConnect';
-import Loading from '../Loading';
+/**
+ * display cart items
+ * @param {*} props takes item which is on cart
+ */
 const CartCard=(props)=>{
   const{item}=props.item;
   const {quantity}=props.item;
@@ -10,9 +13,7 @@ const CartCard=(props)=>{
   const {userId}=props;
   const[quant,setQuant]=useState(quantity);
  //allow to add only quantity between 1 to 5
-
  const updateQuant=(element,num)=>{
-   console.log(element);
    if((quant>=5 && num===1)||(quant<=1 && num===-1))
       return;
    else {
@@ -24,6 +25,11 @@ const CartCard=(props)=>{
         updateQuantityInDB(newQuant,num);
     }
  }
+ /**
+  * it updates the quantity of items in the database
+  * @param {*} q new quantity to update
+  * @param {*} num the numbers increased
+  */
  const updateQuantityInDB=(q,num)=>{
 
   db.collection("user").doc(userId).collection('cart').doc(id).update({

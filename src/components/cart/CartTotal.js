@@ -1,4 +1,9 @@
 import React from 'react';
+import './Cart.css';
+/**
+ * displays the price of the item
+ * @param {*} props item's price
+ */
 const CartTotal=(props)=>{
     if(!props){
         return(<></>);

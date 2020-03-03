@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 import './EditAddress.css'
 import { Form, Col, InputGroup, Button } from 'react-bootstrap';
 import {INPUT_NUMBER, INPUT_NAME, INPUT_PIN, INPUT_LANDMARK, INPUT_LOCALITY, INPUT_ADDRESS, INPUT_CITY, INPUT_STATE, INPUT_ALTERNATE} from '../../app/constants';
+//keeps track of thee field touched
 let touched={
   name:false,
-  number:false,
+  mobile:false,
   pin:false,
   locality:false,
   address:false,
@@ -14,9 +15,10 @@ let touched={
   alternate:false
 
 };
+//keeps track of the feilds having error
 let errors={
   name:true,
-  number:true,
+  mobile:true,
   pin:true,
   locality:true,
   address:true,
@@ -26,6 +28,17 @@ let errors={
   alternate:false
 
 };
+//rex for all fields
+const regex={
+  name:/^[a-zA-Z ]{3,}$/,
+  mobile:/^[0-9]{10}$/,
+  address:/^[0-9a-zA-Z\-, \n]{3,}$/,
+  pin:/^[0-9]{6}$/,
+  locality:/^[0-9a-zA-Z\-, ]{3,}$/,
+  city:/^[a-zA-Z\-, ]{3,}$/,
+  alternate:/^[ ]{1}|[0-9]{10}$/
+
+}
 const EnterAddress=(props)=>{
   const {fullAddress}=props;
   const [name,setName]=useState(fullAddress?fullAddress.name:'');
@@ -36,8 +49,11 @@ const EnterAddress=(props)=>{
   const [city,setCity]=useState(fullAddress?fullAddress.city:'')
   const [state,setState]=useState(fullAddress?fullAddress.state:'1')
   const [landmark,setLandmark]=useState(fullAddress?fullAddress.lsndmark:'')
-  const [alternate,setAlternate]=useState(fullAddress?fullAddress.alternate:'')
+  const [alternate,setAlternate]=useState(fullAddress?fullAddress.alternate:' ')
   const [updated,setUpdated]=useState(true);
+  const [changed,setChanged]=useState(false);
+  
+  //when submit button is clicked it handles
     const handleSubmit=()=>{
       let correct=true;
      Object.keys(errors).forEach((key,index)=>{
@@ -45,11 +61,11 @@ const EnterAddress=(props)=>{
         if(errors[key])
           correct=false;
      });
-     console.log(errors)
      if(correct)
         deleverToThisAddress();
      setUpdated(!updated);
     }
+    //if entered data is correct it send user to next page
     const deleverToThisAddress=()=>{
       let fullAddress={
         name:name,
@@ -65,91 +81,72 @@ const EnterAddress=(props)=>{
       console.log(fullAddress);
       props.setValidAddress(true,fullAddress);
     }
+    const validate=(id,val,setFun)=>{
+    touched[id]=true;
+    if(id==='state'){
+      if(val!==1)
+      errors[id]=false;
+    else
+      errors[id]=true;
+    }else{
+      if(regex[id].test(val))
+      errors[id]=false;
+    else
+      errors[id]=true;
+
+    }
+    setFun(val);
+    }
+   
+    //when user types something it checks for input validation
     const handleChange=(element)=>{
       let val=element.target.value;
-      let regex = /^[a-zA-Z ]{3,}$/;
       switch(element.target.id){
         case INPUT_NAME:
-          touched.name=true;
-          if(regex.test(val))
-            errors.name=false;
-            else
-              errors.name=true;
-          setName(val);
+          validate('name',val,setName);
           break;
         case INPUT_NUMBER:
-          regex = /^[0-9]{10}$/;
-          touched.number=true;
-          if(regex.test(val))
-            errors.number=false;
-            else
-              errors.number=true;
-            setNumber(val);
+          validate('mobile',val,setNumber)
           break;
         case INPUT_PIN:
-          regex = /^[0-9]{6}$/;
-          touched.pin=true;
-          if(regex.test(val))
-            errors.pin=false;
-            else
-              errors.pin=true;
-            setPin(val);
+          validate('pin',val,setPin)
           break;  
         case INPUT_LOCALITY:
-          regex = /^[0-9a-zA-Z\-, ]{3,}$/;
-          touched.locality=true;
-          if(regex.test(val))
-            errors.locality=false;
-            else
-              errors.locality=true;
-            setLocality(val);
+          validate('locality',val,setLocality)
           break;    
         case INPUT_ADDRESS:
-          regex = /^[0-9a-zA-Z\-, \n]{3,}$/;
-          touched.address=true;
-          if(regex.test(val))
-            errors.address=false;
-            else
-              errors.address=true;
-            setAddress(val);
+          validate('address',val,setAddress)
           break;  
         case INPUT_CITY:
-          regex = /^[a-zA-Z\-, ]{3,}$/;
-          touched.city=true;
-          if(regex.test(val))
-            errors.city=false;
-            else
-              errors.city=true;
-            setCity(val);
+          validate('city',val,setCity)
           break;            
         case INPUT_STATE:
-          touched.state=true;
-          if(val!==1)
-            errors.state=false;
-            else
-              errors.state=true;
-            setState(val);
+          validate('state',val,setState)
           break;         
         case INPUT_LANDMARK:
           touched.landmark=true;
-            errors.landmark=false;
+          errors.landmark=false;
             setLandmark(val);
           break;
         case INPUT_ALTERNATE:
-          regex = /^[0-9]{10}$/;
-          touched.alternate=true;
-          if(regex.test(val)|| val==='')
-            errors.alternate=false;
-            else
-              errors.alternate=true;
-            setAlternate(val);
+          validate('alternate',val,setAlternate)
           break;   
           default:
             return;            
           
       }
     }
-
+    if(!changed && fullAddress){
+      validate('name',fullAddress.name,setName);
+      validate('address',fullAddress.address,setAddress);
+      validate('mobile',fullAddress.mobile,setNumber);
+      validate('pin',fullAddress.pin,setPin);
+      validate('locality',fullAddress.locality,setLocality);
+      validate('city',fullAddress.city,setCity);
+      validate('alternate',fullAddress.alternate,setAlternate);
+      validate('state',fullAddress.state,setState)
+      setChanged(true);
+    }
   
 return(
 <div className="address">
@@ -182,8 +179,8 @@ return(
               value={number}
               onChange={handleChange}
               aria-describedby="inputGroupPrepend"
-              isValid={touched.number && !errors.number}
-              isInvalid={touched.number && errors.number}
+              isValid={touched.mobile && !errors.mobile}
+              isInvalid={touched.mobile && errors.mobile}
               maxLength={10}
             
               required

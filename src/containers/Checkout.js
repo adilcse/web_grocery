@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useParams } from 'react-router';
 import { useSelector, useDispatch } from 'react-redux';
-
 import { Alert, Button } from 'react-bootstrap';
 import CartTotal from '../components/cart/CartTotal';
 import EnterAddress from '../components/checkout/EnterAddress';
@@ -10,7 +9,8 @@ import {LOGIN, ADDRESS, PAYMENT} from '../app/constants';
 import PaymentPage from '../components/checkout/Payment'
 import ErrorMessage from '../app/helper/ErrorMessage';
 import {PlaceOrder} from '../redux/actions/CheckoutAction'
-let fullAddress;
+import { Link } from 'react-router-dom';
+import Loading from '../components/Loading';
 /**
  * it displays checkout page to user
  */
@@ -21,6 +21,9 @@ let {from}=useParams('from');
 const userName=useSelector(state=>state.userLogin.userName);
 const userId=useSelector(state=>state.userLogin.userId);
 const details=useSelector(state=>state.CheckoutReducer);
+const cartIds=useSelector(state=>state.addItemsToCart.cart)
+let fullAddress=useSelector(state=>state.userLogin.address);
+
 if(!userName &&currentTab!==LOGIN){
     setCurrentTab(LOGIN)
 }else if(userName && currentTab===LOGIN){
@@ -58,7 +61,7 @@ const validateAddress=(tab,address)=>{
  */
 const paymentStatus=(status)=>{
     if(status){
-       dispatch(PlaceOrder(fullAddress,details,from,userId));
+       PlaceOrder(fullAddress,details,from,userId,dispatch,cartIds);
     }
 }
 /**
@@ -104,14 +107,23 @@ if(details.orderPlaced){
     return(
         <Alert variant='success' >
             <Alert.Heading>Order Placed Successfully</Alert.Heading>
-            <Alert.Body>
+            <p><Link to="/myOrder">
                 Go to My Orders
-            </Alert.Body>
+                </Link>
+            </p>
         </Alert>
     )
 }
+if(details.loading){
+    return(
+        <Loading size={100}/>
+    )
+}
+
 return(
+  
     <div className="container">
+        <ErrorMessage isError={details.isError} message={details.errorMessage}/>
     <div className='row'>
         <div className='col-md-8'>
        <LeftCard/>

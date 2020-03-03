@@ -1,7 +1,10 @@
 import React from 'react';
 import CartCard from './CartCard';
 import Loading from '../Loading';
-import { Alert } from 'react-bootstrap';
+/**
+ * it rrenders card for each item
+ * @param {*} props list of items present in cart
+ */
 const CartList=(props)=>{
     const {item,user}=props;    
     if(item)

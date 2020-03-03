@@ -3,7 +3,6 @@ import { Card as Cardboot ,Button} from 'react-bootstrap';
 import './Card.css';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { CheckoutCart } from '../../redux/actions/CheckoutAction';
 import { AddItemForCheckout } from '../../app/helper/AddItemForCheckout';
 // import { addItemsToCart } from '../../redux/reducers/CardReducer';
 // import {Link} from 'react-router-dom';

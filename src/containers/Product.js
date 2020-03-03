@@ -3,14 +3,16 @@ import { useParams } from 'react-router';
 import Loading from '../components/Loading';
 import { db } from '../firebaseConnect';
 import Item from '../components/item/Item';
+let previousId;
  const Product=()=>{
    const {id}=useParams();
    const [loaded,setLoaded]=useState(false);
    const [item,setItem]=useState({})
    const getProduct=(itemId)=>{
+   
     var docRef = db.collection("products").doc(itemId);
     docRef.get().then(function(doc) {
-        setLoaded(true);
+        console.log(loaded)
         if (doc.exists) {
             setItem(doc.data());
             console.log("Document data:", doc.data());
@@ -25,8 +27,10 @@ import Item from '../components/item/Item';
     }).catch(function(error) {
         console.log("Error getting document:", error);
     });
+    setLoaded(true);
    }
-   if(!loaded) {  
+   if(!loaded ||id!==previousId){  
+       previousId=id;
       getProduct(id);
       return(
           <Loading size={120}/>
@@ -34,10 +38,10 @@ import Item from '../components/item/Item';
     }
    else{
        if(item)
-   return(
-      <Item item={item} id={id}/>
-   )
-else
+    return(
+        <Item item={item} id={id}/>
+    ) 
+    else
     return(
         <h2>
             Sorry !! Item Not Found!!!

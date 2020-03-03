@@ -9,7 +9,8 @@ import {
     REGISTER_USER_SUCCESS,
     REGISTER_USER_FAILED,
    
-    LOAD_CART
+    LOAD_CART,
+    LOAD_ADDRESS
  } from "../../app/ActionConstants";
  import {firebase, db} from '../../firebaseConnect';
 export const Login=(email,password)=>dispatch=>{
@@ -47,7 +48,8 @@ export const LoginStatus=()=>dispatch=>{
   firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
       // User is signed in.
-      dispatch({type:LOGIN_USER_SUCCESS,payload:user})
+      dispatch({type:LOGIN_USER_SUCCESS,payload:user});
+      loadAddress(dispatch,user.uid);
       loadCart(dispatch,user.uid);
 
     } else {
@@ -86,6 +88,23 @@ const loadCart=(dispatch,userId)=>{
     });
 }).then(()=>{
   dispatch({type:LOAD_CART,payload:cart,item:item})
+});
+}
+/**
+ * GETS USER ADDRESS
+ * @param {*} dispatch 
+ * @param {*} userId 
+ */
+const loadAddress=(dispatch,userId)=>{
+  db.collection("user").doc(userId).get().then(function(doc) {
+    if (doc.exists) {
+      dispatch({type:LOAD_ADDRESS,payload:doc.data().address})
+    } else {
+        // doc.data() will be undefined in this case
+        console.log("No such document!");
+    }
+}).catch(function(error) {
+    console.log("Error getting document:", error);
 });
 }
 

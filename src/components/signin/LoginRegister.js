@@ -1,7 +1,5 @@
 import React,{useState} from 'react';
-import { Card } from 'semantic-ui-react';
-
-import { useDispatch, useSelector} from 'react-redux';
+import {useSelector} from 'react-redux';
 import { Redirect } from 'react-router';
 import Login from './Login';
 import Register from './Register';

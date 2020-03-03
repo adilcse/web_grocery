@@ -1,6 +1,6 @@
 import {  CHECKOUT,ORDER_PLACE_PENDING,ORDER_PLACE_FAILED,ORDER_PLACE_SUCCESS, EMPTY_CART } from "../../app/ActionConstants";
 import { db } from "../../firebaseConnect";
-
+import {WriteBatch} from 'firebase';
 export const CheckoutCart=(cart,total)=>({
 type:CHECKOUT,
 payload:cart,
@@ -11,34 +11,40 @@ total:total
  * @param {*} address 
  * @param {*} order 
  * @param {*} dispatch 
- * @param {*} from
+ * @param {'cart','item'} from from where the user is checking out
  */
-export const PlaceOrder=(address,order,from,userId)=>dispatch=>{
+export const PlaceOrder=(address,order,from,userId,dispatch,cartIds)=>{
     dispatch({type:ORDER_PLACE_PENDING});
+    let items=[];
+    order.items.forEach(value=>{
+        items.push({id:value.id,
+        quantity:value.quantity,
+        price:value.item.price
+        })
+    })
     db.collection("orders").add({
         uid:userId,
-        item:order.items,
+        item:items,
         total:order.total,
         address:address
     })
     .then(function() {
-        updateAddress(userId,address,from,dispatch);
+        updateAddress(userId,address,dispatch);
+        if(from==='cart')
+            emptyCart(userId,cartIds,dispatch);
         console.log("Document written");
     })
     .catch(function(error) {
-        dispatch({ type: ORDER_PLACE_FAILED});
+        dispatch({ type: ORDER_PLACE_FAILED,payload:error.message});
         console.error("Error adding document: ", error);
     });
 }
-const updateAddress=(id,address,from,dispatch)=>{
+const updateAddress=(id,address,dispatch)=>{
     db.collection('user').doc(id).set({
         address:address
     })
     .then(()=>{
-        console.log(ORDER_PLACE_SUCCESS);
-        if(from==='cart')
-            emptyCart(id);
-        dispatch({type:ORDER_PLACE_SUCCESS,payload:from})
+         dispatch({type:ORDER_PLACE_SUCCESS})
     }).catch((err)=>{
         console.log(err)
     })
@@ -47,6 +53,13 @@ const updateAddress=(id,address,from,dispatch)=>{
  * empty the cart
  * @param {*} id 
  */
-const emptyCart=(id)=>{
-    //
+const emptyCart=(userId,cartIds,dispatch)=>{
+    var writeBatch = db.batch();
+    cartIds.forEach(id=>{
+        let documentReference = db.collection("user").doc(userId).collection('cart').doc(id);
+        writeBatch.delete(documentReference);
+    });
+    writeBatch.commit().then(function () {
+       dispatch({type:EMPTY_CART})
+    });
 }

@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { useDispatch, useSelector} from 'react-redux';
+import { useDispatch} from 'react-redux';
 import { Logout as LogoutAction } from '../../redux/actions/UserAction';
 const Signout = ()=>{
   const dispatch=useDispatch();

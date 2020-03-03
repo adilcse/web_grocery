@@ -7,7 +7,8 @@ import {
     LOGOUT_USER_SUCCESS,
     REGISTER_USER_PENDING,
     REGISTER_USER_SUCCESS,
-    REGISTER_USER_FAILED
+    REGISTER_USER_FAILED,
+    LOAD_ADDRESS
  } from "../../app/ActionConstants";
  import { 
     USER_TYPE_LOCAL
@@ -38,6 +39,10 @@ export const userLogin=(state=initialState,action={})=>{
                 UserType:USER_TYPE_LOCAL,
                 guest:false
             } 
+        case LOAD_ADDRESS:
+            return{...state,
+                address:action.payload
+            }
         case LOGIN_USER_FAILED:
             return initialState;
         case LOGOUT_USER_FAILED:

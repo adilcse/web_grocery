@@ -8,14 +8,14 @@ import { removeFromCart, removeFromGuestCart } from '../redux/actions/CardAction
 import { CheckoutCart } from '../redux/actions/CheckoutAction';
 import { Link } from 'react-router-dom';
 //cart array holds all the items used in cart
-let cart=[];
+
 /**
  * Cart component is a container routed by the cart in navbar
  * it renders all the items in the cart and the total price user have to pay
  */
 const Cart =()=>{
     const userId=useSelector(state=>state.userLogin.userId);
-    const guestCart=useSelector(state=>state.addItemsToCart.item); 
+    const cart=useSelector(state=>state.addItemsToCart.item); 
     const dispatch=useDispatch();
     const buttonStyle={
         padding : '10px 50px',
@@ -25,7 +25,6 @@ const Cart =()=>{
     const [loaded,setLoaded]=useState(false);
     const [cartUpdated,setCartUpdated]=useState(false);
  
-    cart=guestCart;
     /**
      * when place order button is clicked 
      * it calculates the total 
@@ -64,7 +63,7 @@ const removeItem=(id,index)=>{
     cart.splice(index,1);
     setCartUpdated(!cartUpdated);
     if(userId)
-        dispatch(removeFromCart(userId,id, dispatch))
+        removeFromCart(userId,id, dispatch)
     else
         dispatch(removeFromGuestCart(id))
 }
