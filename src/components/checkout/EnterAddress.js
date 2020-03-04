@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import './EditAddress.css'
 import { Form, Col, InputGroup, Button } from 'react-bootstrap';
 import {INPUT_NUMBER, INPUT_NAME, INPUT_PIN, INPUT_LANDMARK, INPUT_LOCALITY, INPUT_ADDRESS, INPUT_CITY, INPUT_STATE, INPUT_ALTERNATE} from '../../app/constants';
+import ErrorMessage from '../../app/helper/ErrorMessage';
 //keeps track of thee field touched
 let touched={
   name:false,
@@ -41,6 +42,7 @@ const regex={
 }
 const EnterAddress=(props)=>{
   const {fullAddress}=props;
+  console.log(fullAddress);
   const [name,setName]=useState(fullAddress?fullAddress.name:'');
   const [number,setNumber]=useState(fullAddress?fullAddress.mobile:'')
   const [pin,setPin]=useState(fullAddress?fullAddress.pin:'')
@@ -52,26 +54,30 @@ const EnterAddress=(props)=>{
   const [alternate,setAlternate]=useState(fullAddress?fullAddress.alternate:' ')
   const [updated,setUpdated]=useState(true);
   const [changed,setChanged]=useState(false);
-  
+  const [error,showError]=useState(false)
   //when submit button is clicked it handles
     const handleSubmit=()=>{
-      let correct=true;
+      let correct=false;
      Object.keys(regex).forEach((key)=>{
-       if(!touched[key]){
-        if(validate(key,fullAddress[key]))
-          correct=false;
+       if(!touched[key] && fullAddress){
+        if(!validate(key,fullAddress[key]))
+          correct=true;
         }else{
-          if(errors[key])
-          correct=false;
+          if(errors[key]){
+            correct=false;
+            touched[key]=true;
+          }
         }
      });
-     if(correct)
-        deleverToThisAddress();
-      console.log(errors);
-     setUpdated(!updated);
+     if(correct){
+        saveAddress();
+        setUpdated(!updated);
+      }
+      else
+        showError(true);
     }
     //if entered data is correct it send user to next page
-    const deleverToThisAddress=()=>{
+    const saveAddress=()=>{
       let fullAddress={
         name:name,
         mobile:number,
@@ -83,7 +89,6 @@ const EnterAddress=(props)=>{
         landmark:landmark,
         alternate:alternate
       }
-      console.log(fullAddress);
       props.setValidAddress(true,fullAddress);
     }
     const validate=(id,val,setFun=()=>true)=>{
@@ -156,6 +161,7 @@ const EnterAddress=(props)=>{
   
 return(
 <div className="address">
+  <ErrorMessage isError={error} message='please enter correct details'/>
     <div>
     <Form noValidate onSubmit={handleSubmit}>
           <Form.Row>

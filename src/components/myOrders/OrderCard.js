@@ -4,6 +4,7 @@ import ItemCard from './ItemCard';
 import StatusCard from './StatusCard';
 import { getItems } from '../../app/helper/getItems';
 import Loading from '../Loading';
+import HeaderCard from './HeaderCard';
 let items=[];
 const OrderCard=(props)=>{
     const{order}=props;
@@ -37,14 +38,15 @@ const OrderCard=(props)=>{
         return (
             <CardDeck className='rounded mb-3'>
             <Card>
+                <Card.Header>
+                    <HeaderCard orderedOn={order.orderedOn} deleveredOn={order.deleveredOn}/>
+                </Card.Header>
             <Card.Body>
             <ItemCard items={items}/>
             <StatusCard address={order.address} 
                         paymentMode={order.paymentMode} 
-                        orderedOn={order.orderedOn}
                         total={order.total}
-                        status={order.status}
-                        deleveredOn={order.deleveredOn}
+                        status={order.status}   
                         />
             </Card.Body>
             </Card>

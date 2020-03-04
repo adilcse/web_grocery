@@ -41,7 +41,7 @@ export const userLogin=(state=initialState,action={})=>{
             } 
         case LOAD_ADDRESS:
             return{...state,
-                address:action.payload
+                address:action.payload,
             }
         case LOGIN_USER_FAILED:
             return initialState;
