@@ -21,9 +21,7 @@ overflow: hidden;
 	transition: 1s;
 
 }
-.card{
-	align-items :center;
-}
+
 .bd{
 	background-color: rgba(82, 242, 101,.3);
 }

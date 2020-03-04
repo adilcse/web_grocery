@@ -28,7 +28,8 @@ export const PlaceOrder=(address,order,from,userId,dispatch,cartIds,payMode)=>{
         total:order.total,
         address:address,
         paymentMode:payMode,
-        orderedOn:firebase.firestore.FieldValue.serverTimestamp()
+        orderedOn:firebase.firestore.FieldValue.serverTimestamp(),
+        status:'pending'
     })
     .then(function() {
         updateAddress(userId,address,dispatch);

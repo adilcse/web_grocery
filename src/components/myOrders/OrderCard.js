@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { CardDeck, Card ,Media, Container, Row, Col, Button} from 'react-bootstrap';
+import { CardDeck, Card} from 'react-bootstrap';
 import ItemCard from './ItemCard';
 import StatusCard from './StatusCard';
 import { getItems } from '../../app/helper/getItems';
+import Loading from '../Loading';
 let items=[];
 const OrderCard=(props)=>{
     const{order}=props;
@@ -19,35 +20,37 @@ const OrderCard=(props)=>{
     if(!loaded){
         let ids=getIds();
          getItems(ids).then((res) => {
-             items=res;
-            setLoaded(true);
-        });
+             items=[];
+             order.item.forEach((item)=>{
+              let data= res.find((element)=>{
+               return item.id===element.id
+               });
+                items.push({name:data.name,
+                            image:data.image,
+                            catagory:data.catagory,
+                            price:item.price,
+                            quantity:item.quantity})
+             })   
+        }).then(()=>setLoaded(true));
     }
-    if(order){
-    return (
-        <Media className="border">
-            <img 
-            width={200}
-            height={200}
-            className="mr-3"
-            src={Image}
-            alt={items}
-            />
-            <Media.Body>
-             <h1> <ItemCard items={items}/></h1>
-             <Container>
-                 <Row>
-                     <h3> Price</h3>
-                 </Row>
-                 <Row className="border-top">
-                     <Col xs-2><h4><StatusCard/></h4></Col>
-                     <Col xs-2><Button variant="link">Track order</Button></Col>
-                     <Col xs-8></Col>
-                 </Row>
-             </Container>
-            </Media.Body>
-        </Media>
+    if(order && loaded){
+        return (
+            <CardDeck className='rounded mb-3'>
+            <Card>
+            <Card.Body>
+            <ItemCard items={items}/>
+            <StatusCard address={order.address} 
+                        paymentMode={order.paymentMode} 
+                        orderedOn={order.orderedOn}
+                        total={order.total}
+                        status={order.status}
+                        deleveredOn={order.deleveredOn}
+                        />
+            </Card.Body>
+            </Card>
+        </CardDeck>
         )
+       
        }
     else{
         return(

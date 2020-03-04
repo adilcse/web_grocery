@@ -2,7 +2,7 @@ import React from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import OrderCard from "./OrderCard";
 const OrdersList=(props)=>{
-    console.log(props.orders)
+
     if(props.orders.length>0){
     return(
         <Container>
@@ -10,7 +10,7 @@ const OrdersList=(props)=>{
         <Row  className="justify-content-md-center">
           <Col xs={12} md={10}>
             {props.orders.map((item,index)=>{
-                return <OrderCard order={item} key={index} className='rounded mb-3'/>
+                return <OrderCard order={item} key={index} />
             })}
           </Col>
         </Row>

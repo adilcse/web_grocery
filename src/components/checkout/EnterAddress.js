@@ -56,13 +56,18 @@ const EnterAddress=(props)=>{
   //when submit button is clicked it handles
     const handleSubmit=()=>{
       let correct=true;
-     Object.keys(errors).forEach((key,index)=>{
-        touched[key]=true;
-        if(errors[key])
+     Object.keys(regex).forEach((key)=>{
+       if(!touched[key]){
+        if(validate(key,fullAddress[key]))
           correct=false;
+        }else{
+          if(errors[key])
+          correct=false;
+        }
      });
      if(correct)
         deleverToThisAddress();
+      console.log(errors);
      setUpdated(!updated);
     }
     //if entered data is correct it send user to next page
@@ -81,7 +86,7 @@ const EnterAddress=(props)=>{
       console.log(fullAddress);
       props.setValidAddress(true,fullAddress);
     }
-    const validate=(id,val,setFun)=>{
+    const validate=(id,val,setFun=()=>true)=>{
     touched[id]=true;
     if(id==='state'){
       if(val!==1)
@@ -96,6 +101,7 @@ const EnterAddress=(props)=>{
 
     }
     setFun(val);
+    return errors[id];
     }
    
     //when user types something it checks for input validation

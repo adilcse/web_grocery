@@ -14,6 +14,8 @@ import Loading from '../components/Loading';
 /**
  * it displays checkout page to user
  */
+let addressChanged=false;
+let fullAddress;
 const Checkout=()=>{
 const [currentTab,setCurrentTab]=useState(LOGIN);
 const dispatch=useDispatch();
@@ -22,13 +24,15 @@ const userName=useSelector(state=>state.userLogin.userName);
 const userId=useSelector(state=>state.userLogin.userId);
 const details=useSelector(state=>state.CheckoutReducer);
 const cartIds=useSelector(state=>state.addItemsToCart.cart)
-let fullAddress=useSelector(state=>state.userLogin.address);
+let userAddress=useSelector(state=>state.userLogin.address);
 
 if(!userName &&currentTab!==LOGIN){
     setCurrentTab(LOGIN)
 }else if(userName && currentTab===LOGIN){
     setCurrentTab(ADDRESS);
 }
+if(!addressChanged)
+    fullAddress=userAddress;
 /**
  * displays on left side of screen shows edit address and payment option
  * @param {*} props 
@@ -51,6 +55,7 @@ const CheckoutCard=(props)=>{
 const validateAddress=(tab,address)=>{
     if(tab){
      fullAddress=address;
+     addressChanged=true;
      setCurrentTab(PAYMENT);
     }
 }
@@ -60,6 +65,11 @@ const validateAddress=(tab,address)=>{
  * @param {*} status 
  */
 const paymentStatus=(status)=>{
+    console.log(fullAddress)
+    Object.keys(fullAddress).forEach(key=>{
+        if(!fullAddress[key])
+            fullAddress[key]='';
+    })
     if(status){
        PlaceOrder(fullAddress,details,from,userId,dispatch,cartIds,'COD');
     }
@@ -67,6 +77,7 @@ const paymentStatus=(status)=>{
 /**
  * display different tabs for checkout
  */
+console.log(fullAddress);
 const LeftCard=()=>{
      if(details.total.countItems>=1){
         switch(currentTab){
