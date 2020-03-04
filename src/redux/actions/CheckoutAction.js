@@ -1,4 +1,4 @@
-import {  CHECKOUT,ORDER_PLACE_PENDING,ORDER_PLACE_FAILED,ORDER_PLACE_SUCCESS, EMPTY_CART } from "../../app/ActionConstants";
+import {  CHECKOUT,ORDER_PLACE_PENDING,ORDER_PLACE_FAILED,ORDER_PLACE_SUCCESS, EMPTY_CART,ADDRESS_UPDATED } from "../../app/ActionConstants";
 import { db } from "../../firebaseConnect";
 import firebase from 'firebase';
 export const CheckoutCart=(cart,total)=>({
@@ -32,6 +32,7 @@ export const PlaceOrder=(address,order,from,userId,dispatch,cartIds,payMode)=>{
         status:'pending'
     })
     .then(function() {
+        dispatch({type:ORDER_PLACE_SUCCESS})
         updateAddress(userId,address,dispatch);
         if(from==='cart')
             emptyCart(userId,cartIds,dispatch);
@@ -42,12 +43,12 @@ export const PlaceOrder=(address,order,from,userId,dispatch,cartIds,payMode)=>{
         console.error("Error adding document: ", error);
     });
 }
-const updateAddress=(id,address,dispatch)=>{
+export const updateAddress=(id,address,dispatch)=>{
     db.collection('user').doc(id).set({
         address:address
     })
     .then(()=>{
-         dispatch({type:ORDER_PLACE_SUCCESS})
+         dispatch({type:ADDRESS_UPDATED,payload:address})
     }).catch((err)=>{
         console.log(err)
     })

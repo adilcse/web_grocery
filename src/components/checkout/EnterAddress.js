@@ -37,12 +37,15 @@ const regex={
   pin:/^[0-9]{6}$/,
   locality:/^[0-9a-zA-Z\-, ]{3,}$/,
   city:/^[a-zA-Z\-, ]{3,}$/,
-  alternate:/^[ ]{1}|[0-9]{10}$/
-
+  alternate:/^[ ]{1}|[0-9]{10}$/,
+  landmark:/^[a-zA-Z0-9\- ]{0,}$/
 }
+
 const EnterAddress=(props)=>{
-  const {fullAddress}=props;
-  console.log(fullAddress);
+  const{buttonText}=props;
+  let {fullAddress}=props;
+  fullAddress = Object.keys(fullAddress).length === 0 ? null : fullAddress;
+  console.log(fullAddress?fullAddress.landmark:true)
   const [name,setName]=useState(fullAddress?fullAddress.name:'');
   const [number,setNumber]=useState(fullAddress?fullAddress.mobile:'')
   const [pin,setPin]=useState(fullAddress?fullAddress.pin:'')
@@ -50,8 +53,8 @@ const EnterAddress=(props)=>{
   const [address,setAddress]=useState(fullAddress?fullAddress.address:'')
   const [city,setCity]=useState(fullAddress?fullAddress.city:'')
   const [state,setState]=useState(fullAddress?fullAddress.state:'1')
-  const [landmark,setLandmark]=useState(fullAddress?fullAddress.lsndmark:'')
-  const [alternate,setAlternate]=useState(fullAddress?fullAddress.alternate:' ')
+  const [landmark,setLandmark]=useState(fullAddress?fullAddress.landmark:'')
+  const [alternate,setAlternate]=useState(fullAddress?fullAddress.alternate:'')
   const [updated,setUpdated]=useState(true);
   const [changed,setChanged]=useState(false);
   const [error,showError]=useState(false)
@@ -63,10 +66,11 @@ const EnterAddress=(props)=>{
         if(!validate(key,fullAddress[key]))
           correct=true;
         }else{
+          touched[key]=true;
           if(errors[key]){
             correct=false;
-            touched[key]=true;
-          }
+          }else
+            correct=true;
         }
      });
      if(correct){
@@ -156,6 +160,7 @@ const EnterAddress=(props)=>{
       validate('city',fullAddress.city,setCity);
       validate('alternate',fullAddress.alternate,setAlternate);
       validate('state',fullAddress.state,setState)
+      validate('landmark',fullAddress.landmark,setLandmark)
       setChanged(true);
     }
   
@@ -324,7 +329,7 @@ return(
              <Form.Control.Feedback type='invalid'>Enter valid number (Optional)</Form.Control.Feedback>
             </Form.Group>
           </Form.Row>
-          <Button variant="warning" size='lg' onClick={handleSubmit}>Delever to this Address</Button>
+          <Button variant="warning" size='lg' onClick={handleSubmit}>{buttonText?buttonText:'Delever to this Address'}</Button>
           </Form>     
     </div>
 </div>     

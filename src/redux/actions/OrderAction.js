@@ -10,6 +10,8 @@ export const getOrder=(dispatch,userId)=>{
             orders.push(doc.data());
         });
         dispatch({type:GET_ORDERS_SUCCESS,payload:orders});
+    },function(error) {
+        dispatch({type:GET_ORDERS_FAILED,payload:error});
     });
 
 }

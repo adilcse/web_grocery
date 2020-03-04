@@ -8,7 +8,8 @@ import {
     REGISTER_USER_PENDING,
     REGISTER_USER_SUCCESS,
     REGISTER_USER_FAILED,
-    LOAD_ADDRESS
+    LOAD_ADDRESS,
+    ADDRESS_UPDATED
  } from "../../app/ActionConstants";
  import { 
     USER_TYPE_LOCAL
@@ -72,7 +73,12 @@ export const userLogin=(state=initialState,action={})=>{
                     error:true,
                     errorType:action.payload,
                     guest:true
-                }    
+                }  
+            case ADDRESS_UPDATED:
+                return{
+                    ...state,
+                    address:action.payload
+                }
         default:    
             return state;
      }
