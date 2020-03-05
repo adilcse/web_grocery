@@ -9,8 +9,6 @@ let items=[];
 const OrderCard=(props)=>{
     const{order}=props;
     const [loaded,setLoaded]=useState(false);
-
-
     const getIds=()=>{
         let ids=[];
         order.item.forEach(element => {
@@ -24,10 +22,10 @@ const OrderCard=(props)=>{
             
              items=[];
              order.item.forEach((item)=>{
-              let data= res.find((element)=>{
+              let product= res.find((element)=>{
                return item.id===element.id
                });
-              // data=data.data;
+              let data=product.data;
                 items.push({name:data.name,
                             image:data.image,
                             catagory:data.catagory,

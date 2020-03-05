@@ -1,7 +1,6 @@
 import React from 'react';
 import './Nav.css';
-import { IoIosArrowDown,IoIosHome,IoIosList,IoMdPeople } from "react-icons/io";
-import { IconContext } from "react-icons";
+import { IoIosHome,IoIosList,IoMdPeople } from "react-icons/io";
 import {NavLink} from 'react-router-dom';
 import Search from '../../components/Search';
 import LoginLogout from '../../components/nav/LoginLogout';

@@ -45,7 +45,6 @@ const EnterAddress=(props)=>{
   const{buttonText}=props;
   let {fullAddress}=props;
   fullAddress = Object.keys(fullAddress).length === 0 ? null : fullAddress;
-  console.log(fullAddress?fullAddress.landmark:true)
   const [name,setName]=useState(fullAddress?fullAddress.name:'');
   const [number,setNumber]=useState(fullAddress?fullAddress.mobile:'')
   const [pin,setPin]=useState(fullAddress?fullAddress.pin:'')
