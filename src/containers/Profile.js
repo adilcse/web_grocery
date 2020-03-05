@@ -1,9 +1,8 @@
 import React,{useState} from 'react';
-import {  Container, Row, Col,Nav, Image,Form, Button, Tabs, Tab} from 'react-bootstrap';
+import {  Container, Row, Col, Image, Tabs, Tab} from 'react-bootstrap';
 import EnterAddress from '../components/checkout/EnterAddress';
 import { useSelector, useDispatch } from 'react-redux';
 import {updateAddress} from '../redux/actions/CheckoutAction';
-import { AiFillCaretRight } from "react-icons/ai";
 import ViewProfile from '../components/profile/ViewProfile';
 
 const Profile=()=>{
@@ -37,10 +36,10 @@ const Profile=()=>{
                 <Row className="justify-content-center">
               <Image  src="https://image.shutterstock.com/image-photo/colorful-flower-on-dark-tropical-260nw-721703848.jpg" style={{ height:"100px", width: "100px"}} alt="Image" roundedCircle />
               </Row>
-              <Row className="justify-content-center"><h3>UserName</h3></Row>
-              <Row className="justify-content-center"><h4>UserName@mailid.com</h4></Row>
+              <Row className="justify-content-center"><h3>{user.address.name}</h3></Row>
+  <Row className="justify-content-center"><h4>{user.userName}</h4></Row>
               </Col>
-            <ViewProfile showPayment={setShowPayment} status={showPayment}/>
+            <ViewProfile showPayment={setShowPayment} status={showPayment} fullAddress={user.address}/>
               <Col className="border" lg="4">
                 {viewPayment()}
               </Col>
