@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { CardDeck, Card} from 'react-bootstrap';
 import ItemCard from './ItemCard';
 import StatusCard from './StatusCard';
-import { getItems } from '../../app/helper/getItems';
+import { getItemsByIds } from '../../app/helper/getItemsByIds';
 import Loading from '../Loading';
 import HeaderCard from './HeaderCard';
 let items=[];
@@ -20,7 +20,7 @@ const OrderCard=(props)=>{
     }
     if(!loaded){
         let ids=getIds();
-         getItems(ids).then((res) => {
+        getItemsByIds(ids).then((res) => {
              items=[];
              order.item.forEach((item)=>{
               let data= res.find((element)=>{

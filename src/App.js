@@ -10,6 +10,7 @@ import {
 } from "react-router-dom";
 import Loading from './components/Loading';
 import Nav from './sections/header/Nav';
+import Catagory from './containers/Catagory';
 const Home = lazy(() => import('./containers/Home'));
 const SearchPage=lazy(()=>import('./containers/SearchPage'));
 
@@ -21,8 +22,6 @@ const MyOrders=lazy(()=>import('./containers/MyOrders'));
 const Profile=lazy(()=>import('./containers/Profile'));
 
 function App() {
-
-
   let dispatch = useDispatch();
   dispatch(LoginStatus());
   const Logout=()=>{
@@ -38,39 +37,18 @@ function App() {
           <Switch>
             <Suspense fallback={<Loading size={100}/>}>
               <Route path='/Home' component={Home} />
-           
-            <Route path='/About'>
-              <h2>about</h2>
-            </Route>
-          
-             <Route path='/Search/:id' component={SearchPage}/>
-           
-           
-            <Route path='/signin' component={Signin}/>
-            
-           
+              <Route path='/Search/:id' component={SearchPage}/>
+              <Route path='/signin' component={Signin}/>
               <Route path='/cart' component={Cart}/>
-          
-          
-            <Route path='/myOrder' component={MyOrders}/>
-            <Route path='/Profile' component={Profile}/>
-            
-            <Route path='/Checkout/:from' component={Checkout}/>
-              
-            <Route path='/Logout'>
-              <Logout/>
-            </Route>
-          
-            <Route path='/Product/:id' component={Product}/>
-          
-            <Route path='/' exact={true}>
-          
-                <Home/>
-           
-            </Route>
-          </Suspense>
+              <Route path='/myOrder' component={MyOrders}/>
+              <Route path='/Profile' component={Profile}/>
+              <Route path='/Checkout/:from' component={Checkout}/> 
+              <Route path='/Logout' component={Logout}/>
+              <Route path='/Product/:id' component={Product}/>
+              <Route path='/catagories/:cat' component={Catagory}/>
+              <Route path='/' exact={true} component={Home}/>
+            </Suspense>
           </Switch>  
-       
       </div>
  
     </Router>

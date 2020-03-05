@@ -10,9 +10,11 @@ import {
     REGISTER_USER_FAILED,
    
     LOAD_CART,
-    LOAD_ADDRESS
+    LOAD_ADDRESS,
+    CATAGORIES_LOADED
  } from "../../app/ActionConstants";
  import {firebase, db} from '../../firebaseConnect';
+import { getCatagories } from "../../app/helper/getCatagories";
 export const Login=(email,password)=>dispatch=>{
     console.log("action",email, password);
     dispatch({ type: LOGIN_USER_PENDING});
@@ -44,6 +46,7 @@ firebase.auth().createUserWithEmailAndPassword(email, password)
 
 //check user loggedin Status
 export const LoginStatus=()=>dispatch=>{
+  loadCatagory(dispatch);
   dispatch({ type: LOGIN_USER_PENDING});
   firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
@@ -121,4 +124,14 @@ const addUserToDb=(dispatch,userId,email,name)=>{
     console.error("Error writing document: ", error);
     dispatch({type:REGISTER_USER_FAILED,payload:error})
 });
+}
+export const loadCatagory=(dispatch)=>{
+  getCatagories().then(
+    getCatagories().then(res=>{
+     dispatch({type:CATAGORIES_LOADED,payload:res})
+  
+  }).catch(res=>{
+    dispatch({type:CATAGORIES_LOADED,payload:res})
+  })
+  );
 }

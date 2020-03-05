@@ -1,6 +1,6 @@
 import { db } from "../../firebaseConnect"
 
-export const getItems=(ids)=>{
+export const getItemsByIds=(ids)=>{
     var items=[];
     return db.collection('products').where('id','in',ids).get()
     .then(function(querySnapshot) {
@@ -15,5 +15,4 @@ export const getItems=(ids)=>{
     .catch(function(error) {
         console.log("Error getting documents: ", error);
     });
-   
 }

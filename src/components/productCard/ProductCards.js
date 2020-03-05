@@ -2,11 +2,16 @@ import React,{useState} from 'react';
 import { useDispatch, useSelector} from 'react-redux';
 import {addToCart, addToGuestCart} from '../../redux/actions/CardAction';
 import Card from './Card';
-import { db } from '../../firebaseConnect';
 import Loading from '../Loading';
 import { Alert } from 'react-bootstrap';
+import { getItemsByCatagory } from '../../app/helper/getItemsByCatagory';
 let loading=false;
+let type=null;
 let source=[];
+/**
+ * display numbers of item in the screen by catagory
+ * @param {'all','vegetables','fruits','oil','masala'} props catagory of items
+ */
 const ProductCards =(props)=>{
     const dispatch = useDispatch();
     const userid=useSelector(state=>state.userLogin.userId)
@@ -19,19 +24,23 @@ const ProductCards =(props)=>{
     dispatch(addToGuestCart(itemId,item));
        // setShowMessage(true);
   }
-    const loadItem=()=>{
+  /**
+   * loads item from database
+   */
+    const loadItem=(catagory)=>{    
         if(!loading){
            loading=true;
-        db.collection("products").limit(5).get().then(function(querySnapshot) {
-            querySnapshot.forEach(function(doc) {
-                // doc.data() is never undefined for query doc snapshots
-               // console.log(doc.id, " => ", doc.data());
-               source.push({id:doc.id,data:doc.data()});
-               
-            });
+           getItemsByCatagory(catagory).then((res)=>{
+            source=res;
+            loading=false;
+            setLoaded(true); 
+           }
+           ).catch(e=>{
+            loading=false;
             setLoaded(true);
-           loading=false;
-        });}
+           })
+           
+      }
     }
     const ErrorMessage= ()=>{
         if(showMsg)
@@ -42,28 +51,40 @@ const ProductCards =(props)=>{
             )
         return <> </>;    
     }
+    //if catagory is changed it loads thee data
+    if(type!==props.catagory){
+        type=props.catagory;
+        loadItem(props.catagory);
+        setLoaded(false);
+    }
    if(!loaded && source.length<1){
-    loadItem();
+    loadItem(props.catagory);
     return(
        <Loading size={120}/>
     )
 }
-
-    return (
+else if(source.length>0){
+return (
         <div className="container ">
            <ErrorMessage/>
-          
-            {/* <ErrorMessage className={showMsg?'visible alert alert-danger':'invisible'} message={'please login first'}/> */}
             <div className="row text-center">
             {
-                source.map((item) =>{    
-                   
+                source.map((item) =>{     
                     return <Card source={item.data} id={item.id} key = {item.id} addItem={onItemAdded} />
                 } )
             }
             </div>
         </div>
-    )
+    )}
+    else{
+        
+        return(
+            <h1>
+                Sorry!!!
+                No Items Found.
+            </h1>
+        )
+    }
  }   
 
 

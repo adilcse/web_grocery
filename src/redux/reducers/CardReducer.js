@@ -8,7 +8,8 @@ import {
     LOAD_CART,
     ADD_TO_GUEST_CART,
     REMOVE_FROM_GUEST_CART,
-    EMPTY_CART
+    EMPTY_CART,
+    CATAGORIES_LOADED
     } from '../../app/ActionConstants';
 
 
@@ -75,5 +76,19 @@ export const addItemsToCart = (state=initialState,action={})=>{
             
         default : 
         return state;
+    }
+}
+
+const initialCatagory={
+    item:[]
+};
+export const CatagoryReducer=(state=initialCatagory,action={})=>{
+    switch(action.type){
+        case CATAGORIES_LOADED:
+            return{...state,
+                item:action.payload
+            }
+        default:
+            return{...state}
     }
 }
