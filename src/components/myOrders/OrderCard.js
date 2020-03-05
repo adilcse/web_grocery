@@ -21,11 +21,13 @@ const OrderCard=(props)=>{
     if(!loaded){
         let ids=getIds();
         getItemsByIds(ids).then((res) => {
+            
              items=[];
              order.item.forEach((item)=>{
               let data= res.find((element)=>{
                return item.id===element.id
                });
+              // data=data.data;
                 items.push({name:data.name,
                             image:data.image,
                             catagory:data.catagory,

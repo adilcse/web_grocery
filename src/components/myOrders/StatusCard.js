@@ -56,7 +56,7 @@ return(
                     <Col md='8' xs='8'>
                     Grand Total 
                     </Col>
-                    <Col md='4' xs='4'>
+                    <Col md='4' xs='4' className='d-flex'>
                     ₹{props.total.total}
                     </Col>    
                 </Row>

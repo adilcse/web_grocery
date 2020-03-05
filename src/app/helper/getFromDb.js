@@ -1,3 +1,7 @@
+/**
+ * takes a firebase query and return a promise with requested data
+ * @param {*} query Firebase query
+ */
 export const getFromDb=(query)=>{
     return query.get()
     .then(function(querySnapshot) {

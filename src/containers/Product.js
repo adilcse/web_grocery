@@ -12,11 +12,8 @@ let previousId;
    
     var docRef = db.collection("products").doc(itemId);
     docRef.get().then(function(doc) {
-        console.log(loaded)
         if (doc.exists) {
-            setItem(doc.data());
-            console.log("Document data:", doc.data());
-            
+            setItem(doc.data());            
         } else {
             // doc.data() will be undefined in this case
             console.log("No such document!");

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useParams } from 'react-router';
 import { useSelector, useDispatch } from 'react-redux';
-import { Alert, Button } from 'react-bootstrap';
+import { Alert, Button, Tabs, Tab } from 'react-bootstrap';
 import CartTotal from '../components/cart/CartTotal';
 import EnterAddress from '../components/checkout/EnterAddress';
 import LoginRegister from '../components/signin/LoginRegister';
@@ -11,6 +11,7 @@ import ErrorMessage from '../app/helper/ErrorMessage';
 import {PlaceOrder} from '../redux/actions/CheckoutAction'
 import { Link } from 'react-router-dom';
 import Loading from '../components/Loading';
+import GpsAddress from '../components/checkout/GpsAddress';
 /**
  * it displays checkout page to user
  */
@@ -77,7 +78,6 @@ const paymentStatus=(status)=>{
 /**
  * display different tabs for checkout
  */
-console.log(fullAddress);
 const LeftCard=()=>{
      if(details.total.countItems>=1){
         switch(currentTab){
@@ -94,8 +94,16 @@ const LeftCard=()=>{
             case ADDRESS:
                 return(
                     <CheckoutCard>
-                     
-                        <EnterAddress setValidAddress={validateAddress} fullAddress={fullAddress}/>
+                        <Tabs defaultActiveKey="gpsAddress" id="addressTab">
+                            <Tab eventKey="gpsAddress" title="Use my Location">
+                            <GpsAddress/>
+                            </Tab>
+                            <Tab eventKey="enterAddress" title="Enter Address">
+                            <EnterAddress setValidAddress={validateAddress} fullAddress={fullAddress}/>
+                            </Tab>
+                           
+                        </Tabs>
+    
                     </CheckoutCard>
                 );
             case PAYMENT:

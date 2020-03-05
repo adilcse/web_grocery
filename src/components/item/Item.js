@@ -7,13 +7,14 @@ import '../../assets/images/img2.jpeg';
 import { useDispatch, useSelector } from 'react-redux';
 import { addToCart,addToGuestCart } from '../../redux/actions/CardAction';
 import { AddItemForCheckout } from '../../app/helper/AddItemForCheckout';
-import {Redirect } from 'react-router-dom';
+import {Redirect, Link } from 'react-router-dom';
+import { getItemsByTime } from '../../app/helper/getItemsByTime';
 
 const Item =(props)=>{
-    console.log(props)
-    const {name,price,description,image,quantity}=props.item;
+    const {name,price,description,image,quantity,catagory}=props.item;
     const itemId=props.id;
     const userId=useSelector(state=>state.userLogin.userId);
+    const [newItems,setNewItems]=useState(null);
     const [showMsg,setShowMessage]=useState(false); 
     const dispatch = useDispatch();
     let addToCartButton ={
@@ -55,6 +56,36 @@ const Item =(props)=>{
     if(buy){
         return(<Redirect to='/checkout/item'/>)
     }
+    const NewArival=()=>{
+        console.log('new',newItems );
+          if(!newItems){
+             getItemsByTime(2).then(res=>{
+            setNewItems(res);  
+        }
+        )
+        .catch(()=>setNewItems(true));
+        return(<></>)
+        }
+        else{
+            console.log(newItems)
+            return(<>
+                <div className="alert alert-dark cntnt"><h3>New arriavals</h3></div>
+                <div><i className="dropdown-toggle"></i></div>
+                <div className="flexcss">
+                 <div className="photobanner">
+               {newItems.map(item=>{
+                   return <Link to={`/product/${item.id}`}>
+                   <img  key={item.id} src={item.data.image} alt="img1" width='250px' height='250px' />
+                   </Link>
+               })}    
+            </div>
+            </div>
+            </>
+            )
+        }
+       
+    }
+    
     return(
        
         <div>
@@ -99,34 +130,11 @@ const Item =(props)=>{
             </div>
             </div>
         </div>
-        <div className="alert alert-dark cntnt"><h3>New arriavals</h3></div>
-        <div><i className="dropdown-toggle"></i></div>
-            <div className="flexcss">
-                <div className="photobanner">
-            <img   src={image} alt="img1" />
-            <img   src={image} alt="img1" />
-            <img   src={image} alt="img1" />
-            <img   src={image} alt="img1" />
-            <img   src={image} alt="img1" />
-            <img   src={image} alt="img1" />
-            <img   src={image} alt="img1" />
-            <img   src={image} alt="img1" />
-            <img   src={image} alt="img1" />
-            <img   src={image} alt="img1" />
-            <img   src={image} alt="img1" />
-            <img   src={image} alt="img1" />
-            <img   src={image} alt="img1" />
-            <img   src={image} alt="img1" />
-            <img   src={image} alt="img1" />
-            <img   src={image} alt="img1" />
-            <img   src={image} alt="img1" />
-            <img   src={image} alt="img1" />
-            <img   src={image} alt="img1" />
-        </div>
-        </div>
+
+        <NewArival/>
         <div className="alert alert-dark cntnt"><h3>Shop More</h3></div>
         <div><i className="dropdown-toggle"></i></div>
-        <ProductCards/>
+        <ProductCards catagory={catagory}/>
         
         
         </div>
