@@ -4,7 +4,6 @@ const  HeaderCard=(props)=>{
     const ordered=props.orderedOn?props.orderedOn.toDate().toLocaleString():null;
     const delevered=props.deleveredOn?props.deleveredOn.toDate().toLocaleString():null;
     
-    console.log(ordered)
     return(
     <Row>
         <Col className='text-left' xs='12' md='6'>

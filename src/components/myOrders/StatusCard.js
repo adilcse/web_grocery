@@ -1,7 +1,7 @@
 import React from 'react';
 import { Container, Row, Col, Button } from 'react-bootstrap';
 const StatusCard=(props)=>{
-    console.log(props)
+   
     let trackButton=<Button>Track Now</Button>
 return(
     <Container  >

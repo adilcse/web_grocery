@@ -6,7 +6,6 @@ import Register from './Register';
 const LoginRegister=(props)=>{
     const [page,setPage]=useState('login');
     let current;
-    
     const user = useSelector((state)=>state.userLogin);
     if(page==='login'){
         current =<Login change={setPage}/> 

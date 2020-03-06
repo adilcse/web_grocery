@@ -10,7 +10,7 @@ import {
     REGISTER_USER_FAILED,
    
     LOAD_CART,
-    LOAD_ADDRESS,
+    LOAD_USER,
     CATAGORIES_LOADED
  } from "../../app/ActionConstants";
  import {firebase, db} from '../../firebaseConnect';
@@ -20,10 +20,7 @@ export const Login=(email,password)=>dispatch=>{
     dispatch({ type: LOGIN_USER_PENDING});
     //handles user signin
     firebase.auth().signInWithEmailAndPassword(email, password)
-    .then(user=>{
-        dispatch({type:LOGIN_USER_SUCCESS,payload:user})
-    })
-    .catch(function(error) {
+      .catch(function(error) {
         // Handle Errors here.
         dispatch({type:LOGIN_USER_FAILED,error:{error}})
         // ...
@@ -45,14 +42,14 @@ firebase.auth().createUserWithEmailAndPassword(email, password)
 }
 
 //check user loggedin Status
-export const LoginStatus=()=>dispatch=>{
+export const LoginStatus=(dispatch)=>{
   loadCatagory(dispatch);
   dispatch({ type: LOGIN_USER_PENDING});
   firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
       // User is signed in.
-      dispatch({type:LOGIN_USER_SUCCESS,payload:user});
-      loadAddress(dispatch,user.uid);
+     
+      ValidateUser(dispatch,user);
       loadCart(dispatch,user.uid);
 
     } else {
@@ -68,7 +65,7 @@ type:LOGIN_USER_SUCCESS,
 payload : user
 })
 
-export const Logout=()=>dispatch=>{
+export const Logout=(dispatch)=>{
     dispatch({type:LOGOUT_USER_PENDING})
     firebase.auth().signOut().then(function() {
         // Sign-out successful.
@@ -98,10 +95,11 @@ const loadCart=(dispatch,userId)=>{
  * @param {*} dispatch 
  * @param {*} userId 
  */
-const loadAddress=(dispatch,userId)=>{
-  db.collection("user").doc(userId).get().then(function(doc) {
+export const ValidateUser=(dispatch,user)=>{
+  db.collection("user").doc(user.uid).get().then(function(doc) {
     if (doc.exists) {
-      dispatch({type:LOAD_ADDRESS,payload:doc.data().address})
+      dispatch({type:LOGIN_USER_SUCCESS,payload:user});
+      dispatch({type:LOAD_USER,payload:doc.data()});
     } else {
         // doc.data() will be undefined in this case
         console.log("No such document!");

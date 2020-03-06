@@ -3,7 +3,6 @@ import { Container, Row, Col } from "react-bootstrap";
 import OrderCard from "./OrderCard";
 const OrdersList=(props)=>{
     if(props.orders.length>0){
-      console.log(props.orders);
     return(
         <Container>
         {/* Stack the columns on mobile by making one full-width and the other half-width */}

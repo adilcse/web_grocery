@@ -8,7 +8,7 @@ import {
     REGISTER_USER_PENDING,
     REGISTER_USER_SUCCESS,
     REGISTER_USER_FAILED,
-    LOAD_ADDRESS,
+    LOAD_USER,
     ADDRESS_UPDATED
  } from "../../app/ActionConstants";
  import { 
@@ -17,8 +17,9 @@ import {
  let initialState={
      userId:null,
      userName:null,
+     name:null,
      loggedIn:false,
-     UserType:null,
+     userType:null,
      loggingIn:false,
      error:false,
      guest:true,
@@ -37,12 +38,14 @@ export const userLogin=(state=initialState,action={})=>{
                 userName:action.payload.email,
                 loggingIn:false,
                 loggedIn:true,
-                UserType:USER_TYPE_LOCAL,
                 guest:false
             } 
-        case LOAD_ADDRESS:
+        case LOAD_USER:
+            console.log(action.payload);
             return{...state,
-                address:action.payload,
+                name:action.payload.name,
+                userType:action.payload.userType,
+                address:action.payload.address,
             }
         case LOGIN_USER_FAILED:
             return initialState;
@@ -61,7 +64,7 @@ export const userLogin=(state=initialState,action={})=>{
                 userName:action.payload.email,
                 loggingIn:false,
                 loggedIn:true,
-                UserType:USER_TYPE_LOCAL,
+                userType:USER_TYPE_LOCAL,
                 guest:false
             } 
             case REGISTER_USER_FAILED:

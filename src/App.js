@@ -1,57 +1,25 @@
 import React,{Suspense,lazy} from 'react';
 import './App.css';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { LoginStatus } from './redux/actions/UserAction';
 import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Redirect
+  BrowserRouter as Router
 } from "react-router-dom";
-import Loading from './components/Loading';
-import Nav from './sections/header/Nav';
-import Catagory from './containers/Catagory';
-const Home = lazy(() => import('./containers/Home'));
-const SearchPage=lazy(()=>import('./containers/SearchPage'));
 
-const Signin=lazy(()=>import('./containers/Signin'));
-const Product=lazy(()=>import('./containers/Product'));
-const Cart=lazy(()=>import('./containers/Cart'));
-const Checkout=lazy(()=>import('./containers/Checkout'));
-const MyOrders=lazy(()=>import('./containers/MyOrders'));
-const Profile=lazy(()=>import('./containers/Profile'));
+import HomeUserRoutes from './app/routes/HomeUserRoutes';
+import SellerUserRoutes from './app/routes/SellerUserRoutes';
+
 
 function App() {
   let dispatch = useDispatch();
-  dispatch(LoginStatus());
-  const Logout=()=>{
-    return <Redirect to='/Home'/>
-  }
+  LoginStatus(dispatch);
+  const userType=useSelector(state=>state.userLogin.userType);
   return (
-    <Router>
-    
-      <div className="App text-center">
-      <Suspense fallback={<Loading size={100}/>}>
-        <Nav/>
-      </Suspense>
-          <Switch>
-            <Suspense fallback={<Loading size={100}/>}>
-              <Route path='/Home' component={Home} />
-              <Route path='/Search/:id' component={SearchPage}/>
-              <Route path='/signin' component={Signin}/>
-              <Route path='/cart' component={Cart}/>
-              <Route path='/myOrder' component={MyOrders}/>
-              <Route path='/Profile' component={Profile}/>
-              <Route path='/Checkout/:from' component={Checkout}/> 
-              <Route path='/Logout' component={Logout}/>
-              <Route path='/Product/:id' component={Product}/>
-              <Route path='/catagories/:cat' component={Catagory}/>
-              <Route path='/' exact={true} component={Home}/>
-            </Suspense>
-          </Switch>  
-      </div>
- 
-    </Router>
+  <Router>
+    {userType!=='2'?<HomeUserRoutes/>:<SellerUserRoutes/>}
+  </Router>
+            
+       
   );
 }
 

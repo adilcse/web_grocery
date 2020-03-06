@@ -7,24 +7,18 @@ import LoginLogout from '../../components/nav/LoginLogout';
 import NavCart from '../../components/nav/NavCart';
 import NavCatagory from '../../components/nav/NavCatagory';
 const MyNavbar = ()=>{
+
   let collapse = true;
     const toggle=()=>{
       if(collapse){
-       
-
-        document.getElementById("navbarSupportedContent").style.display = 'block';
-        
+        document.getElementById("navbarSupportedContent").style.display = 'block';        
       }else{
         document.getElementById("navbarSupportedContent").style.display = 'none';
-  
       }
       collapse = !collapse;
 
     }
-
-
-    return(
-     
+    return(    
 <nav className="navbar navbar-expand-lg navbar-light bg-light sticky-top">
   <NavCatagory/>
   <Search/>
@@ -47,14 +41,9 @@ const MyNavbar = ()=>{
       <LoginLogout/>
       
     </ul>
-   
-    {/* <form className="form-inline my-2 my-lg-0">
-      <input className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"/>
-      <button className="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-    </form> */}
   </div>
 </nav>
-
     )
+   
 }
 export default MyNavbar;

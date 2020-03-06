@@ -9,7 +9,6 @@ import { useSelector } from "react-redux";
 const NavCatagory=()=>{
    
     const catagories=useSelector(state=>state.CatagoryReducer.item);
-console.log(catagories);
 return(
     <div className="nav-depart ">
     <div className="depart-btn row">

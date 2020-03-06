@@ -1,16 +1,11 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { useDispatch} from 'react-redux';
-import { Logout as LogoutAction } from '../../redux/actions/UserAction';
+
 const Signout = ()=>{
-  const dispatch=useDispatch();
-  const logout=()=>{
-    dispatch(LogoutAction());
-  }
 
     return(
         <li className="nav-item">
-        <NavLink className="nav-link" to="/Logout" onClick={logout}>Logout </NavLink>
+        <NavLink className="nav-link" to="/Logout">Logout </NavLink>
       </li>
     )
 }
