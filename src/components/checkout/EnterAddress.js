@@ -1,8 +1,11 @@
+/* eslint-disable no-useless-escape */
 import React, { useState } from 'react';
 import './EditAddress.css'
 import { Form, Col, InputGroup, Button } from 'react-bootstrap';
 import {INPUT_NUMBER, INPUT_NAME, INPUT_PIN, INPUT_LANDMARK, INPUT_LOCALITY, INPUT_ADDRESS, INPUT_CITY, INPUT_STATE, INPUT_ALTERNATE} from '../../app/constants';
 import ErrorMessage from '../../app/helper/ErrorMessage';
+import { firebase } from '../../firebaseConnect';
+
 //keeps track of thee field touched
 let touched={
   name:false,
@@ -33,7 +36,7 @@ let errors={
 const regex={
   name:/^[a-zA-Z ]{3,}$/,
   mobile:/^[0-9]{10}$/,
-  address:/^[0-9a-zA-Z\-, \n]{3,}$/,
+  address:/^[0-9a-zA-Z\-,\/\\ \n]{3,}$/,
   pin:/^[0-9]{6}$/,
   locality:/^[0-9a-zA-Z\-, ]{3,}$/,
   city:/^[a-zA-Z\-, ]{3,}$/,
@@ -90,7 +93,9 @@ const EnterAddress=(props)=>{
         city:city,
         state:state,
         landmark:landmark,
-        alternate:alternate
+        alternate:alternate,
+        latLng:props.fullAddress.latLng
+              ?new firebase.firestore.GeoPoint(props.fullAddress.latLng.latitude,props.fullAddress.latLng.longitude):''
       }
       props.setValidAddress(true,fullAddress);
     }

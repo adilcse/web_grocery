@@ -5,7 +5,7 @@ import { Alert, Button, Tabs, Tab } from 'react-bootstrap';
 import CartTotal from '../components/cart/CartTotal';
 import EnterAddress from '../components/checkout/EnterAddress';
 import LoginRegister from '../components/signin/LoginRegister';
-import {LOGIN, ADDRESS, PAYMENT} from '../app/constants';
+import {LOGIN, ADDRESS, PAYMENT, PAYMENT_METHOD_COD} from '../app/constants';
 import PaymentPage from '../components/checkout/Payment'
 import ErrorMessage from '../app/helper/ErrorMessage';
 import {PlaceOrder} from '../redux/actions/CheckoutAction'
@@ -16,9 +16,11 @@ import GpsAddress from '../components/checkout/GpsAddress';
  * it displays checkout page to user
  */
 let addressChanged=false;
-let fullAddress;
 const Checkout=()=>{
 const [currentTab,setCurrentTab]=useState(LOGIN);
+const [addressTab,setAddressTab]=useState('gpsAddress');
+const [fullAddress,setFullAddress]=useState({data:'aaaa'});
+const [addressSet,setAddressSet]=useState(false);
 const dispatch=useDispatch();
 let {from}=useParams('from');
 const userName=useSelector(state=>state.userLogin.userName);
@@ -32,8 +34,17 @@ if(!userName &&currentTab!==LOGIN){
 }else if(userName && currentTab===LOGIN){
     setCurrentTab(ADDRESS);
 }
-if(!addressChanged)
-    fullAddress=userAddress;
+//set user address
+console.log(addressChanged,addressSet);
+console.log(fullAddress);
+if(!addressChanged && !addressSet){
+    console.log('seting address')
+    if(userAddress.name){
+        setAddressSet(true);
+        setFullAddress(userAddress);
+    }
+}
+
 /**
  * displays on left side of screen shows edit address and payment option
  * @param {*} props 
@@ -55,10 +66,10 @@ const CheckoutCard=(props)=>{
  */
 const validateAddress=(tab,address)=>{
     if(tab){
-     fullAddress=address;
      addressChanged=true;
+     setFullAddress(address);
      setCurrentTab(PAYMENT);
-    }
+     }
 }
 /**
  * if payment is successed then place the order .
@@ -72,8 +83,18 @@ const paymentStatus=(status)=>{
             fullAddress[key]='';
     })
     if(status){
-       PlaceOrder(fullAddress,details,from,userId,dispatch,cartIds,'COD');
+       PlaceOrder(fullAddress,details,from,userId,dispatch,cartIds,PAYMENT_METHOD_COD);
     }
+}
+/**
+ * set users address from gps and prompt to enter extra detiails
+ * @param {*}address uses address by gps and google api call
+ */
+const setAddressByGps=(address)=>{
+    console.log(fullAddress);
+    setFullAddress({...fullAddress,...address});
+    console.log(fullAddress);
+    setAddressTab('enterAddress')
 }
 /**
  * display different tabs for checkout
@@ -94,9 +115,9 @@ const LeftCard=()=>{
             case ADDRESS:
                 return(
                     <CheckoutCard>
-                        <Tabs defaultActiveKey="gpsAddress" id="addressTab">
-                            <Tab eventKey="gpsAddress" title="Use my Location">
-                            <GpsAddress/>
+                        <Tabs activeKey={addressTab} id="addressTab" onSelect={k => setAddressTab(k)}>
+                            <Tab eventKey="gpsAddress" title="Use my Location" >
+                            <GpsAddress setAddress={setAddressByGps}/>
                             </Tab>
                             <Tab eventKey="enterAddress" title="Enter Address">
                             <EnterAddress setValidAddress={validateAddress} fullAddress={fullAddress}/>

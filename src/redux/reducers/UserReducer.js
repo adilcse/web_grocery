@@ -41,7 +41,6 @@ export const userLogin=(state=initialState,action={})=>{
                 guest:false
             } 
         case LOAD_USER:
-            console.log(action.payload);
             return{...state,
                 name:action.payload.name,
                 userType:action.payload.userType,

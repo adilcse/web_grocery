@@ -1,6 +1,6 @@
 import React from 'react';
 import './Nav.css';
-import { IoIosHome,IoIosList,IoMdPeople } from "react-icons/io";
+import { IoIosHome,IoIosList } from "react-icons/io";
 import {FaPlus} from 'react-icons/fa';
 import {NavLink} from 'react-router-dom';
 
@@ -11,7 +11,7 @@ const SellerNav = ()=>{
     const user=useSelector(state=>state.userLogin);
 const LogoutButton=()=>{
     return (
-    <NavLink to='/logout' className='nav-item ml-auto mr-2'>
+    <NavLink to='/seller/logout' className='nav-item ml-auto mr-2'>
         <Button>Logout</Button>
     </NavLink>
      )
@@ -26,8 +26,8 @@ const LogoutButton=()=>{
       collapse = !collapse;
 
     }
-    return(    
-<nav className="navbar navbar-expand-md navbar-light bg-light sticky-top">
+    return( 
+<nav className="navbar navbar-expand-md navbar-light bg-light">
   <button className="navbar-toggler ml-auto mr-2" type="button" data-toggle="collapse" onClick={toggle} data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span className="navbar-toggler-icon"></span>
   </button>
@@ -35,13 +35,13 @@ const LogoutButton=()=>{
     <ul className="navbar-nav w-100 ">
      
       <li className="nav-item">
-        <NavLink className="nav-link" to="/dashbord">Dashbord <IoIosHome/></NavLink>
+        <NavLink className="nav-link" to="/seller/dashbord">Dashbord <IoIosHome/></NavLink>
       </li>
       <li className="nav-item">
-        <NavLink className="nav-link" to="/orders">Orders<IoIosList/></NavLink>
+        <NavLink className="nav-link" to="/seller/orders">Orders<IoIosList/></NavLink>
       </li>
       <li className="nav-item">
-        <NavLink className="nav-link" to="/additem">Add Item <FaPlus/></NavLink>
+        <NavLink className="nav-link" to="/seller/additem">Add Item <FaPlus/></NavLink>
       </li>
       <li className="nav-item align-self-center">
         <h5>Welcome {user.name}</h5>

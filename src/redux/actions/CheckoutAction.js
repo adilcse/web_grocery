@@ -21,8 +21,10 @@ export const PlaceOrder=(address,order,from,userId,dispatch,cartIds,payMode)=>{
         quantity:value.quantity,
         price:value.item.price
         })
-    })
+    });
+    console.log(address);
     db.collection("orders").add({
+
         uid:userId,
         item:items,
         total:order.total,
