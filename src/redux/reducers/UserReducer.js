@@ -41,14 +41,15 @@ export const userLogin=(state=initialState,action={})=>{
                 name:action.payload.name,
                 userType:action.payload.userType,
                 address:action.payload.address,
+                error:false
             } 
        
         case LOGIN_USER_FAILED:
-            return initialState;
+            return {...state,...initialState,error:action.payload};
         case LOGOUT_USER_FAILED:
             return {...state,error:action.error}   
         case LOGOUT_USER_SUCCESS:
-            return initialState;
+            return {...initialState};
         case LOGOUT_USER_PENDING:
             return {...state,loggingIn:true}        
         
@@ -61,7 +62,8 @@ export const userLogin=(state=initialState,action={})=>{
                 loggingIn:false,
                 loggedIn:true,
                 userType:USER_TYPE_LOCAL,
-                guest:false
+                guest:false,
+                error:false
             } 
             case REGISTER_USER_FAILED:
                 return{...state,
@@ -69,8 +71,7 @@ export const userLogin=(state=initialState,action={})=>{
                     userName:null, 
                     loggedIn:false,
                     loggingIn:false,
-                    error:true,
-                    errorType:action.payload,
+                    error:action.payload,
                     guest:true
                 }  
             case ADDRESS_UPDATED:

@@ -50,7 +50,7 @@ const Profile=()=>{
   else if(!user.loggedIn){
     return(
       <div>
-        <ErrorMessage isError={true} messsage='Please Login First'></ErrorMessage>
+        <ErrorMessage isError={true} message='Please Login First'></ErrorMessage>
       </div>
     )
   }

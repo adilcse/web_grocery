@@ -28,7 +28,8 @@ const Login = (props)=>{
       document.getElementById("email").value='';
       document.getElementById("password").value='';
     }
-    const loggingIn=useSelector(state=>state.userLogin.loggingIn) ;
+    const user=useSelector(state=>state.userLogin)
+    const loggingIn=user.loggingIn;
     const LoginButtons=()=>{
       if(!loggingIn)
       return( 
@@ -73,6 +74,7 @@ const Login = (props)=>{
 					 <div className="logo mb-3">
 						 <div className="col-md-12 text-center">
 							<h1>Login</h1>
+                     {user.error?<h5 className='text-danger'>{user.error.code}</h5>:<></>}
 						 </div>
 					</div>  
                <form>         

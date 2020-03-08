@@ -3,6 +3,7 @@ import { useParams } from 'react-router';
 import Loading from '../components/Loading';
 import { db } from '../firebaseConnect';
 import Item from '../components/item/Item';
+import { getItemFromDb } from '../app/helper/getItemFromDb';
 let previousId;
  const Product=()=>{
    const {id}=useParams();
@@ -10,20 +11,15 @@ let previousId;
    const [item,setItem]=useState({})
    const getProduct=(itemId)=>{
    
-    var docRef = db.collection("products").doc(itemId);
-    docRef.get().then(function(doc) {
-        if (doc.exists) {
-            setItem(doc.data());            
-        } else {
-            // doc.data() will be undefined in this case
-            console.log("No such document!");
+    var query = db.collection("products").doc(itemId);
+    getItemFromDb(query).then(result=>{
+        if(result){
+            setItem(result);
+        }else{
             setItem(false);
-
         }
-       
-    }).catch(function(error) {
-        console.log("Error getting document:", error);
     });
+   
     setLoaded(true);
    }
    if(!loaded ||id!==previousId){  

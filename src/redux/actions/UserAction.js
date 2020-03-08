@@ -33,7 +33,7 @@ export const EmailLogin=(dispatch,email,password)=>{
     })
       .catch(function(error) {
         // Handle Errors here.
-        dispatch({type:LOGIN_USER_FAILED,error:{error}})
+        dispatch({type:LOGIN_USER_FAILED,payload:{...error}})
         // ...
       });
 };
@@ -71,7 +71,7 @@ firebase.auth().createUserWithEmailAndPassword(email, password)
 })
 .catch(function(error) {
   console.log(error);
-  dispatch({type:REGISTER_USER_FAILED,payload:error});
+  dispatch({type:REGISTER_USER_FAILED,payload:{...error}});
   // ...
 });
 
@@ -148,7 +148,7 @@ export const ValidateUser=(dispatch,user,by='email')=>{
          
           addUserToDb(dispatch,user.uid,user.email,user.displayName);
         }else{
-          dispatch({type:LOGIN_USER_FAILED});
+          dispatch({type:LOGIN_USER_FAILED,payload:{code:'user not exist'}});
           Logout(dispatch);
         }
 

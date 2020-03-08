@@ -67,7 +67,7 @@ const Register = (props)=>{
 
         <div id="second">
            {
-            user.error? <ErrorMessage isError={user.error} message={user.errorType.message}/>:<></>
+            user.error? <ErrorMessage isError={user.error} message={user.error.message}/>:<></>
            }
           
 			      <div className="myform form ">

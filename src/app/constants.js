@@ -20,5 +20,5 @@ export const INPUT_LANDMARK='INPUT_LANDMARK';
 export const INPUT_ALTERNATE='INPUT_ALTERNATE';
 
 export const PAYMENT_METHOD_COD='COD';
-
+export const ALGOLIA_INDEX_NAME='product_name';
 
