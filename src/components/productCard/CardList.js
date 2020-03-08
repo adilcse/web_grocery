@@ -13,6 +13,7 @@ const CardList =(props)=>{
     const userid=useSelector(state=>state.userLogin.userId)
     const [showMsg,setShowMessage]=useState(false); 
     const source=props.items;
+    console.log(source);
  const onItemAdded = (itemId,item,userId=userid) => {
       if(userId)
         dispatch(addToCart(itemId,item,userId));
@@ -41,7 +42,7 @@ return (
             <div className="row text-center">
             {
                 source.map((item) =>{     
-                    return <Card source={item.data} id={item.id} key = {item.id} addItem={onItemAdded} />
+                    return <Card source={item} id={item.id} key = {item.id} addItem={onItemAdded} />
                 } )
             }
             </div>

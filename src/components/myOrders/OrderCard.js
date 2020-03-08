@@ -53,6 +53,8 @@ const OrderCard=(props)=>{
         </CardDeck>
         )
        
+       }else if(!loaded){
+           return(<Loading size={100}/>)
        }
     else{
         return(

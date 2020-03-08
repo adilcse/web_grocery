@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Button } from 'react-bootstrap';
-import { Map, GoogleApiWrapper, Marker, Polyline } from 'google-maps-react';
-import Loading from '../Loading';
+import { Map, GoogleApiWrapper, Marker } from 'google-maps-react';
 const GpsAddress=(props)=>{
     const [marker,setMarker]=useState(false);
     const [center,setCenter]=useState({ lat: 20.3423744, lng: 85.8161152});

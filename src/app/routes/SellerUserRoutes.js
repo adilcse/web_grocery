@@ -8,14 +8,14 @@ import { Logout } from "../../redux/actions/UserAction";
     const dispatch=useDispatch();
     const LogoutButton=()=>{
         Logout(dispatch);
-        return <Redirect to='/Home'/>
+        return <Redirect to='/seller'/>
       }
   return(
       <div>
           <SellerNav/>
           <Switch>
-          <Route path='/Logout' component={LogoutButton}/>
-              <Route path='/dashbord' component={SellerHome}/>
+          <Route path='/seller/Logout' component={LogoutButton}/>
+              <Route path='/seller/dashbord' component={SellerHome}/>
           </Switch>
       </div>
   )  

@@ -57,8 +57,7 @@ const Item =(props)=>{
         return(<Redirect to='/checkout/item'/>)
     }
     const NewArival=()=>{
-        console.log('new',newItems );
-          if(!newItems){
+            if(!newItems){
              getItemsByTime(2).then(res=>{
             setNewItems(res);  
         }
@@ -67,15 +66,15 @@ const Item =(props)=>{
         return(<></>)
         }
         else{
-            console.log(newItems)
+          
             return(<>
                 <div className="alert alert-dark cntnt"><h3>New arriavals</h3></div>
                 <div><i className="dropdown-toggle"></i></div>
                 <div className="flexcss">
                  <div className="photobanner">
                {newItems.map(item=>{
-                   return <Link to={`/product/${item.id}`}>
-                   <img  key={item.id} src={item.data.image} alt="img1" width='250px' height='250px' />
+                   return <Link key={item.id}    to={`/product/${item.id}`}>
+                   <img   src={item.image} alt="img1" width='250px' height='250px' />
                    </Link>
                })}    
             </div>

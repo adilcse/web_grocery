@@ -13,16 +13,7 @@ export const searchProductInDb=(value)=>{
         attributesToRetrieve: ['name', 'price','image','id'],
         hitsPerPage: 10,
       }).then(({ hits }) => {
-        let arr=[];
-        hits.forEach(item=>{
-            arr.push({
-                title:item.name,
-                price:'₹ '+item.price.toString(),
-                image:item.image,
-                id:item.objectID
-            })
-        });
-        return arr;
+        return hits;
       }).catch(err=>{
           console.log(err);
           return false;

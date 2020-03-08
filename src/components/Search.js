@@ -1,13 +1,11 @@
 import React, { useState } from 'react'
 import { Search, Grid } from 'semantic-ui-react'
 import {useHistory} from 'react-router-dom';
-import algoliasearch from 'algoliasearch';
-import { ALGOLIA_INDEX_NAME } from '../app/constants';
+
 import { setSearchResults } from '../redux/actions/SearchAction';
 import { useDispatch } from 'react-redux';
 import {searchProductInDb} from '../app/helper/searchProductInDb';
-// const client = algoliasearch(process.env.REACT_APP_ALGOLIA_APP_ID,process.env.REACT_APP_ALGOLIA_API_KEY);
-// const index = client.initIndex(ALGOLIA_INDEX_NAME);
+
 const SearchBox=()=>{
    const dispatch=useDispatch();
     let history = useHistory();
@@ -20,30 +18,23 @@ const SearchBox=()=>{
      setValue(value)
      setIsLoading(true);
      searchProductInDb(value).then(result=>{
-        if(result){
-            setResults(result);
-        }
+         if(!result){
+            setIsLoading(false);
+            return;
+         }
+        let arr=[];
+        result.forEach(item=>{
+            arr.push({
+                title:item.name,
+                price:'₹ '+item.price.toString(),
+                image:item.image,
+                id:item.objectID
+            })
+        });
+        setResults(arr);
         setIsLoading(false);
      })
-    // index.search(value,{
-    //     attributesToRetrieve: ['name', 'price','image','id'],
-    //     hitsPerPage: 10,
-    //   }).then(({ hits }) => {
-    //     let arr=[];
-    //     hits.forEach(item=>{
-    //         arr.push({
-    //             title:item.name,
-    //             price:item.price.toString(),
-    //             image:item.image,
-    //             id:item.objectID
-    //         })
-    //     });
-    //     setResults(arr);        
-    //     setIsLoading(false);
-    //   }).catch(err=>{
-    //       console.log(err);
-    //       setIsLoading(false);
-    //   });
+   
     
   }
   const   handleKeyPress = (e)=>{
