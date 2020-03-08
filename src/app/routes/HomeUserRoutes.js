@@ -5,11 +5,11 @@ import {
     Route,
     Redirect
   } from "react-router-dom";
-import Nav from "../../sections/header/Nav";
-import Catagory from '../../containers/Catagory';
-import SellerLogin from "../../containers/seller/SellerLogin";
-import { useDispatch } from "react-redux";
+  import { useDispatch } from "react-redux";
 import { Logout as LogoutAction} from "../../redux/actions/UserAction";
+import Nav from "../../sections/header/Nav";
+const Catagory=lazy(()=>import('../../containers/Catagory'));
+const SellerLogin=lazy(()=>import( "../../containers/seller/SellerLogin"));
 const Home = lazy(() => import('../../containers/Home'));
 const SearchPage=lazy(()=>import('../../containers/SearchPage'));
 const Signin=lazy(()=>import('../../containers/Signin'));

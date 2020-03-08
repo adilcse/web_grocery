@@ -1,29 +1,43 @@
 import React from 'react';
 import './Signin.css';
 import { useDispatch, useSelector} from 'react-redux';
-import { Login as LoginAction  } from "../../redux/actions/UserAction";
+import { EmailLogin, GoogleLogin } from "../../redux/actions/UserAction";
 import Loading from '../Loading';
+import { Button } from 'react-bootstrap';
+/**
+ * displays login form to the user
+ * @param {hideSignup} props to dide signup button
+ */
 const Login = (props)=>{
     const dispatch = useDispatch();
+    /**
+     * try to login by users entered email and password
+     */
     const tryLogin=()=>{
         let email=document.getElementById("email").value;
         let password=document.getElementById("password").value;
-       dispatch(LoginAction(email,password));
+       EmailLogin(dispatch,email,password);
+    }
+    /**
+     * tries to login with google signin
+     */
+    const LoginWithGoogle=()=>{
+       GoogleLogin(dispatch);
     }
     const clear = ()=>{
       document.getElementById("email").value='';
       document.getElementById("password").value='';
     }
     const loggingIn=useSelector(state=>state.userLogin.loggingIn) ;
-    const Button=()=>{
+    const LoginButtons=()=>{
       if(!loggingIn)
       return( 
          <>
            <div className="row justify-content-center">
-              <div className="col-md-5 text-center ">
+              <div className="col-sm-5 text-center mt-3">
                  <button className=" btn btn-block mybtn btn-warning tx-tfm" onClick={tryLogin}>Login</button>
               </div>
-              <div className="col-md-5 text-center ">
+              <div className="col-sm-5 text-center mt-3">
                  <button className=" btn btn-block mybtn btn-warning tx-tfm" onClick={clear}>Clear</button>
               </div>
            </div>
@@ -33,14 +47,17 @@ const Login = (props)=>{
                  <span className="span-or">or</span>
               </div>
            </div>
-           <div className="col-md-12 mb-3">
-              <p className="text-center">
-                 {/* google siggnin here */}
-              </p>
+           <div className="col-md-12 mb-3 text-center">
+            <Button style={{backgroundColor:' #dd4b39',color: 'white'}} onClick={LoginWithGoogle}>
+               <h6 className='d-inline'>Login with Google</h6></Button>
            </div>
+           {props.hideSignup?<></>:
            <div className="form-group">
-              <p className="text-center">Don't have account? <button className="btn bg-warning" onClick={()=>props.change('register')}>Sign up here</button></p>
-           </div>
+              <p className="text-center">
+                 Don't have account? 
+                 <button className="btn bg-warning" onClick={()=>props.change('register')}>Sign up here</button>
+               </p>
+           </div>}
            </>
       );
       else 
@@ -56,7 +73,8 @@ const Login = (props)=>{
 						 <div className="col-md-12 text-center">
 							<h1>Login</h1>
 						 </div>
-					</div>             
+					</div>  
+               <form>         
                <div className="form-group">
                   <label htmlFor="exampleInputEmail1">Email address</label>
                   <input type="email" name="email"  className="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter email"/>
@@ -65,7 +83,8 @@ const Login = (props)=>{
                   <label htmlFor="exampleInputEmail1">Password</label>
                   <input type="password" name="password" id="password"  className="form-control" aria-describedby="emailHelp" placeholder="Enter Password"/>
                </div>
-               <Button/>
+               </form>  
+               <LoginButtons/>
                           
                       
                  

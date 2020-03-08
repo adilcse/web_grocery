@@ -2,6 +2,7 @@ import React from 'react';
 import { Col, Row, Form, Button } from 'react-bootstrap';
 import { AiFillCaretRight } from 'react-icons/ai';
 const ViewProfile=(props)=>{
+
     const {address,city,locality,mobile,state,pin}=props.fullAddress;
 
 return(

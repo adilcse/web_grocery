@@ -34,7 +34,7 @@ let errors={
 };
 //rex for all fields
 const regex={
-  name:/^[a-zA-Z ]{3,}$/,
+  name:/^[a-zA-Z ]{3,20}$/,
   mobile:/^[0-9]{10}$/,
   address:/^[0-9a-zA-Z\-,\/\\ \n]{3,}$/,
   pin:/^[0-9]{6}$/,
@@ -47,7 +47,8 @@ const regex={
 const EnterAddress=(props)=>{
   const{buttonText}=props;
   let {fullAddress}=props;
-  fullAddress = Object.keys(fullAddress).length === 0 ? null : fullAddress;
+  if(fullAddress)
+    fullAddress = Object.keys(fullAddress).length === 0 ? null : fullAddress;
   const [name,setName]=useState(fullAddress?fullAddress.name:'');
   const [number,setNumber]=useState(fullAddress?fullAddress.mobile:'')
   const [pin,setPin]=useState(fullAddress?fullAddress.pin:'')
@@ -62,18 +63,22 @@ const EnterAddress=(props)=>{
   const [error,showError]=useState(false)
   //when submit button is clicked it handles
     const handleSubmit=()=>{
-      let correct=false;
+      let correct=true;
      Object.keys(regex).forEach((key)=>{
+   
        if(!touched[key] && fullAddress){
+       
         if(!validate(key,fullAddress[key]))
-          correct=true;
+            correct=true;
+          else
+            correct=false;
         }else{
           touched[key]=true;
           if(errors[key]){
             correct=false;
-          }else
-            correct=true;
+          }
         }
+       
      });
      if(correct){
         saveAddress();
@@ -94,9 +99,11 @@ const EnterAddress=(props)=>{
         state:state,
         landmark:landmark,
         alternate:alternate,
-        latLng:props.fullAddress.latLng
-              ?new firebase.firestore.GeoPoint(props.fullAddress.latLng.latitude,props.fullAddress.latLng.longitude):''
+        latLng:props.fullAddress?(props.fullAddress.latLng
+              ?new firebase.firestore.GeoPoint(props.fullAddress.latLng.latitude,props.fullAddress.latLng.longitude):''):
+              ''
       }
+   
       props.setValidAddress(true,fullAddress);
     }
     const validate=(id,val,setFun=()=>true)=>{
@@ -108,7 +115,7 @@ const EnterAddress=(props)=>{
       errors[id]=true;
     }else{
       if(regex[id].test(val))
-      errors[id]=false;
+        errors[id]=false;
     else
       errors[id]=true;
 
@@ -321,7 +328,7 @@ return(
               
             <Form.Control
               type="text"
-              placeholder="Alternate Number"
+              placeholder="Alternate Number (optional)"
               aria-describedby="inputGroupPrepend"
               value={alternate}
               onChange={handleChange}

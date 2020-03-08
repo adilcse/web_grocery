@@ -8,7 +8,6 @@ import {
     REGISTER_USER_PENDING,
     REGISTER_USER_SUCCESS,
     REGISTER_USER_FAILED,
-    LOAD_USER,
     ADDRESS_UPDATED
  } from "../../app/ActionConstants";
  import { 
@@ -38,14 +37,12 @@ export const userLogin=(state=initialState,action={})=>{
                 userName:action.payload.email,
                 loggingIn:false,
                 loggedIn:true,
-                guest:false
-            } 
-        case LOAD_USER:
-            return{...state,
+                guest:false,
                 name:action.payload.name,
                 userType:action.payload.userType,
                 address:action.payload.address,
-            }
+            } 
+       
         case LOGIN_USER_FAILED:
             return initialState;
         case LOGOUT_USER_FAILED:

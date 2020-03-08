@@ -2,11 +2,9 @@
     a{
      text-decoration:none !important;
      }
-     h1,h2,h3{
-     font-family: 'Kaushan Script', cursive;
-     }
-      .myform{
-        margin: auto;
+
+    .myform{
+    margin: auto;
     position: relative;
     display: -ms-flexbox;
     display: flex;
@@ -27,8 +25,7 @@
      }
      .mybtn{
      border-radius:50px;
-     background-color: rgb(233, 236, 46);
-     color: turquoise;
+   
      }
     
      .login-or {
