@@ -52,6 +52,7 @@ const Login = (props)=>{
                <h6 className='d-inline'>Login with Google</h6></Button>
            </div>
            {props.hideSignup?<></>:
+           
            <div className="form-group">
               <p className="text-center">
                  Don't have account? 
