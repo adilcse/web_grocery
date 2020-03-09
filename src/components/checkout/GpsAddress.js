@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Button } from 'react-bootstrap';
 import { Map, GoogleApiWrapper, Marker } from 'google-maps-react';
+import { getAddressByLatLng } from '../../app/helper/getAddressByLatLng';
 const GpsAddress=(props)=>{
     const [marker,setMarker]=useState(false);
     const [center,setCenter]=useState({ lat: 20.3423744, lng: 85.8161152});
@@ -20,11 +21,13 @@ const GpsAddress=(props)=>{
        * get user's gps address when button is clicked.
        */
     const getLocation=()=>{
+     
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(pos=>{
                 setCenter( {lat:pos.coords.latitude,
                     lng:pos.coords.longitude});
                 setMarker(pos.coords);
+                console.log('getting location')
                 getAddress({latitude:pos.coords.latitude,longitude:pos.coords.longitude});
 
                
@@ -39,25 +42,8 @@ const GpsAddress=(props)=>{
      * @param {*} latLng latitude and longitude of location
      */
     const getAddress=(latLng)=>{
-        fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=
-        ${latLng.latitude+','+latLng.longitude}
-        &key=${process.env.REACT_APP_MAP_API_KEY}`)
-        .then(res=>{
-            return res.json()
-        }).then(res=>{
-            console.log(res);
-            if(res.status==='OK'){
-                for(let i=0;i<res.results.length;i++){
-                    let element=res.results[i];
-                    if(element.types.includes('street_address')
-                    ||element.types.includes("point_of_interest")
-                    ||element.types.includes("route")){
-                        setAddress(element);
-                        break;
-                    }
-                    
-                }
-            }
+        getAddressByLatLng(latLng).then(address=>{
+         setAddress(address);
         })
     }
     /**
