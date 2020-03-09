@@ -6,9 +6,16 @@ import { searchProduct } from "../reducers/SearchReducer";
 import { userLogin } from "../reducers/UserReducer";
 import {CheckoutReducer} from '../reducers/CheckoutReducer';
 import {getOrders} from '../reducers/OrderReducer';
+import {UserLocation} from '../reducers/LocationReducer';
  const Store=()=>{
     const logger= createLogger();
-    const reducers=combineReducers({addItemsToCart,searchProduct,userLogin,CheckoutReducer,getOrders,CatagoryReducer});
+    const reducers=combineReducers({addItemsToCart,
+                                    searchProduct,
+                                    userLogin,
+                                    CheckoutReducer,
+                                    getOrders,
+                                    CatagoryReducer,
+                                    UserLocation});
     const store = createStore(reducers,applyMiddleware(thunkMiddleware, logger));
     return store;
 
