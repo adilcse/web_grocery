@@ -1,19 +1,17 @@
-import React, { useState } from "react";
+import React from "react";
 import ProductCards from "../components/productCard/ProductCards";
 import Slider from "../components/Slider";
 import CatagoryList from "../components/catagory/CatagoryList";
 
-import { useSelector, useDispatch } from "react-redux";
-import { getUserLocation } from "../redux/actions/LocationAction";
+import { useSelector } from "react-redux";
+
 import { Alert } from "react-bootstrap";
-let loaded=false;
+/**
+ * home user page which dispays adds and some product to the user.
+ */
 const Home=()=>{
-    const dispatch=useDispatch();
+   
     const location=useSelector(state=>state.UserLocation)
-    if(!loaded){
-        loaded=true;
-    getUserLocation(dispatch);
-  }
     return(
         <>
         

@@ -8,8 +8,8 @@ import {
   import { useDispatch } from "react-redux";
 import { Logout as LogoutAction} from "../../redux/actions/UserAction";
 import Nav from "../../sections/header/Nav";
+import { getUserLocation } from "../../redux/actions/LocationAction";
 const Catagory=lazy(()=>import('../../containers/Catagory'));
-const SellerLogin=lazy(()=>import( "../../containers/seller/SellerLogin"));
 const Home = lazy(() => import('../../containers/Home'));
 const SearchPage=lazy(()=>import('../../containers/SearchPage'));
 const Signin=lazy(()=>import('../../containers/Signin'));
@@ -18,9 +18,13 @@ const Cart=lazy(()=>import('../../containers/Cart'));
 const Checkout=lazy(()=>import('../../containers/Checkout'));
 const MyOrders=lazy(()=>import('../../containers/MyOrders'));
 const Profile=lazy(()=>import('../../containers/Profile'));
-
+let loaded=false;
 const HomeUserRoutes=()=>{
     const dispatch=useDispatch();
+    if(!loaded){
+        loaded=true;
+    getUserLocation(dispatch);
+  }
     const Logout=()=>{
         LogoutAction(dispatch);
         return <Redirect to='/Home'/>
@@ -31,7 +35,6 @@ return(
         <Nav/>
           <Switch>
             <Suspense fallback={<Loading size={100}/>}>
-                <Route path='./seller' component={SellerLogin}/>
                 <Route path='/Home' component={Home} />
                 <Route path='/Search/:id' component={SearchPage}/>
                 <Route path='/signin' component={Signin}/>

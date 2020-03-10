@@ -2,11 +2,26 @@ import React, { useState } from 'react';
 import { Button } from 'react-bootstrap';
 import { Map, GoogleApiWrapper, Marker } from 'google-maps-react';
 import { getAddressByLatLng } from '../../app/helper/getAddressByLatLng';
+import { useSelector } from 'react-redux';
+let oldLocation=true;
+/**
+ * get gps address
+ * @param {*} props 
+ */
 const GpsAddress=(props)=>{
     const [marker,setMarker]=useState(false);
-    const [center,setCenter]=useState({ lat: 20.3423744, lng: 85.8161152});
+   
     const[myAddress,setMyAddress]=useState(false);
     const [fullAddress,setFullAddress]=useState({});
+    const myLocation=useSelector(state=>state.UserLocation.location);
+    const [center,setCenter]=useState({  lat:22.241497, lng: 84.861948});
+    if(oldLocation!==myLocation){
+        setCenter( {lat:myLocation.latitude,
+                     lng:myLocation.longitude})
+        oldLocation=myLocation;
+
+    }
+    
     const buttonStyle={
         minHeight:'500px',
         height:'100%'
@@ -21,17 +36,12 @@ const GpsAddress=(props)=>{
        * get user's gps address when button is clicked.
        */
     const getLocation=()=>{
-     
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(pos=>{
-                setCenter( {lat:pos.coords.latitude,
-                    lng:pos.coords.longitude});
-                setMarker(pos.coords);
-                console.log('getting location')
-                getAddress({latitude:pos.coords.latitude,longitude:pos.coords.longitude});
-
-               
-            });
+        if (myLocation) {
+            setCenter({lat:myLocation.latitude,
+                lng:myLocation.longitude});
+            setMarker(myLocation);
+            getAddress(myLocation);
+         
           } else { 
            console.log("Geolocation is not supported by this browser.");
           }

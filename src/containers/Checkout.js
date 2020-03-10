@@ -35,8 +35,7 @@ if(!userName &&currentTab!==LOGIN){
     setCurrentTab(ADDRESS);
 }
 //set user address
-console.log(addressChanged,addressSet);
-console.log(fullAddress);
+
 if(!addressChanged && !addressSet){
     console.log('seting address')
     if(userAddress.name){
