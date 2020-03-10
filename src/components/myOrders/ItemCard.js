@@ -1,5 +1,6 @@
 import React from "react";
 import { Row,  Media, Col } from "react-bootstrap";
+import { Link } from "react-router-dom";
 const ItemCard=(props)=>{
     const{items}=props;
     if(items && items.length>0)
@@ -19,7 +20,7 @@ const ItemCard=(props)=>{
                             <Media.Body className="text-left">
                                 <Row>
                                     <Col md='6' xs='12'>
-                                    <h5>{item.name}</h5>
+                                    <h5><Link to={`/Product/${item.id}`}>{item.name}</Link></h5>
                                     <h6 className='text-muted'>Catagory : {item.catagory}</h6>
                                     </Col>
                                     <Col md='3' xs='12'>

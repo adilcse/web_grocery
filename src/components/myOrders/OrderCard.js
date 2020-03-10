@@ -9,6 +9,7 @@ let items=[];
 const OrderCard=(props)=>{
     const{order}=props;
     const [loaded,setLoaded]=useState(false);
+  
     const getIds=()=>{
         let ids=[];
         order.item.forEach(element => {
@@ -19,14 +20,15 @@ const OrderCard=(props)=>{
     if(!loaded){
         let ids=getIds();
         getItemsByIds(ids).then((res) => {
-            
              items=[];
              order.item.forEach((item)=>{
-              let product= res.find((element)=>{
+              let data= res.find((element)=>{
                return item.id===element.id
                });
-              let data=product.data;
-                items.push({name:data.name,
+              
+                items.push({
+                            id:data.id,
+                            name:data.name,
                             image:data.image,
                             catagory:data.catagory,
                             price:item.price,
@@ -42,7 +44,7 @@ const OrderCard=(props)=>{
                     <HeaderCard orderedOn={order.orderedOn} deleveredOn={order.deleveredOn}/>
                 </Card.Header>
             <Card.Body>
-            <ItemCard items={items}/>
+            <ItemCard items={items} />
             <StatusCard address={order.address} 
                         paymentMode={order.paymentMode} 
                         total={order.total}
