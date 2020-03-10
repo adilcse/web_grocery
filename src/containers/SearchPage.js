@@ -4,7 +4,9 @@ import { useSelector } from "react-redux";
 import { searchProductInDb } from "../app/helper/searchProductInDb";
 import CardList from "../components/productCard/CardList";
 let oldId=null;
+document.title='Search';
 const SearchPage=()=>{
+
 let {id} = useParams();
 const [searchItems,setSearchItems]=useState([]);
 const [loaded,setLoaded]=useState(false);

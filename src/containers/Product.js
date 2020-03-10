@@ -5,6 +5,7 @@ import { db } from '../firebaseConnect';
 import Item from '../components/item/Item';
 import { getItemFromDb } from '../app/helper/getItemFromDb';
 let previousId;
+document.title='product';
  const Product=()=>{
    const {id}=useParams();
    const [loaded,setLoaded]=useState(false);
@@ -23,6 +24,7 @@ let previousId;
     setLoaded(true);
    }
    if(!loaded ||id!==previousId){  
+    
        previousId=id;
       getProduct(id);
       return(
@@ -30,10 +32,11 @@ let previousId;
       )
     }
    else{
-       if(item)
-    return(
+       if(item){
+        document.title=item.name?item.name:'product';
+        return(
         <Item item={item} id={id}/>
-    ) 
+    ) }
     else
     return(
         <h2>

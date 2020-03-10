@@ -13,7 +13,7 @@ export const getUserLocation=(dispatch)=>{
           }else{
               lastTimestamp=position.timestamp;
           }
-            if(secondsDifference>30){
+            if(secondsDifference>10){
                 dispatch({type:SET_CURRENT_LOCATION_SUCCESS,payload:position.coords});
                 dispatch({type:SET_CURRENT_ADDRESS_PENDING});
                 getAddressByLatLng(position.coords).then(address=>{

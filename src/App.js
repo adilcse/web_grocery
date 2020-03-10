@@ -6,7 +6,6 @@ import {
   BrowserRouter as Router
 } from "react-router-dom";
 import Loading from './components/Loading';
-import GpsAddress from './components/checkout/GpsAddress';
 
 const HomeUserRoutes=lazy(()=>import('./app/routes/HomeUserRoutes'));
 

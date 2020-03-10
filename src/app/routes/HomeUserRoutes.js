@@ -21,6 +21,7 @@ const Profile=lazy(()=>import('../../containers/Profile'));
 let loaded=false;
 const HomeUserRoutes=()=>{
     const dispatch=useDispatch();
+    document.title='welcome';
     if(!loaded){
         loaded=true;
     getUserLocation(dispatch);
@@ -32,6 +33,7 @@ const HomeUserRoutes=()=>{
 return(
 
       <div className="App text-center">
+       
         <Nav/>
           <Switch>
             <Suspense fallback={<Loading size={100}/>}>

@@ -80,7 +80,6 @@ firebase.auth().createUserWithEmailAndPassword(email, password)
 //check user loggedin Status
 export const LoginStatus=(dispatch)=>{
   loadCatagory(dispatch);
-  console.log('status pending')
   dispatch({ type: LOGIN_USER_PENDING});
   firebase.auth().onAuthStateChanged(function(user) {
     if (user) {

@@ -5,8 +5,9 @@ import { useSelector, useDispatch } from 'react-redux';
 import {updateAddress} from '../redux/actions/CheckoutAction';
 import ViewProfile from '../components/profile/ViewProfile';
 import ErrorMessage from '../app/helper/ErrorMessage';
-
+document.title='Profile';
 const Profile=()=>{
+
   const [showPayment, setShowPayment] = useState(false);
   const [currentTab,setCurrentTab]=useState('viewAddress')
   const user=useSelector(state=>state.userLogin);

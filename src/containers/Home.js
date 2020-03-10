@@ -9,6 +9,7 @@ import { Alert } from "react-bootstrap";
 /**
  * home user page which dispays adds and some product to the user.
  */
+document.title='Home';
 const Home=()=>{
    
     const location=useSelector(state=>state.UserLocation)

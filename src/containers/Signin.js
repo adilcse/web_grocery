@@ -1,6 +1,7 @@
 import React from 'react';
 import LoginRegister from '../components/signin/LoginRegister';
 const Signin=()=>{ 
+      document.title='Signin';
 return(
        <div className="container">
         <div className="row">

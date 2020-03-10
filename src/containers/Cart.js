@@ -14,6 +14,7 @@ import { Link } from 'react-router-dom';
  * it renders all the items in the cart and the total price user have to pay
  */
 const Cart =()=>{
+    document.title='my Cart';
     const userId=useSelector(state=>state.userLogin.userId);
     const cart=useSelector(state=>state.addItemsToCart.item); 
     const dispatch=useDispatch();
