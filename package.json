@@ -10,6 +10,8 @@
     "algoliasearch": "^4.0.3",
     "bootstrap": "^4.4.1",
     "firebase": "^7.8.2",
+    "fuse.js": "^5.0.2-beta",
+    "geofirestore": "^3.4.1",
     "google-maps-react": "^2.0.2",
     "lodash": "^4.17.15",
     "react": "^16.12.0",

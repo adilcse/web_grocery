@@ -39,7 +39,7 @@ return(
     <Link to={`/Product/${id}`}>
     <Cardboot.Title><div className="title  font-weight-bold">{source.name}</div></Cardboot.Title>
     <Cardboot.Text style={{fontSize:'1.5rem'}}>
-  <i><small><strike>MRP ₹{Math.floor(parseInt(source.price)*1.1)}</strike></small> </i>₹{source.price}
+  <i><small><strike>MRP ₹{source.MRP}</strike></small> </i>₹{source.price}
     </Cardboot.Text>
     </Link>
     </Cardboot.Body>

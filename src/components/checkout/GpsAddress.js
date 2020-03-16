@@ -15,11 +15,15 @@ const GpsAddress=(props)=>{
     const [fullAddress,setFullAddress]=useState({});
     const myLocation=useSelector(state=>state.UserLocation.location);
     const [center,setCenter]=useState({  lat:22.241497, lng: 84.861948});
+    const [gpsEnabled,setGpsEnabled]=useState(myLocation?true:false);
+  
     if(oldLocation!==myLocation){
+       myLocation?setGpsEnabled(true):setGpsEnabled(false);
+       oldLocation=myLocation;
+       if(!myLocation)
+        return;
         setCenter( {lat:myLocation.latitude,
                      lng:myLocation.longitude})
-        oldLocation=myLocation;
-
     }
     
     const buttonStyle={
@@ -61,7 +65,6 @@ const GpsAddress=(props)=>{
      * @param {*} address address by fetch call to map api
      */
     const setAddress=(address)=>{
-        console.log(address)
         let fullAddress={};
         address.address_components.forEach(element => {
             if(element.types.includes('locality')){
@@ -92,7 +95,6 @@ const GpsAddress=(props)=>{
             else if(element.types.includes('postal_code')){
                 fullAddress.pin=element.long_name;
             }
-
         });
         fullAddress.formatted_address=address.formatted_address;
         setMyAddress(address.formatted_address);
@@ -139,7 +141,9 @@ const GpsAddress=(props)=>{
     }
     }
    
-   
+    if(!gpsEnabled){
+        return <h2>Gps is not set</h2>
+    } 
 return(
     <div style={buttonStyle}>
         <Button className='mt-4 mb-3'onClick={getLocation}>

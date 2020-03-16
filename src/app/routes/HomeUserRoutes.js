@@ -25,6 +25,7 @@ const HomeUserRoutes=()=>{
     if(!loaded){
         loaded=true;
     getUserLocation(dispatch);
+    
   }
     const Logout=()=>{
         LogoutAction(dispatch);

@@ -21,4 +21,7 @@ export const INPUT_ALTERNATE='INPUT_ALTERNATE';
 
 export const PAYMENT_METHOD_COD='COD';
 export const ALGOLIA_INDEX_NAME='product_name';
+export const ALGOLIA_SELLER_INDEX='sellers';
 
+export const AVAILABLE='AVAILABLE';
+export const NOT_AVAILABLE='NOT_AVAILABLE';

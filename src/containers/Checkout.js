@@ -90,9 +90,7 @@ const paymentStatus=(status)=>{
  * @param {*}address uses address by gps and google api call
  */
 const setAddressByGps=(address)=>{
-    console.log(fullAddress);
     setFullAddress({...fullAddress,...address});
-    console.log(fullAddress);
     setAddressTab('enterAddress')
 }
 /**

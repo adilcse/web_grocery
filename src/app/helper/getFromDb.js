@@ -7,7 +7,7 @@ export const getFromDb=(query)=>{
     .then(function(querySnapshot) {
         var items=[];
         querySnapshot.forEach(function(doc) {
-            items.push(doc.data());
+            items.push({...doc.data(),id:doc.id,MRP:doc.data().price,price:Math.floor(parseInt(doc.data().price)*(1-doc.data().discount/100))});
         });
         return items;
     })

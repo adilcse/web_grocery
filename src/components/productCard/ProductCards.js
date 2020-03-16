@@ -2,9 +2,8 @@ import React,{useState} from 'react';
 
 import Loading from '../Loading';
 
-import { getItemsByCatagory } from '../../app/helper/getItemsByCatagory';
 import CardList from './CardList';
-let loading=false;
+import { useSelector } from 'react-redux';
 let type=null;
 let source=[];
 /**
@@ -14,34 +13,35 @@ let source=[];
 const ProductCards =(props)=>{
 
     const[loaded,setLoaded]=useState(false); 
-
+    const sellers=useSelector(state=>state.sellers);
   /**
    * loads item from database
    * @param {catagory} catagory to dispay
    */
-    const loadItem=(catagory)=>{    
-        if(!loading){
-           loading=true;
-           getItemsByCatagory(catagory).then((res)=>{
-            source=res;
-            loading=false;
-            setLoaded(true); 
+    const loadItem=(catagory)=>{   
+        if(!sellers.productLoading && sellers.productLoaded){
+           if(catagory==='all'){
+            source=sellers.products;
+           }else{
+               source=[];
+            sellers.products.forEach(element => {
+                if(element.catagory.includes(catagory)){
+                    source.push(element);
+                }
+            });
+
            }
-           ).catch(e=>{
-            loading=false;
-            setLoaded(true);
-           })
-           
+           setLoaded(true);
       }
+      
     }
-  
+
     //if catagory is changed it loads the data
-    if(type!==props.catagory){
+    if(type!==props.catagory && sellers.loaded){
         type=props.catagory;
-        loadItem(props.catagory);
-        setLoaded(false);
+        loadItem(props.catagory); 
     }
-   if(!loaded && source.length<1){
+   if(sellers.productLoaded && !loaded){
     loadItem(props.catagory);
     return(
        <Loading size={120}/>

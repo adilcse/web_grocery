@@ -7,6 +7,7 @@ import { userLogin } from "../reducers/UserReducer";
 import {CheckoutReducer} from '../reducers/CheckoutReducer';
 import {getOrders} from '../reducers/OrderReducer';
 import {UserLocation} from '../reducers/LocationReducer';
+import {sellers} from '../reducers/GetSellerReducer';
  const Store=()=>{
     const logger= createLogger();
     const reducers=combineReducers({addItemsToCart,
@@ -15,7 +16,8 @@ import {UserLocation} from '../reducers/LocationReducer';
                                     CheckoutReducer,
                                     getOrders,
                                     CatagoryReducer,
-                                    UserLocation});
+                                    UserLocation,
+                                    sellers});
     const store = createStore(reducers,applyMiddleware(thunkMiddleware, logger));
     return store;
 
