@@ -27,7 +27,7 @@ const Home=()=>{
         <Slider/>
         <CatagoryList className='mt-3'/>
         <h2 className='text-left'>Catagory : ALL</h2>
-        <ProductCards catagory='all'/>
+        <ProductCards max={10}/>
         </>
     )
 }

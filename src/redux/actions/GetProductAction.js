@@ -12,7 +12,6 @@ const index = client.initIndex(ALGOLIA_SELLER_INDEX);
  */
 export const getNearbySeller=(dispatch,location)=>{
 dispatch({type:GET_SELLERS_PENDING})
-console.log(location)
 index.search('', {
     aroundLatLng: location.latitude+','+location.longitude,
     aroundRadius: 10*1000  // in meters

@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { Button } from 'react-bootstrap';
-import { Map, GoogleApiWrapper, Marker } from 'google-maps-react';
+import { Map, GoogleApiWrapper, Marker, InfoWindow } from 'google-maps-react';
 import { getAddressByLatLng } from '../../app/helper/getAddressByLatLng';
 import { useSelector } from 'react-redux';
+import { getPath } from '../../app/helper/getPath';
 let oldLocation=true;
 /**
  * get gps address
@@ -10,13 +11,17 @@ let oldLocation=true;
  */
 const GpsAddress=(props)=>{
     const [marker,setMarker]=useState(false);
-   
+    
     const[myAddress,setMyAddress]=useState(false);
     const [fullAddress,setFullAddress]=useState({});
     const myLocation=useSelector(state=>state.UserLocation.location);
     const [center,setCenter]=useState({  lat:22.241497, lng: 84.861948});
     const [gpsEnabled,setGpsEnabled]=useState(myLocation?true:false);
-  
+    const [activeMarker,setActiveMarker]=useState({});
+    const [showingInfoWindow,setShowingInfoWindow]=useState(false);
+    const [selectedPlace,setSelectedPlace]=useState({});
+    const [isPath,setIsPath]=useState(false);
+    const [path,setPath]=useState([])
     if(oldLocation!==myLocation){
        myLocation?setGpsEnabled(true):setGpsEnabled(false);
        oldLocation=myLocation;
@@ -120,6 +125,12 @@ const GpsAddress=(props)=>{
     </div>
     
     }
+    const AnyReactComponent = ({text}) => <div>{text}</div>;
+    const onMarkerClick=(props, marker, e)=>{
+       setSelectedPlace(props)
+       setActiveMarker(marker)
+       setShowingInfoWindow(true);
+    }
     /**
      * dispay marker in map
      */
@@ -130,6 +141,13 @@ const GpsAddress=(props)=>{
        }
 
     if(marker){
+        //will be done later
+        // if(!isPath){
+        //     props.sellers.map(el=>{
+        //         getPath(el._geoloc,pos);
+        //     }) 
+        // setIsPath(true);
+        // }
         return(
             <Marker position={pos}
             draggable={true}
@@ -162,7 +180,28 @@ return(
         >
             
             {MyLocation()}
-
+            { props.sellers.map((el,i)=>{
+                    return <Marker
+                            key={i}
+                            name={el.name}
+                            address={el.address}
+                           position={el._geoloc}
+                           icon={{
+                            url: "https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678111-map-marker-512.png",
+                            anchor: new props.google.maps.Point(25,25),
+                            scaledSize: new props.google.maps.Size(50,50)
+                          }}
+                          onClick={onMarkerClick}
+                           />}
+            )}
+             <InfoWindow
+          marker={activeMarker}
+          visible={showingInfoWindow}>
+            <div>
+              <h3>{selectedPlace.name}</h3>
+                        <h5>{selectedPlace.address}</h5>
+            </div>
+        </InfoWindow>
             {/* <Polyline path={path} options={{ strokeColor: "#FF0000 " }} /> */}
             </Map>
            

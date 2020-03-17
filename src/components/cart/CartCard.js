@@ -7,11 +7,10 @@ import { db } from '../../firebaseConnect';
  * @param {*} props takes item which is on cart
  */
 const CartCard=(props)=>{
-  const{item}=props.item;
-  const {quantity}=props.item;
+  const{item}=props;
   const {id}=props.item;
   const {userId}=props;
-  const[quant,setQuant]=useState(quantity);
+  const[quant,setQuant]=useState(item.quantity);
  //allow to add only quantity between 1 to 5
  const updateQuant=(element,num)=>{
    if((quant>=5 && num===1)||(quant<=1 && num===-1))

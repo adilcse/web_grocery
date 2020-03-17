@@ -43,8 +43,9 @@ const Cart =()=>{
     const countItems=cart.length;
     let total=0;
     let deleveryCharges=0;
+    console.log(cart)
     cart.forEach(element => {
-        total+=(element.item.price*element.quantity);
+        total+=(element.price*element.quantity);
     });
     total+=deleveryCharges;
   let cardTotalObj={

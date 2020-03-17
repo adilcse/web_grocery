@@ -1,7 +1,7 @@
 import React,{useState} from 'react';
 
 import Loading from '../Loading';
-
+import _ from 'lodash';
 import CardList from './CardList';
 import { useSelector } from 'react-redux';
 let type=null;
@@ -11,7 +11,8 @@ let source=[];
  * @param {'all','vegetables','fruits','oil','masala'} props catagory of items
  */
 const ProductCards =(props)=>{
-
+    let{max}=props;
+    max=max?max:10;
     const[loaded,setLoaded]=useState(false); 
     const sellers=useSelector(state=>state.sellers);
   /**
@@ -20,17 +21,18 @@ const ProductCards =(props)=>{
    */
     const loadItem=(catagory)=>{   
         if(!sellers.productLoading && sellers.productLoaded){
-           if(catagory==='all'){
+           if(!catagory){
             source=sellers.products;
            }else{
                source=[];
             sellers.products.forEach(element => {
-                if(element.catagory.includes(catagory)){
+                let found=_.intersection(catagory,element.catagory);
+                if(found.length>0)
                     source.push(element);
                 }
-            });
-
+            );      
            }
+           source=source.slice(0,max)
            setLoaded(true);
       }
       

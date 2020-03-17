@@ -1,6 +1,7 @@
 import {  CHECKOUT,ORDER_PLACE_PENDING,ORDER_PLACE_FAILED,ORDER_PLACE_SUCCESS, EMPTY_CART,ADDRESS_UPDATED } from "../../app/ActionConstants";
 import { db } from "../../firebaseConnect";
 import firebase from 'firebase';
+import { AVAILABLE } from "../../app/constants";
 export const CheckoutCart=(cart,total)=>({
 type:CHECKOUT,
 payload:cart,
@@ -16,15 +17,21 @@ total:total
 export const PlaceOrder=(address,order,from,userId,dispatch,cartIds,payMode)=>{
     dispatch({type:ORDER_PLACE_PENDING});
     let items=[];
+    for(let i=0;i<order.items.length;i++){
+        if(order.items[i].stock!==AVAILABLE){
+            dispatch({type:ORDER_PLACE_FAILED,payload:'out of stock'});
+            return;
+           } 
+    }
     order.items.forEach(value=>{
-        items.push({id:value.id,
-        quantity:value.quantity,
-        price:value.item.price
+        items.push({
+            id:value.id,
+            sellerId:value.sellerId,
+            quantity:value.quantity,
+            price:value.price
         })
     });
-    console.log(address);
     db.collection("orders").add({
-
         uid:userId,
         item:items,
         total:order.total,

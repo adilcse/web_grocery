@@ -14,7 +14,8 @@ import {
  } from "../../app/ActionConstants";
  import {firebase, db} from '../../firebaseConnect';
 import { getCatagories } from "../../app/helper/getCatagories";
-import { USER_TYPE_LOCAL } from "../../app/constants";
+import { USER_TYPE_LOCAL, AVAILABLE, NOT_AVAILABLE } from "../../app/constants";
+import { getItemsByIds } from "../../app/helper/getItemsByIds";
 /**
  * Tries to signin with given email and password
  * if verifies logsin the user
@@ -117,16 +118,33 @@ export const Logout=(dispatch)=>{
 const loadCart=(dispatch,userId)=>{
   let cart=new Set();
   let item=[];
-
+  let itemIds=[]
   db.collection("user").doc(userId).collection('cart').get().then(function(querySnapshot) {
     querySnapshot.forEach(function(doc) {
         // doc.data() is never undefined for query doc snapshots
       
         cart.add(doc.id);
         item.push(doc.data());
+
     });
-}).then(()=>{
-  dispatch({type:LOAD_CART,payload:cart,item:item})
+    return [...cart];
+}).then((crt)=>{
+  console.log(item);
+  let prod=[];
+  getItemsByIds(crt,'sellerItems',firebase.firestore.FieldPath.documentId()).then(res=>{
+    function merge(array1, array2, prop) {
+      return array2.map(function (item2) {
+          var item1 = array1.find(function (item1) {
+
+              return item1[prop] === item2[prop];
+          });
+          return Object.assign({}, item1, item2,{stock:(item2.stock>0?AVAILABLE:NOT_AVAILABLE)});
+      });
+  }
+    prod=merge(item,res,'id')
+    dispatch({type:LOAD_CART,payload:cart,item:prod})
+  })
+ // 
 });
 }
 /**

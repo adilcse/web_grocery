@@ -28,7 +28,13 @@ const userId=useSelector(state=>state.userLogin.userId);
 const details=useSelector(state=>state.CheckoutReducer);
 const cartIds=useSelector(state=>state.addItemsToCart.cart)
 let userAddress=useSelector(state=>state.userLogin.address);
-
+const sellers=useSelector(state=>state.sellers.ids)
+const sellersId=details.items.map(s=>{
+    return s.sellerId;
+});
+const sellerLocations=sellersId.map(el=>{
+  return sellers.find(element=>element.objectID===el)
+})
 if(!userName &&currentTab!==LOGIN){
     setCurrentTab(LOGIN)
 }else if(userName && currentTab===LOGIN){
@@ -114,7 +120,7 @@ const LeftCard=()=>{
                     <CheckoutCard>
                         <Tabs activeKey={addressTab} id="addressTab" onSelect={k => setAddressTab(k)}>
                             <Tab eventKey="gpsAddress" title="Use my Location" >
-                            <GpsAddress setAddress={setAddressByGps}/>
+                            <GpsAddress setAddress={setAddressByGps} sellers={sellerLocations}/>
                             </Tab>
                             <Tab eventKey="enterAddress" title="Enter Address">
                             <EnterAddress setValidAddress={validateAddress} fullAddress={fullAddress}/>

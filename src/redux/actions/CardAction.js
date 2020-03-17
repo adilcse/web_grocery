@@ -9,19 +9,26 @@ import {
     REMOVE_FROM_GUEST_CART
     } from '../../app/ActionConstants';
 import { db } from '../../firebaseConnect';
-
+/**
+ * add cart detils to database
+ * @param {*} itemId id of item to be loaded in cart
+ * @param {*} item details of item
+ * @param {*} userId userId 
+ * @param {*} quantity quantity of item to be loaded
+ */
 export const addToCart = (itemId,item,userId,quantity=1)=>dispatch=>{
     dispatch({ type: ADD_TO_CART_PENDING});
     if(userId){
+        console.log(item)
         let items={
             id:itemId,
-            item:item,
+            sellerId:item.sellerId,
             quantity:quantity,
             inCart:true
         }
     db.collection("user").doc(userId).collection('cart').doc(itemId).set(items)
     .then(function() {
-        dispatch({ type: ADD_TO_CART_SUCCESS,payload:itemId,item:items,quantity:quantity});
+        dispatch({ type: ADD_TO_CART_SUCCESS,payload:itemId,item:{...item,quantity:quantity}});
         console.log("Document written");
     })
     .catch(function(error) {

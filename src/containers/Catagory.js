@@ -10,7 +10,7 @@ const Catagory=()=>{
 return(
     <Container>
         <h1 className='text-left'>Catagory : {cat}</h1>
-      <ProductCards catagory={cat}/>
+      <ProductCards catagory={[cat]}/>
     </Container>
 )
 }

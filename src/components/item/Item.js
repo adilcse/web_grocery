@@ -17,6 +17,7 @@ const Item =(props)=>{
     const [newItems,setNewItems]=useState(null);
     const [showMsg,setShowMessage]=useState(false); 
     const dispatch = useDispatch();
+    const products=useSelector(state=>state.sellers.products);
     let addToCartButton ={
         style :'warning',
         text : 'Add to Cart',
@@ -58,8 +59,8 @@ const Item =(props)=>{
     }
     const NewArival=()=>{
             if(!newItems){
-             getItemsByTime(2).then(res=>{
-            setNewItems(res);  
+             getItemsByTime(products,7).then(res=>{
+          setNewItems(res);    
         }
         )
         .catch(()=>setNewItems(true));
@@ -133,7 +134,7 @@ const Item =(props)=>{
         <NewArival/>
         <div className="alert alert-dark cntnt"><h3>Shop More</h3></div>
         <div><i className="dropdown-toggle"></i></div>
-        <ProductCards catagory={catagory}/>
+        <ProductCards catagory={catagory} max={3}/>
         
         
         </div>
