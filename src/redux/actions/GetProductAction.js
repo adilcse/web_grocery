@@ -16,7 +16,6 @@ index.search('', {
     aroundLatLng: location.latitude+','+location.longitude,
     aroundRadius: 10*1000  // in meters
   }).then(({ hits }) => {
-    console.log(hits);
     let ids=[];
     hits.forEach(item=>{
         ids.push(item.objectID);

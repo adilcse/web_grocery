@@ -5,11 +5,12 @@ import StatusCard from './StatusCard';
 import { getItemsByIds } from '../../app/helper/getItemsByIds';
 import Loading from '../Loading';
 import HeaderCard from './HeaderCard';
+import {firebase} from '../../firebaseConnect';
 let items=[];
 const OrderCard=(props)=>{
+
     const{order}=props;
     const [loaded,setLoaded]=useState(false);
-  
     const getIds=()=>{
         let ids=[];
         order.item.forEach(element => {
@@ -19,13 +20,12 @@ const OrderCard=(props)=>{
     }
     if(!loaded){
         let ids=getIds();
-        getItemsByIds(ids).then((res) => {
+        getItemsByIds(ids,'sellerItems',firebase.firestore.FieldPath.documentId()).then((res) => {
              items=[];
              order.item.forEach((item)=>{
               let data= res.find((element)=>{
                return item.id===element.id
                });
-              
                 items.push({
                             id:data.id,
                             name:data.name,

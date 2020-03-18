@@ -30,7 +30,16 @@ const GpsAddress=(props)=>{
         setCenter( {lat:myLocation.latitude,
                      lng:myLocation.longitude})
     }
-    
+    if(!isPath && marker && myLocation){
+        console.log(myLocation)
+        props.sellers.forEach(el=>{
+            getPath({lat:myLocation.latitude,lng:myLocation.longitude},el._geoloc).then(res=>{
+                console.log(res)
+            })
+                    
+        })
+        setIsPath(true)
+    }
     const buttonStyle={
         minHeight:'500px',
         height:'100%'
@@ -125,7 +134,7 @@ const GpsAddress=(props)=>{
     </div>
     
     }
-    const AnyReactComponent = ({text}) => <div>{text}</div>;
+   
     const onMarkerClick=(props, marker, e)=>{
        setSelectedPlace(props)
        setActiveMarker(marker)

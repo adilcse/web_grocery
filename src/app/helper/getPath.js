@@ -8,7 +8,8 @@ export const getPath=(origin,destination,type='establishment')=>{
     origin=Object.values(origin).join(",");
     destination=Object.values(destination).join(",");
     let url=`https://maps.googleapis.com/maps/api/directions/json?origin=${origin}&destination=${destination}&key=${process.env.REACT_APP_MAP_API_KEY}`
-    return fetch(url)
+    console.log(url)
+    return fetch(url,{mode:'no-cors'})
         .then(response=>{
             return response.json()
         }).then(res=>{
