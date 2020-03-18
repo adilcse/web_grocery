@@ -6,7 +6,6 @@ import {
   BrowserRouter as Router
 } from "react-router-dom";
 import Loading from './components/Loading';
-
 const HomeUserRoutes=lazy(()=>import('./app/routes/HomeUserRoutes'));
 
 /**

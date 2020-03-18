@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Button } from 'react-bootstrap';
-import { Map, GoogleApiWrapper, Marker, InfoWindow } from 'google-maps-react';
+import { Map, GoogleApiWrapper, Marker, InfoWindow, Polyline } from 'google-maps-react';
 import { getAddressByLatLng } from '../../app/helper/getAddressByLatLng';
 import { useSelector } from 'react-redux';
 import { getPath } from '../../app/helper/getPath';
@@ -30,16 +30,19 @@ const GpsAddress=(props)=>{
         setCenter( {lat:myLocation.latitude,
                      lng:myLocation.longitude})
     }
-    if(!isPath && marker && myLocation){
-        console.log(myLocation)
-        props.sellers.forEach(el=>{
-            getPath({lat:myLocation.latitude,lng:myLocation.longitude},el._geoloc).then(res=>{
+    
+    const drawPolyline=()=>{
+            getPath({lat:myLocation.latitude,lng:myLocation.longitude},props.sellers[0]._geoloc).then(res=>{
                 console.log(res)
-            })
-                    
-        })
-        setIsPath(true)
-    }
+               setPath(res);
+            })          
+        setIsPath(true);
+        console.log(path)
+        }
+    
+    if(!isPath && marker && myLocation){
+        drawPolyline();
+     }
     const buttonStyle={
         minHeight:'500px',
         height:'100%'
@@ -59,7 +62,7 @@ const GpsAddress=(props)=>{
                 lng:myLocation.longitude});
             setMarker(myLocation);
             getAddress(myLocation);
-         
+         drawPolyline();
           } else { 
            console.log("Geolocation is not supported by this browser.");
           }
@@ -122,6 +125,8 @@ const GpsAddress=(props)=>{
         const latLng={latitude:cord.latLng.lat(),longitude:cord.latLng.lng()}
         setMarker(latLng)
         getAddress(latLng);
+      drawPolyline();
+
     }
     /**
      * dispay address and button
@@ -201,7 +206,10 @@ return(
                             scaledSize: new props.google.maps.Size(50,50)
                           }}
                           onClick={onMarkerClick}
-                           />}
+                          
+                           />
+                          
+                            }
             )}
              <InfoWindow
           marker={activeMarker}
@@ -211,7 +219,9 @@ return(
                         <h5>{selectedPlace.address}</h5>
             </div>
         </InfoWindow>
-            {/* <Polyline path={path} options={{ strokeColor: "#FF0000 " }} /> */}
+           {
+             <Polyline path={path} options={{ strokeColor: "#FF0000 " }} />
+           }
             </Map>
            
     </div>

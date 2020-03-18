@@ -31,6 +31,7 @@ const HomeUserRoutes=()=>{
         LogoutAction(dispatch);
         return <Redirect to='/Home'/>
       }
+      
 return(
 
       <div className="App text-center">

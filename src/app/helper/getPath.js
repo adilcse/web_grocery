@@ -4,17 +4,39 @@
  * @param {*} destination cords of final points
  * @param {*} type mode of path
  */
-export const getPath=(origin,destination,type='establishment')=>{
+export const getPath=async(origin,destination,type='establishment')=>{
     origin=Object.values(origin).join(",");
     destination=Object.values(destination).join(",");
-    let url=`https://maps.googleapis.com/maps/api/directions/json?origin=${origin}&destination=${destination}&key=${process.env.REACT_APP_MAP_API_KEY}`
-    console.log(url)
-    return fetch(url,{mode:'no-cors'})
-        .then(response=>{
-            return response.json()
-        }).then(res=>{
-            console.log(res)
-        }).catch(err=>{
-            console.log(err)
-        })
+    let res=await getDirections(origin,destination);
+    if(res.status==='OK'){
+       return res.result.routes[0].overview_path;
+    }
 }
+
+const getDirections=async(startLoc, destinationLoc, wayPoints = [])=> {
+    return new Promise((resolve, reject) => {
+      const waypts = [];
+      if (wayPoints.length > 0) {
+        waypts.push({
+          location: new window.google.maps.LatLng(
+            wayPoints[0].lat,
+            wayPoints[0].lng
+          ),
+          stopover: true
+        });
+      }
+      const DirectionsService = new window.google.maps.DirectionsService();
+      DirectionsService.route(
+        {
+          origin: startLoc,
+          destination: destinationLoc,
+          waypoints: waypts,
+          optimizeWaypoints: true,
+          travelMode: window.google.maps.TravelMode.DRIVING
+        },
+        (result, status) => {
+          resolve({ status, result, wayPoints });
+        }
+      );
+    });
+  }
