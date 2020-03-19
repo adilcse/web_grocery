@@ -1,14 +1,22 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getOrder } from '../redux/actions/OrderAction';
 import ErrorMessage from '../app/helper/ErrorMessage';
 import Loading from '../components/Loading';
 import { Link } from 'react-router-dom';
 import OrdersList from '../components/myOrders/OrdersList';
+import { ORDER } from '../app/constants';
+import TrackDetais from '../components/myOrders/TrackDetails';
 const MyOrders=()=>{
     const dispatch=useDispatch();
     const allOrders=useSelector(state=>state.getOrders);
     const user=useSelector(state=>state.userLogin);
+    const [currentPage,setCurrentPage]=useState(ORDER);
+    const [trackDetails,setTrackDetails]=useState();
+    const changePage=(page,details=null)=>{
+        setTrackDetails(details);
+        setCurrentPage(page);
+    }
     if(user.loggedIn){
         if(!allOrders.loaded && !allOrders.loading && !allOrders.isError){
             getOrder(dispatch,user.userId)
@@ -24,7 +32,12 @@ const MyOrders=()=>{
                 </>
             )
         }else{
-           return <OrdersList orders={allOrders.orders}/>
+            if(currentPage===ORDER)
+           return (
+           <OrdersList orders={allOrders.orders} changePage={changePage}/>
+           )
+           else
+            return(<TrackDetais changePage={changePage} details={trackDetails}/>)
         }
     }else if(user.loggingIn){
         return(

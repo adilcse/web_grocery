@@ -6,11 +6,15 @@ import { getItemsByIds } from '../../app/helper/getItemsByIds';
 import Loading from '../Loading';
 import HeaderCard from './HeaderCard';
 import {firebase} from '../../firebaseConnect';
+import { TRACK } from '../../app/constants';
 let items=[];
 const OrderCard=(props)=>{
 
     const{order}=props;
     const [loaded,setLoaded]=useState(false);
+    const changePage=()=>{
+        props.changePage(TRACK,order);
+    }
     const getIds=()=>{
         let ids=[];
         order.item.forEach(element => {
@@ -49,6 +53,7 @@ const OrderCard=(props)=>{
                         paymentMode={order.paymentMode} 
                         total={order.total}
                         status={order.status}   
+                        track={changePage}
                         />
             </Card.Body>
             </Card>

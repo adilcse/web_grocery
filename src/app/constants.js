@@ -8,6 +8,9 @@ export const USER_TYPE_ADMIN='3';
 export const LOGIN='LOGIN';
 export const ADDRESS='ADDRESS';
 export const PAYMENT='PAYMENT';
+export const ORDER='ORDER';
+export const DETAILS='DETAILS';
+export const TRACK='TRACK';
 //USED FOR USER ADDRESS IN INPUT TAB
 export const INPUT_NAME='INPUT_NAME';
 export const INPUT_NUMBER='INPUT_NUMBER';

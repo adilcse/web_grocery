@@ -2,7 +2,7 @@ import React from 'react';
 import { Container, Row, Col, Button } from 'react-bootstrap';
 const StatusCard=(props)=>{
    
-    let trackButton=<Button>Track Now</Button>
+    let trackButton=<Button onClick={props.track}>Track Now</Button>
 return(
     <Container  >
         <Row className='border-bottom'>

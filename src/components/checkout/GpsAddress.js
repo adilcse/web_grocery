@@ -21,27 +21,31 @@ const GpsAddress=(props)=>{
     const [showingInfoWindow,setShowingInfoWindow]=useState(false);
     const [selectedPlace,setSelectedPlace]=useState({});
     const [isPath,setIsPath]=useState(false);
-    const [path,setPath]=useState([])
+    const [path,setPath]=useState([]);
+    const [currentLocation,setCurrentLocation]=useState(myLocation?{lat:myLocation.latitude,
+        lng:myLocation.longitude}:false)
     if(oldLocation!==myLocation){
        myLocation?setGpsEnabled(true):setGpsEnabled(false);
        oldLocation=myLocation;
        if(!myLocation)
         return;
-        setCenter( {lat:myLocation.latitude,
-                     lng:myLocation.longitude})
+        setCenter(currentLocation)
     }
     
-    const drawPolyline=()=>{
-            getPath({lat:myLocation.latitude,lng:myLocation.longitude},props.sellers[0]._geoloc).then(res=>{
+    const drawPolyline=(cord1,cord2=currentLocation)=>{
+
+        console.log(cord1,cord2)
+            getPath(cord1,cord2).then(res=>{
                 console.log(res)
                setPath(res);
+               setPath(res);
+             
             })          
-        setIsPath(true);
-        console.log(path)
+            setIsPath(true);
         }
     
-    if(!isPath && marker && myLocation){
-        drawPolyline();
+    if(!isPath && marker && currentLocation){
+        drawPolyline(props.sellers[0]._geoloc);
      }
     const buttonStyle={
         minHeight:'500px',
@@ -58,11 +62,12 @@ const GpsAddress=(props)=>{
        */
     const getLocation=()=>{
         if (myLocation) {
-            setCenter({lat:myLocation.latitude,
-                lng:myLocation.longitude});
+            const latLng={lat:myLocation.latitude,
+                lng:myLocation.longitude}
+            setCenter(latLng);
             setMarker(myLocation);
             getAddress(myLocation);
-         drawPolyline();
+         drawPolyline(props.sellers[0]._geoloc,latLng);
           } else { 
            console.log("Geolocation is not supported by this browser.");
           }
@@ -122,11 +127,11 @@ const GpsAddress=(props)=>{
      * @param {*} cord cordinate of user's location
      */
     const markerDraged=(cord)=>{
-        const latLng={latitude:cord.latLng.lat(),longitude:cord.latLng.lng()}
-        setMarker(latLng)
+        const latLng={latitude:cord.latLng.lat(),longitude:cord.latLng.lng()};
+        setCurrentLocation({lat:latLng.latitude,lng:latLng.longitude});
+        setMarker(latLng);
         getAddress(latLng);
-      drawPolyline();
-
+      drawPolyline(props.sellers[0]._geoloc,{lat:latLng.latitude,lng:latLng.longitude});
     }
     /**
      * dispay address and button
@@ -141,6 +146,8 @@ const GpsAddress=(props)=>{
     }
    
     const onMarkerClick=(props, marker, e)=>{
+        console.log(marker.position.lat())
+        drawPolyline({lat:marker.position.lat(),lng:marker.position.lng()});
        setSelectedPlace(props)
        setActiveMarker(marker)
        setShowingInfoWindow(true);
@@ -155,13 +162,6 @@ const GpsAddress=(props)=>{
        }
 
     if(marker){
-        //will be done later
-        // if(!isPath){
-        //     props.sellers.map(el=>{
-        //         getPath(el._geoloc,pos);
-        //     }) 
-        // setIsPath(true);
-        // }
         return(
             <Marker position={pos}
             draggable={true}
@@ -219,9 +219,7 @@ return(
                         <h5>{selectedPlace.address}</h5>
             </div>
         </InfoWindow>
-           {
-             <Polyline path={path} options={{ strokeColor: "#FF0000 " }} />
-           }
+             <Polyline path={path} options={{ strokeColor: "#FF0000 " }} />  
             </Map>
            
     </div>
