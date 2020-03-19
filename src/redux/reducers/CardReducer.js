@@ -1,76 +1,94 @@
-import {ADD_TO_CART} from '../../app/constants';
-import vegs from '../../assets/images/vegs.png';
-import slideimg1 from '../../assets/images/img2.jpeg';
-import slideimg2 from '../../assets/images/img3.jpg';
-import slideimg3 from '../../assets/images/img4.jpg';
+import {
+    ADD_TO_CART_FAILED,
+    ADD_TO_CART_SUCCESS,
+    ADD_TO_CART_PENDING,
+    LOGOUT_USER_SUCCESS,
+    REMOVE_FROM_CART_SUCCESS,
+    REMOVE_FROM_CART_PENDING,
+    LOAD_CART,
+    ADD_TO_GUEST_CART,
+    REMOVE_FROM_GUEST_CART,
+    EMPTY_CART,
+    CATAGORIES_LOADED
+    } from '../../app/ActionConstants';
 
 
 const initialState={
-    source : [
-        {
-            imageurl: vegs,
-            name: 'vegs',
-            price: '500',
-            id : 1,
-            inCart : false
-
-           
-          }, {
-            imageurl: vegs,
-            name: 'maggie',
-            price: '800',
-            id : 2,
-            inCart : false
-           
-          } , {
-            imageurl: vegs,
-            name: 'maggie',
-            price: '800',
-            id : 3,
-            inCart : false
-           
-          } , {
-            imageurl: vegs,
-            name: 'maggie',
-            price: '800',
-            id : 4,
-            inCart : false
-           
-          } ,
-         {
-            imageurl: vegs,
-            name: 'maggie',
-            price: '800',
-            id : 5,
-            inCart : false
-           
-          } 
-    ],
-    slider:[{
-      imageurl : slideimg1
-    },
-    {
-      imageurl : slideimg2
-    },
-    {
-      imageurl : slideimg3
-    }]
+   cart:new Set(),
+    item:[],
+    loading:false,
+    cartLoaded:false,
 }
-export const AddItemsToCart = (state=initialState,action={})=>{
+/**
+ * cart reducers handles all cart releted action
+ * @param {*} state 
+ * @param {*} action 
+ */
+export const addItemsToCart = (state=initialState,action={})=>{
     switch(action.type){
-        case  ADD_TO_CART:
-            const index = state.source.findIndex(function(element){
-                return (element.id == action.payload)
-            }) 
-            let Nstate=[...state.source];
-             Nstate[index]={
-                ...state.source[index],
-                inCart:true
+        case ADD_TO_CART_PENDING:
+            return{...state,loading:true}
+        case  ADD_TO_CART_SUCCESS:
+           { 
+             let Ncart =new Set([...state.cart]);
+             Ncart.add(action.payload);
+             
+             let items=[...state.item];
+             items.push(action.item);
+             return {...state,cart:Ncart,loading:false,item:items,cartLoaded:false};
+        }
+        case ADD_TO_CART_FAILED:
+            return {...state}
+        case REMOVE_FROM_CART_PENDING:
+            return {...state}
+        case REMOVE_FROM_CART_SUCCESS:
+           { 
+             let Ncart =new Set([...state.cart]);
+             Ncart.delete(action.payload);
+             return {...state,cart:Ncart,loading:false,cartLoaded:false} ;
             }
-
-            // console.log(Nstate);
-            return {...state,source :Nstate };
+        case LOGOUT_USER_SUCCESS:
+            return {...state,...initialState};
+        case ADD_TO_GUEST_CART:
+            {
+                let Ncart =new Set([...state.cart]);
+                Ncart.add(action.payload.itemId);
+                let Nitem=[...state.item];
+                Nitem.push(action.payload.item);
+                return{...state,cart:Ncart,item:Nitem,loading:false}
+            }
+        case REMOVE_FROM_GUEST_CART:
+            {
+                let Ncart =new Set([...state.cart]);
+                Ncart.delete(action.payload);
+                let Nitem=[...state.item];
+                Nitem.forEach((element,index)=>{
+                    if(element.id===action.payload){
+                        Nitem.splice(index,1)
+                    }
+                })
+                return{...state,cart:Ncart,item:Nitem,loading:false}
+            }    
+        case LOAD_CART:
+            return {...state,cart:action.payload,item:action.item,loading:false,cartLoaded:true}  ;  
+        case EMPTY_CART:
+            return {...state,...initialState}
+            
         default : 
         return state;
+    }
+}
+
+const initialCatagory={
+    item:[]
+};
+export const CatagoryReducer=(state=initialCatagory,action={})=>{
+    switch(action.type){
+        case CATAGORIES_LOADED:
+            return{...state,
+                item:action.payload
+            }
+        default:
+            return{...state}
     }
 }

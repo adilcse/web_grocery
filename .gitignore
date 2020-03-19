@@ -4,12 +4,15 @@
 /node_modules
 /.pnp
 .pnp.js
+#env file
+.env
 
 #constants file
 /src/assets
 # testing
 /coverage
-
+#firebase configuration file
+firebaseConfig.js
 # production
 /build
 
