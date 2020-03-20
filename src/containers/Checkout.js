@@ -58,7 +58,7 @@ const CheckoutCard=(props)=>{
     return(
         <div className='card'>
         <div className='text-left'>
-            <h3>LogedIn as : {userName}</h3>      
+            <h3>Logged in as : {userName}</h3>      
         </div>
      {props.children}
     </div> 
@@ -103,7 +103,7 @@ const setAddressByGps=(address)=>{
  * display different tabs for checkout
  */
 const LeftCard=()=>{
-    
+
      if(details.total.countItems>=1){
         switch(currentTab){
             case LOGIN: 

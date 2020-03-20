@@ -13,7 +13,6 @@ import { Link, useHistory } from 'react-router-dom';
  * Cart component is a container routed by the cart in navbar
  * it renders all the items in the cart and the total price user have to pay
  */
-let checked=false;
 const Cart =()=>{
     document.title='my Cart';
     let history = useHistory();
@@ -23,6 +22,7 @@ const Cart =()=>{
     const [available,setAvailable]=useState([]);
     const dispatch=useDispatch();
     const [showError,setShowError]=useState(false);
+    const [checked,setChecked]=useState(false);
     const buttonStyle={
         padding : '10px 50px',
         fontSize:'1.5rem',
@@ -37,21 +37,23 @@ const Cart =()=>{
            if(item)
             av.push(item.id);
         });
-        checked=true;
         setAvailable(av);
+        setChecked(true)
         if(av.length!==cartItems.length)
             return false;
         else
             return true;
     }
     if(!checked && cart.length>0) checkItems();
-    console.log(available)
     /**
      * when place order button is clicked 
      * it calculates the total 
      * and dispatches checkout action
      */
     const placeOrder=()=>{
+        //scroll to top
+        document.body.scrollTop = 0; // For Safari
+        document.documentElement.scrollTop = 0;
        if(checkItems(cart,products)){
         setShowError(false);
         let obj=cardTotal();
@@ -70,7 +72,6 @@ const Cart =()=>{
     let total=0;
     let deleveryCharges=0;
     let MRPTotal=0;
-    console.log(cart)
     cart.forEach(element => {
         total+=(element.price*element.quantity);
         MRPTotal+=(element.MRP*element.quantity);
@@ -105,7 +106,6 @@ const removeItem=(id,index)=>{
  * @param {new updated qantity} quantity 
  */
 const updateQuantity=(id,quantity)=>{
-    console.log(id,quantity,cart);
     cart[id].quantity=quantity;
     setCartUpdated(!cartUpdated);
 }
@@ -122,10 +122,10 @@ if(cart.length===0){
     )
 }
 else
-    return(
+    return( 
         <div className="container">
             <div className='row'>
-                <div className='col-md-8'>
+                <div className='col-md-8' style={{overflowY:"scroll",maxHeight:'100vh'}}>
                     {showError?<Alert variant='danger'>One or more item is unavailable . Remove to continue.</Alert>:<></>}
                 <CartList item={cart} 
                 user={userId} 

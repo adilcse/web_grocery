@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './Cart.css';
 import { db } from '../../firebaseConnect';
-let set=false;
+import UpdateQuantitybutton from '../UpdateQuantityButtons';
 /**
  * display cart items
  * @param {*} props takes item which is on cart
@@ -14,9 +14,10 @@ const CartCard=(props)=>{
   const {available}=props;
   const[quant,setQuant]=useState(item.quantity);
   const [av,setAv]=useState(false);
-  if(!set){
+  const [checked,setChecked]=useState(false)
+  if(!checked){
     setAv(available.find(it=>it===item.id));
-    set=true;
+    setChecked(true);
   }
  //allow to add only quantity between 1 to 5
  const updateQuant=(element,num)=>{
@@ -52,18 +53,17 @@ const CartCard=(props)=>{
  }
 return(        
     <div className="row no-gutters">
-      <div className="col-md-4">
-        <img src={item.image} className="card-img" alt={item.name}/>
+      <div className="col-md-4" style={{maxHeight:'200px'}}>
+        <img src={item.image} className="card-img img-thumbnail rounded mh-100"  alt={item.name}/>
       </div>
       <div className="col-md-8">
         <div className="card-body" align="left">
         <Link to={`/Product/${id}`}>  <h4 className="card-title">{item.name} </h4> </Link>
         {!av?<h3>This item is not deleverable, Please remove to continue</h3>:<></>}
           <h4> ₹ {item.price}  only   </h4> 
-          Quantity : <button className="btn btn-success" onClick={(element)=>updateQuant(element.target,1)} >+</button> 
-          <input className="ct text center" type="text" value={quant} readOnly />
-           <button className="btn btn-danger" onClick={(element)=>updateQuant(element.target,-1)}>-</button>
-           <button className="btn btn-warning" onClick={()=>props.removeItem(id,props.index)}>Remove</button> 
+          Quantity : <UpdateQuantitybutton quant={quant} updateQuant={updateQuant}>
+           <button className="btn btn-warning ml-3" onClick={()=>props.removeItem(id,props.index)}>Remove</button> 
+            </UpdateQuantitybutton>
         </div>
       </div> 
     </div>

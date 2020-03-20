@@ -30,3 +30,4 @@ export const AVAILABLE='AVAILABLE';
 export const NOT_AVAILABLE='NOT_AVAILABLE';
 
 export const RADIUS_IN_KM=30;
+export const MAX_ITEM_ALLOWED=5;

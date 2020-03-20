@@ -4,12 +4,12 @@ import { CheckoutCart } from "../../redux/actions/CheckoutAction";
  * @param {pass the dispatch for action} dispatch 
  * @param {item for checkout} source 
  */
-export const AddItemForCheckout=(dispatch,source)=>{
+export const AddItemForCheckout=(dispatch,source,quant)=>{
     let total={
       deleveryCharges:0,
-      countItems:1,
+      countItems:quant,
     }
-    total.total=source.price+total.deleveryCharges;
-   dispatch(CheckoutCart([{...source,quantity:1}],total));
+    total.total=(source.price*quant)+total.deleveryCharges;
+   dispatch(CheckoutCart([{...source,quantity:quant}],total));
   }
   
