@@ -8,7 +8,7 @@ const CartTotal=(props)=>{
     if(!props){
         return(<></>);
     }
-    const{countItems,total,deleveryCharges}=props.item;
+    const{countItems,total,deleveryCharges,discount}=props.item;
 
 const inRupee=(amount)=>{
     return new Intl.NumberFormat('en-IN').format(amount)
@@ -30,7 +30,7 @@ return(
                     </div>
                 </div>
             </div>
-            <div className="_22vQVX">You will save ₹{inRupee(total*0.1)} on this order</div>
+            <div className="_22vQVX">You will save ₹{discount} on this order</div>
         </div>
     </div>
 )

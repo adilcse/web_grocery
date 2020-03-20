@@ -17,7 +17,8 @@ const CartList=(props)=>{
                                     userId={user}
                                     index={index} 
                                     removeItem={props.removeItem}
-                                    updateQuantity={props.updateQuantity}/>
+                                    updateQuantity={props.updateQuantity}
+                                    available={props.available}/>
                 } )
             }
             </div>

@@ -9,7 +9,10 @@ const TrackMap=(props)=>{
     const [center,setCenter]=useState({lat:user.latLng.latitude,lng:user.latLng.longitude});
     const [path,setPath]=useState([]);
     const [currentLocation,setCurrentLocation]=useState(center);
-    console.log(user , seller[0]._geoloc)
+    if(!seller[0] || (user.address && user.latLng)){
+      return(<div> no seller available</div>)
+    }
+ 
     const onMarkerClick=(props, marker, e)=>{
         console.log(marker.position.lat())
        // drawPolyline({lat:marker.position.lat(),lng:marker.position.lng()});

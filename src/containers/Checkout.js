@@ -103,6 +103,7 @@ const setAddressByGps=(address)=>{
  * display different tabs for checkout
  */
 const LeftCard=()=>{
+    
      if(details.total.countItems>=1){
         switch(currentTab){
             case LOGIN: 

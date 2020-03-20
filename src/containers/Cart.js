@@ -6,18 +6,23 @@ import CartList from '../components/cart/CartList';
 import Loading from '../components/Loading';
 import { removeFromCart, removeFromGuestCart } from '../redux/actions/CardAction';
 import { CheckoutCart } from '../redux/actions/CheckoutAction';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 //cart array holds all the items used in cart
 
 /**
  * Cart component is a container routed by the cart in navbar
  * it renders all the items in the cart and the total price user have to pay
  */
+let checked=false;
 const Cart =()=>{
     document.title='my Cart';
+    let history = useHistory();
     const userId=useSelector(state=>state.userLogin.userId);
-    const cart=useSelector(state=>state.addItemsToCart.item); 
+    const cart=useSelector(state=>state.addItemsToCart.item);
+    const products=useSelector(state=>state.sellers.products); 
+    const [available,setAvailable]=useState([]);
     const dispatch=useDispatch();
+    const [showError,setShowError]=useState(false);
     const buttonStyle={
         padding : '10px 50px',
         fontSize:'1.5rem',
@@ -25,15 +30,36 @@ const Cart =()=>{
     }
     const [loaded,setLoaded]=useState(false);
     const [cartUpdated,setCartUpdated]=useState(false);
- 
+    const checkItems=(cartItems=cart,product=products)=>{
+        let av=[];
+        cartItems.forEach(el=>{
+            let item=product.find(item=>item.id===el.id);
+           if(item)
+            av.push(item.id);
+        });
+        checked=true;
+        setAvailable(av);
+        if(av.length!==cartItems.length)
+            return false;
+        else
+            return true;
+    }
+    if(!checked && cart.length>0) checkItems();
+    console.log(available)
     /**
      * when place order button is clicked 
      * it calculates the total 
      * and dispatches checkout action
      */
     const placeOrder=()=>{
+       if(checkItems(cart,products)){
+        setShowError(false);
         let obj=cardTotal();
         dispatch(CheckoutCart(cart,obj));
+        history.push('/checkout/cart');
+    }else{
+        setShowError(true);
+    }
     }
 
    /**
@@ -43,15 +69,19 @@ const Cart =()=>{
     const countItems=cart.length;
     let total=0;
     let deleveryCharges=0;
+    let MRPTotal=0;
     console.log(cart)
     cart.forEach(element => {
         total+=(element.price*element.quantity);
+        MRPTotal+=(element.MRP*element.quantity);
     });
+    let discount=MRPTotal-total;
     total+=deleveryCharges;
   let cardTotalObj={
         countItems:countItems,
         total:total,
-        deleveryCharges:deleveryCharges
+        deleveryCharges:deleveryCharges,
+        discount:discount
     }
     return cardTotalObj;
    }
@@ -96,10 +126,12 @@ else
         <div className="container">
             <div className='row'>
                 <div className='col-md-8'>
+                    {showError?<Alert variant='danger'>One or more item is unavailable . Remove to continue.</Alert>:<></>}
                 <CartList item={cart} 
                 user={userId} 
                 removeItem={removeItem}
                 updateQuantity={updateQuantity}
+                available={available}
                 />
                 </div>
                 <div className='col-md-4'>
@@ -107,11 +139,11 @@ else
                     <CartTotal item={cardTotal()}/>       
                 </div>
                 <div className='row mt-5 mx-auto'>
-                    <Link to='/checkout/cart'>
+                 
                     <button className="btn btn-primary " style={buttonStyle} onClick={placeOrder}>
                         <span>Place Order</span>
                     </button>   
-                </Link>
+               
                 </div>
                 </div>
                 
