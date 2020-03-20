@@ -1,5 +1,3 @@
-import { db } from "../../firebaseConnect"
-import { getFromDb } from "./getFromDb";
 /**
  * returns Promise with items selected from db
  * @param {1-10} limit number of items to fetch
