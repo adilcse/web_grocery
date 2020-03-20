@@ -53,7 +53,7 @@ return(
         <Link to={`/Product/${id}`}>  <h4 className="card-title">{item.name} </h4> </Link>
           <h4> ₹ {item.price}  only   </h4> 
           Quantity : <button className="btn btn-success" onClick={(element)=>updateQuant(element.target,1)} >+</button> 
-          <input className="ct" type="text" value={quant} readOnly />
+          <input className="ct text center" type="text" value={quant} readOnly />
            <button className="btn btn-danger" onClick={(element)=>updateQuant(element.target,-1)}>-</button>
            <button className="btn btn-warning" onClick={()=>props.removeItem(id,props.index)}>Remove</button> 
         </div>
