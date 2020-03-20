@@ -28,3 +28,5 @@ export const ALGOLIA_SELLER_INDEX='sellers';
 
 export const AVAILABLE='AVAILABLE';
 export const NOT_AVAILABLE='NOT_AVAILABLE';
+
+export const RADIUS_IN_KM=30;

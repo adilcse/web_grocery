@@ -44,7 +44,7 @@ if(!userName &&currentTab!==LOGIN){
 
 if(!addressChanged && !addressSet){
     console.log('seting address')
-    if(userAddress.name){
+    if(userAddress){
         setAddressSet(true);
         setFullAddress(userAddress);
     }

@@ -51,7 +51,12 @@ export const removeFromCart=(userId,itemId, dispatch)=>{
 }
 //guest cart
 export const addToGuestCart=(itemId,item,quantity=1)=>dispatch=>{
-    dispatch({type:ADD_TO_GUEST_CART,payload:{itemId:itemId,item:{item,quantity:quantity,id:itemId}}})
+    dispatch(
+        {type:ADD_TO_GUEST_CART,
+            payload:itemId,
+            item:{...item,quantity:quantity}
+        }
+    )
 }
 //remove from guest cart
 export const removeFromGuestCart=(itemId)=>({
