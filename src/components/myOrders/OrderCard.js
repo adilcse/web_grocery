@@ -7,9 +7,9 @@ import Loading from '../Loading';
 import HeaderCard from './HeaderCard';
 import {firebase} from '../../firebaseConnect';
 import { TRACK } from '../../app/constants';
-let items=[];
+import { arrayMergeByObject } from '../../app/helper/arrayMergeByObject';
 const OrderCard=(props)=>{
-
+    const [displayItems,setDisplayitems]=useState(props.order.item)
     const{order}=props;
     const [loaded,setLoaded]=useState(false);
     const changePage=()=>{
@@ -25,20 +25,17 @@ const OrderCard=(props)=>{
     if(!loaded){
         let ids=getIds();
         getItemsByIds(ids,'sellerItems',firebase.firestore.FieldPath.documentId()).then((res) => {
-             items=[];
+             let items=[];
              order.item.forEach((item)=>{
               let data= res.find((element)=>{
                return item.id===element.id
                });
-                items.push({
-                            id:data.id,
-                            name:data.name,
-                            image:data.image,
-                            catagory:data.catagory,
-                            price:item.price,
-                            quantity:item.quantity})
+                items.push({...data,...item})
              })   
-        }).then(()=>setLoaded(true));
+             return items;
+        }).then((items)=>{
+            setDisplayitems(items);
+            setLoaded(true)});
     }
     if(order && loaded){
         return (
@@ -48,7 +45,7 @@ const OrderCard=(props)=>{
                     <HeaderCard orderedOn={order.orderedOn} deleveredOn={order.deleveredOn}/>
                 </Card.Header>
             <Card.Body>
-            <ItemCard items={items} />
+            <ItemCard items={arrayMergeByObject(displayItems,props.order.item,'id')} />
             <StatusCard address={order.address} 
                         paymentMode={order.paymentMode} 
                         total={order.total}

@@ -31,3 +31,9 @@ export const NOT_AVAILABLE='NOT_AVAILABLE';
 
 export const RADIUS_IN_KM=30;
 export const MAX_ITEM_ALLOWED=5;
+
+export const PENDING='PENDING';
+export const ACCEPT='ACCEPTED';
+export const REJECT='REJECTED';
+export const OUT_FOR_DELIVERY='OUT_FOR_DELIVERY';
+export const DELIVERED='DELIVERED';

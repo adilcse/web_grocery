@@ -17,7 +17,7 @@ return(
         <span>All Catagories</span>                    
           <ul className="depart-hover text-center">
               {catagories.map((item,index)=>{
-                  return  <li key={index}><NavLink to={`/catagories/${item.data.id}`}>{item.data.name}</NavLink></li>
+                  return  <li key={index}><NavLink to={`/catagories/${item.data.catId}`}>{item.data.name}</NavLink></li>
               })}
           </ul>
           <IconContext.Provider  value={{ style: {marginLeft:'10px' },size : '1.1em' }}>

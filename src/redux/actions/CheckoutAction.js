@@ -1,7 +1,7 @@
 import {  CHECKOUT,ORDER_PLACE_PENDING,ORDER_PLACE_FAILED,ORDER_PLACE_SUCCESS, EMPTY_CART,ADDRESS_UPDATED } from "../../app/ActionConstants";
 import { db } from "../../firebaseConnect";
 import firebase from 'firebase';
-import { AVAILABLE } from "../../app/constants";
+import { AVAILABLE, PENDING } from "../../app/constants";
 export const CheckoutCart=(cart,total)=>({
 type:CHECKOUT,
 payload:cart,
@@ -28,7 +28,10 @@ export const PlaceOrder=(address,order,from,userId,dispatch,cartIds,payMode)=>{
             id:value.id,
             sellerId:value.sellerId,
             quantity:value.quantity,
-            price:value.price
+            price:value.price,
+            accept:true
+
+
         })
     });
     db.collection("orders").add({
@@ -38,7 +41,7 @@ export const PlaceOrder=(address,order,from,userId,dispatch,cartIds,payMode)=>{
         address:address,
         paymentMode:payMode,
         orderedOn:firebase.firestore.FieldValue.serverTimestamp(),
-        status:'pending'
+        status:PENDING
     })
     .then(function() {
         dispatch({type:ORDER_PLACE_SUCCESS})

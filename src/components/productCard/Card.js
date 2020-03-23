@@ -61,7 +61,7 @@ return(
     <Link to='/Checkout/item'>
       <Button variant="primary card-btn " onClick={()=>AddItemForCheckout(dispatch,source,quant)}>Buy </Button> 
     </Link>
-<Button variant={cardButton.style + " card-btn "+cardButton.active} onClick={()=>props.addItem(id,source)} disabled={cardButton.disabled} >{cardButton.text}</Button> 
+<Button variant={cardButton.style + " card-btn "+cardButton.active} onClick={()=>props.addItem(id,source,quant)} disabled={cardButton.disabled} >{cardButton.text}</Button> 
   </div>
    
  
