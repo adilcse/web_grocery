@@ -128,7 +128,6 @@ const loadCart=(dispatch,userId)=>{
     });
     return [...cart];
 }).then((crt)=>{
-  console.log(item);
   let prod=[];
   getItemsByIds(crt,'sellerItems',firebase.firestore.FieldPath.documentId()).then(res=>{
     function merge(array1, array2, prop) {

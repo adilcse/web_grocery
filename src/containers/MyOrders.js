@@ -32,7 +32,7 @@ const MyOrders=()=>{
                 </>
             )
         }else{
-            if(currentPage===ORDER)
+            if(currentPage===ORDER && allOrders.loaded)
            return (
            <OrdersList orders={allOrders.orders} changePage={changePage}/>
            )

@@ -9,6 +9,8 @@ import { addToCart,addToGuestCart } from '../../redux/actions/CardAction';
 import { AddItemForCheckout } from '../../app/helper/AddItemForCheckout';
 import {Redirect, Link } from 'react-router-dom';
 import { getItemsByTime } from '../../app/helper/getItemsByTime';
+import { MAX_ITEM_ALLOWED } from '../../app/constants';
+import UpdateQuantitybutton from '../UpdateQuantityButtons';
 
 const Item =(props)=>{
     const {name,price,description,image,quantity,catagory}=props.item;
@@ -18,6 +20,7 @@ const Item =(props)=>{
     const [showMsg,setShowMessage]=useState(false); 
     const dispatch = useDispatch();
     const products=useSelector(state=>state.sellers.products);
+    const [quant,setQuant]=useState(1);
     let addToCartButton ={
         style :'warning',
         text : 'Add to Cart',
@@ -34,6 +37,12 @@ const Item =(props)=>{
        addToCartButton.disabled= true;
        addToCartButton.text = 'Added to Cart';
       }
+const updateQuant=(target,value)=>{
+let newQuant=quant+value;
+if(newQuant>0&&newQuant<=MAX_ITEM_ALLOWED){
+  setQuant(newQuant);
+}
+}
       const addItem = () => {
         if(userId)
         dispatch(addToCart(itemId,props.item,userId));
@@ -50,7 +59,7 @@ const Item =(props)=>{
         return <> </>;    
     }
     const checkout=()=>{
-        AddItemForCheckout(dispatch,props.item);
+        AddItemForCheckout(dispatch,props.item,quant);
         setBuy(true);
          
     }
@@ -74,7 +83,8 @@ const Item =(props)=>{
                 <div className="flexcss">
                  <div className="photobanner">
                {newItems.map(item=>{
-                   return <Link key={item.id}    to={`/product/${item.id}`}>
+                   return <Link key={item.id} onClick={()=>{document.body.scrollTop = 0; // For Safari
+                    document.documentElement.scrollTop = 0;}}   to={`/product/${item.id}`}>
                    <img   src={item.image} alt="img1" width='250px' height='250px' />
                    </Link>
                })}    
@@ -90,7 +100,7 @@ const Item =(props)=>{
        
         <div>
            <ErrorMessage/> 
-        <div className="container itm">
+        <div className="container itm mh-100">
             <div className="row">
                 <div className="col-md-1 bkstyl" ></div>
             <div className="col-md-5">
@@ -112,8 +122,8 @@ const Item =(props)=>{
                 <div className="row cntr">
                 <div className="col-sm-3"></div>
                 <div className="col-sm-6">
-                <div className=" btn-group-vertical ">
-               
+                <div className=" btn-group-vertical text-center ">
+                <UpdateQuantitybutton quant={quant} updateQuant={updateQuant}/>
                   <Button variant="primary card-btn " onClick={checkout} > Buy</Button>
              
                 <Button variant={addToCartButton.style + " card-btn "+addToCartButton.active} 

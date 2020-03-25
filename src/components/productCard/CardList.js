@@ -14,11 +14,11 @@ const CardList =(props)=>{
     const [showMsg,setShowMessage]=useState(false); 
     const source=props.items;
 
- const onItemAdded = (itemId,item,userId=userid) => {
+ const onItemAdded = (itemId,item,quant,userId=userid) => {
       if(userId)
-        dispatch(addToCart(itemId,item,userId));
+        dispatch(addToCart(itemId,item,userId,quant));
     else
-    dispatch(addToGuestCart(itemId,item));
+    dispatch(addToGuestCart(itemId,item,quant));
        
   }
   /**

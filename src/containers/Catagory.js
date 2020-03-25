@@ -6,7 +6,7 @@ const Catagory=()=>{
     
     let cat=useParams('cat');
     cat=cat?cat.cat:'all';
-    document.title='catagory'+cat;
+    document.title=cat;
 return(
     <Container>
         <h1 className='text-left'>Catagory : {cat}</h1>

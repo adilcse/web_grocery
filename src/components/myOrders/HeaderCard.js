@@ -6,10 +6,13 @@ const  HeaderCard=(props)=>{
     
     return(
     <Row>
-        <Col className='text-left' xs='12' md='6'>
+        <Col className='text-left' xs='12' md='4'>
         Ordered On : {ordered}
         </Col>
-        <Col className='text-right' xs='12' md='6'>
+        <Col className='text-center' xs='12' md='4'>
+        seller name: {props.sellerName}
+        </Col>
+        <Col className='text-right' xs='12' md='4'>
         Delevered On : {delevered?delevered:'Pending'}
         </Col>
 

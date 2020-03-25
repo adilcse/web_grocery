@@ -52,9 +52,9 @@ export const addItemsToCart = (state=initialState,action={})=>{
         case ADD_TO_GUEST_CART:
             {
                 let Ncart =new Set([...state.cart]);
-                Ncart.add(action.payload.itemId);
+                Ncart.add(action.payload);
                 let Nitem=[...state.item];
-                Nitem.push(action.payload.item);
+                Nitem.push(action.item);
                 return{...state,cart:Ncart,item:Nitem,loading:false}
             }
         case REMOVE_FROM_GUEST_CART:

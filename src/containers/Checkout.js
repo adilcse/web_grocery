@@ -44,7 +44,7 @@ if(!userName &&currentTab!==LOGIN){
 
 if(!addressChanged && !addressSet){
     console.log('seting address')
-    if(userAddress.name){
+    if(userAddress){
         setAddressSet(true);
         setFullAddress(userAddress);
     }
@@ -58,7 +58,7 @@ const CheckoutCard=(props)=>{
     return(
         <div className='card'>
         <div className='text-left'>
-            <h3>LogedIn as : {userName}</h3>      
+            <h3>Logged in as : {userName}</h3>      
         </div>
      {props.children}
     </div> 
@@ -88,7 +88,7 @@ const paymentStatus=(status)=>{
             fullAddress[key]='';
     })
     if(status){
-       PlaceOrder(fullAddress,details,from,userId,dispatch,cartIds,PAYMENT_METHOD_COD);
+       PlaceOrder(dispatch,fullAddress,details,from,userId,cartIds,PAYMENT_METHOD_COD,sellers);
     }
 }
 /**
@@ -103,6 +103,7 @@ const setAddressByGps=(address)=>{
  * display different tabs for checkout
  */
 const LeftCard=()=>{
+
      if(details.total.countItems>=1){
         switch(currentTab){
             case LOGIN: 

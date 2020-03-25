@@ -3,7 +3,7 @@ import { GET_ORDERS_PENDING, GET_ORDERS_SUCCESS, GET_ORDERS_FAILED } from "../..
 
 export const getOrder=(dispatch,userId)=>{
     dispatch({type:GET_ORDERS_PENDING});
-    db.collection("orders").where("uid", "==", userId).orderBy("orderedOn", "desc")
+    db.collection("sellerOrders").where("userId", "==", userId).orderBy("orderedOn", "desc").limit(10)
     .onSnapshot(function(querySnapshot) {
         var orders = [];
         querySnapshot.forEach(function(doc) {
@@ -11,6 +11,7 @@ export const getOrder=(dispatch,userId)=>{
         });
         dispatch({type:GET_ORDERS_SUCCESS,payload:orders});
     },function(error) {
+        console.log(error)
         dispatch({type:GET_ORDERS_FAILED,payload:error});
     });
 
