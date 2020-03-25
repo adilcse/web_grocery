@@ -12,7 +12,6 @@ import { arrayMergeByObject } from '../../app/helper/arrayMergeByObject';
 const OrderCard=(props)=>{
     const [displayItems,setDisplayitems]=useState(props.order.items)
     const{order}=props;
-    console.log(order);
     const [loaded,setLoaded]=useState(false);
     const changePage=()=>{
         props.changePage(TRACK,order);
@@ -38,10 +37,8 @@ const OrderCard=(props)=>{
         }).then((items)=>{
             setDisplayitems(items);
             setLoaded(true)});
-            console.log('getting')
     }
     if(order && loaded ){
-        console.log('render')
         return (
             <CardDeck className='rounded mb-3'>
             <Card>
