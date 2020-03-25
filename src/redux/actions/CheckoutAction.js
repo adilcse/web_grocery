@@ -14,48 +14,83 @@ total:total
  * @param {*} dispatch 
  * @param {'cart','item'} from from where the user is checking out
  */
-export const PlaceOrder=(address,order,from,userId,dispatch,cartIds,payMode)=>{
+export const PlaceOrder=(dispatch,address,order,from,userId,cartIds,payMode,sellers)=>{
+    console.log(sellers)
     dispatch({type:ORDER_PLACE_PENDING});
-    let items=[];
-    for(let i=0;i<order.items.length;i++){
-        if(order.items[i].stock!==AVAILABLE){
-            dispatch({type:ORDER_PLACE_FAILED,payload:'out of stock'});
-            return;
-           } 
+    const sellerOrders=getSellerOrders(order,sellers);
+    const sellerTotal=(item)=>{
+        let tot=0;
+        item.forEach(el=>{
+            tot+=(el.quantity*el.price)
+        });
+        return {
+            total:tot,
+            itemCount:item.length,
+            deliveryCharges:0
+            };
     }
-    order.items.forEach(value=>{
-        items.push({
+    if(sellerOrders){
+        const batch=db.batch();
+        sellerOrders.forEach(ord=>{
+            ord.userId=userId;
+            ord.total=sellerTotal(ord.items);
+            ord.address=address;
+            ord.paymentMode=payMode;
+            ord.orderedOn=firebase.firestore.FieldValue.serverTimestamp();
+            ord.status=PENDING;
+            console.log(ord);
+            const docRef=db.collection("sellerOrders").doc();
+            batch.set(docRef,ord);
+        });
+        batch.commit().then(res=>{
+            dispatch({type:ORDER_PLACE_SUCCESS});
+            updateAddress(dispatch,userId,address);
+            if(from==='cart')
+                emptyCart(dispatch,userId,cartIds);
+        }).catch(error=>{
+            dispatch({ type: ORDER_PLACE_FAILED,payload:error.message});
+        })
+
+    }else{
+        dispatch({type:ORDER_PLACE_FAILED,payload:'out of stock'});
+    }
+}
+/**
+ * convert order to seller wise order and return seller orders
+ * @param {*} order 
+ */
+const getSellerOrders=(order,AllSellers)=>{
+    let sellers=[];
+    let sellerOrders=[];
+    for(let i=0;i<order.items.length;i++){
+        const value=order.items[i];
+        if(value.stock!==AVAILABLE){
+            return false;
+           } 
+           const it={
             id:value.id,
-            sellerId:value.sellerId,
             quantity:value.quantity,
             price:value.price,
             accept:true
-
-
-        })
-    });
-    db.collection("orders").add({
-        uid:userId,
-        item:items,
-        total:order.total,
-        address:address,
-        paymentMode:payMode,
-        orderedOn:firebase.firestore.FieldValue.serverTimestamp(),
-        status:PENDING
-    })
-    .then(function() {
-        dispatch({type:ORDER_PLACE_SUCCESS})
-        updateAddress(userId,address,dispatch);
-        if(from==='cart')
-            emptyCart(userId,cartIds,dispatch);
-        console.log("Document written");
-    })
-    .catch(function(error) {
-        dispatch({ type: ORDER_PLACE_FAILED,payload:error.message});
-        console.error("Error adding document: ", error);
-    });
+        }
+        const details=AllSellers.find(el=>el.objectID===value.sellerId);
+        if(sellers.includes(value.sellerId)){
+            let index=sellerOrders.findIndex(element=>element.sellerId===value.sellerId);
+             sellerOrders[index].items.push(it);
+         }else{
+             let ord={
+                 sellerId:value.sellerId,
+                 sellerDetails:{name:details.name,
+                                address:details.address},
+                 items:[it]
+             }
+             sellers.push(value.sellerId);
+             sellerOrders.push(ord);
+         }
+    }
+    return sellerOrders;
 }
-export const updateAddress=(id,address,dispatch)=>{
+export const updateAddress=(dispatch,id,address)=>{
     db.collection('user').doc(id).set({
         address:address
     })
@@ -69,7 +104,8 @@ export const updateAddress=(id,address,dispatch)=>{
  * empty the cart
  * @param {*} id 
  */
-const emptyCart=(userId,cartIds,dispatch)=>{
+const emptyCart=(dispatch,userId,cartIds)=>{
+    console.log(userId,cartIds)
     var writeBatch = db.batch();
     cartIds.forEach(id=>{
         let documentReference = db.collection("user").doc(userId).collection('cart').doc(id);

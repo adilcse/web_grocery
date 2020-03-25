@@ -8,25 +8,27 @@ import HeaderCard from './HeaderCard';
 import {firebase} from '../../firebaseConnect';
 import { TRACK } from '../../app/constants';
 import { arrayMergeByObject } from '../../app/helper/arrayMergeByObject';
+
 const OrderCard=(props)=>{
-    const [displayItems,setDisplayitems]=useState(props.order.item)
+    const [displayItems,setDisplayitems]=useState(props.order.items)
     const{order}=props;
+    console.log(order);
     const [loaded,setLoaded]=useState(false);
     const changePage=()=>{
         props.changePage(TRACK,order);
     }
     const getIds=()=>{
         let ids=[];
-        order.item.forEach(element => {
+        order.items.forEach(element => {
         ids.push(element.id)
         });
         return ids;
     }
-    if(!loaded){
+    if(!loaded ){ 
         let ids=getIds();
         getItemsByIds(ids,'sellerItems',firebase.firestore.FieldPath.documentId()).then((res) => {
              let items=[];
-             order.item.forEach((item)=>{
+             order.items.forEach((item)=>{
               let data= res.find((element)=>{
                return item.id===element.id
                });
@@ -36,17 +38,22 @@ const OrderCard=(props)=>{
         }).then((items)=>{
             setDisplayitems(items);
             setLoaded(true)});
+            console.log('getting')
     }
-    if(order && loaded){
+    if(order && loaded ){
+        console.log('render')
         return (
             <CardDeck className='rounded mb-3'>
             <Card>
                 <Card.Header>
-                    <HeaderCard orderedOn={order.orderedOn} deleveredOn={order.deleveredOn}/>
+                    <HeaderCard orderedOn={order.orderedOn}
+                                deleveredOn={order.deleveredOn} 
+                                sellerName={order.sellerDetails.name}/>
                 </Card.Header>
             <Card.Body>
-            <ItemCard items={arrayMergeByObject(displayItems,props.order.item,'id')} />
+            <ItemCard items={arrayMergeByObject(displayItems,order.items,'id')} />
             <StatusCard address={order.address} 
+                        sellerDetails={order.sellerDetails}
                         paymentMode={order.paymentMode} 
                         total={order.total}
                         status={order.status}   

@@ -88,7 +88,7 @@ const paymentStatus=(status)=>{
             fullAddress[key]='';
     })
     if(status){
-       PlaceOrder(fullAddress,details,from,userId,dispatch,cartIds,PAYMENT_METHOD_COD);
+       PlaceOrder(dispatch,fullAddress,details,from,userId,cartIds,PAYMENT_METHOD_COD,sellers);
     }
 }
 /**

@@ -11,17 +11,19 @@ let type=null;
  * @param {'all','vegetables','fruits','oil','masala'} props catagory of items
  */
 const ProductCards =(props)=>{
-    let{max}=props;
-    max=max?max:10;
+    
+    const [max,setMax]=useState(props.max?props.max:10)
     const[loaded,setLoaded]=useState(false); 
     const sellers=useSelector(state=>state.sellers);
     const [allItems,setAllItems]=useState([])
     const [loadMore,setLoadMore]=useState(true);
+    const [loading,setLoading]=useState(false);
   /**
    * loads item from database
    * @param {catagory} catagory to dispay
    */
     const loadItem=(catagory)=>{  
+        setLoading(true);
         let source=[]; 
         if(!sellers.productLoading && sellers.productLoaded){
            if(!catagory){
@@ -38,9 +40,10 @@ const ProductCards =(props)=>{
                 }}
             );      
            }
-           source=source.slice(0,max);
-           setAllItems(source);
+           console.log(source,max);
+           setAllItems(source.slice(0,max));
            setLoaded(true);
+           setLoading(false)
       }
       
     }
@@ -58,7 +61,7 @@ const ProductCards =(props)=>{
 const loadButton=()=>{
     if(sellers.loaded && sellers.products.length>allItems.length && loadMore)
     {return <Button variant="primary" onClick={()=>{
-        max+=5;
+        setMax(max+5);
         loadItem(props.catagory);
     }}>Load more</Button>
 }else{
@@ -68,6 +71,7 @@ const loadButton=()=>{
 return (
     <div className='mb-5'>
         <CardList items={allItems}/>
+        {loading?<Loading size={100}/>:<></>}
       {loadButton()}
     </div>
     )
