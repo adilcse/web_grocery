@@ -6,7 +6,8 @@
 .pnp.js
 #env file
 .env
-
+# firebase
+.firebase
 #constants file
 /src/assets
 # testing
