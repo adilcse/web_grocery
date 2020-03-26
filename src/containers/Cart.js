@@ -6,7 +6,7 @@ import CartList from '../components/cart/CartList';
 import Loading from '../components/Loading';
 import { removeFromCart, removeFromGuestCart } from '../redux/actions/CardAction';
 import { CheckoutCart } from '../redux/actions/CheckoutAction';
-import { Link, useHistory } from 'react-router-dom';
+import {  useHistory } from 'react-router-dom';
 //cart array holds all the items used in cart
 
 /**

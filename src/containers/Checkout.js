@@ -33,7 +33,7 @@ const sellersId=details.items.map(s=>{
     return s.sellerId;
 });
 const sellerLocations=sellersId.map(el=>{
-  return sellers.find(element=>element.objectID===el)
+  return sellers.find(element=>element.id===el)
 })
 if(!userName &&currentTab!==LOGIN){
     setCurrentTab(LOGIN)

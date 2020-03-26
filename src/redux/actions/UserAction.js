@@ -136,7 +136,7 @@ const loadCart=(dispatch,userId)=>{
 
               return item1[prop] === item2[prop];
           });
-          return Object.assign({}, item1, item2,{stock:(item2.stock>0?AVAILABLE:NOT_AVAILABLE)});
+          return Object.assign({}, item1, item2,{stock:(item2.stock>0?(item2.stock>10?AVAILABLE:item2.stock):NOT_AVAILABLE)});
       });
   }
     prod=merge(item,res,'id')

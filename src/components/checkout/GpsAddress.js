@@ -45,7 +45,7 @@ const GpsAddress=(props)=>{
         }
     
     if(!isPath && marker && currentLocation){
-        drawPolyline(props.sellers[0]._geoloc);
+        drawPolyline(props.sellers[0].position.geopoint);
      }
     const buttonStyle={
         minHeight:'500px',
@@ -67,7 +67,7 @@ const GpsAddress=(props)=>{
             setCenter(latLng);
             setMarker(myLocation);
             getAddress(myLocation);
-         drawPolyline(props.sellers[0]._geoloc,latLng);
+         drawPolyline(props.sellers[0].position.geopoint,latLng);
           } else { 
            console.log("Geolocation is not supported by this browser.");
           }
@@ -131,7 +131,7 @@ const GpsAddress=(props)=>{
         setCurrentLocation({lat:latLng.latitude,lng:latLng.longitude});
         setMarker(latLng);
         getAddress(latLng);
-      drawPolyline(props.sellers[0]._geoloc,{lat:latLng.latitude,lng:latLng.longitude});
+      drawPolyline(props.sellers[0].position.geopoint,{lat:latLng.latitude,lng:latLng.longitude});
     }
     /**
      * dispay address and button
