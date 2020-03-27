@@ -5,14 +5,16 @@ import StatusCard from './StatusCard';
 import { getItemsByIds } from '../../app/helper/getItemsByIds';
 import Loading from '../Loading';
 import HeaderCard from './HeaderCard';
-import {firebase} from '../../firebaseConnect';
+
 import { TRACK } from '../../app/constants';
 import { arrayMergeByObject } from '../../app/helper/arrayMergeByObject';
+import { useSelector } from 'react-redux';
 
 const OrderCard=(props)=>{
     const [displayItems,setDisplayitems]=useState(props.order.items)
     const{order}=props;
     const [loaded,setLoaded]=useState(false);
+    const {products}=useSelector(state=>state.sellers);
     const changePage=()=>{
         props.changePage(TRACK,order);
     }
@@ -25,7 +27,7 @@ const OrderCard=(props)=>{
     }
     if(!loaded ){ 
         let ids=getIds();
-        getItemsByIds(ids,'sellerItems',firebase.firestore.FieldPath.documentId()).then((res) => {
+        getItemsByIds(ids,products).then((res) => {
              let items=[];
              order.items.forEach((item)=>{
               let data= res.find((element)=>{

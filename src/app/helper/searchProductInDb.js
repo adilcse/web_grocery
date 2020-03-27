@@ -1,21 +1,25 @@
-import { ALGOLIA_INDEX_NAME } from "../constants";
-import algoliasearch from "algoliasearch";
-
-const client = algoliasearch(process.env.REACT_APP_ALGOLIA_APP_ID,process.env.REACT_APP_ALGOLIA_API_KEY);
-const index = client.initIndex(ALGOLIA_INDEX_NAME);
+import Fuse from 'fuse.js';
 /**
  * in searches in algolia search index and gives result as an array
  * returns arrays of results
  * @param {*} value data to search in database
  */
-export const searchProductInDb=(value)=>{
-   return index.search(value,{
-        attributesToRetrieve: ['name', 'price','image','id'],
-        hitsPerPage: 10,
-      }).then(({ hits }) => {
-        return hits;
-      }).catch(err=>{
-          console.log(err);
-          return false;
-      });
+export const searchProductInDb=(products,value)=>{
+  const options = {
+    shouldSort: true,
+    threshold: 0.5,
+    location: 0,
+    distance: 100,
+    minMatchCharLength: 1,
+    keys: [
+     'name','description'
+    ]
+  };
+  const fuse = new Fuse(products, options);
+  let result=fuse.search(value)
+  let items=[];
+  result.forEach(element=>{
+    items.push(element.item);
+  });
+  return items;
 }

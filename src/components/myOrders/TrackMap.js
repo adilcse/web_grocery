@@ -52,7 +52,7 @@ const TrackMap=(props)=>{
         return(
               <Map
           google={props.google}
-          zoom={15}
+          zoom={12}
           style={mapStyles}
           center={center}
           panControl={true}

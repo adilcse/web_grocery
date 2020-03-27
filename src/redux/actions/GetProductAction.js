@@ -2,7 +2,7 @@ import { GET_SELLERS_PENDING, GET_SELLERS_SUCCESS, GET_ALL_PRODUCT_PENDING, GET_
 import * as geofirex from 'geofirex';
 import { firebase, db } from "../../firebaseConnect";
 import {AVAILABLE, NOT_AVAILABLE, RADIUS_IN_KM} from '../../app/constants';
-import { getItemsByIds } from "../../app/helper/getItemsByIds";
+import { getItemsByIdsFromDb } from "../../app/helper/getItemsByIds";
 
 const geo = geofirex.init(firebase);
 /**
@@ -30,7 +30,7 @@ geofirex.get(query).then(res=>{
 
 export const getProductsOfSellers=(dispatch,ids)=>{
     dispatch({type:GET_ALL_PRODUCT_PENDING});
-    let sellerItems=getItemsByIds(ids,'sellerItems','sellerId');
+    let sellerItems=getItemsByIdsFromDb(ids,'sellerItems','sellerId');
     let products=[];
     sellerItems.then(res=>{
         res.forEach(item=>{
