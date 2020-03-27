@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import ProductCards from "../components/productCard/ProductCards";
 import Slider from "../components/Slider";
 import CatagoryList from "../components/catagory/CatagoryList";
@@ -6,13 +6,17 @@ import CatagoryList from "../components/catagory/CatagoryList";
 import { useSelector } from "react-redux";
 
 import { Alert } from "react-bootstrap";
+import { HOME, CHANGE_LOCATION } from "../app/constants";
+import SelectLocation from "../components/SelectLocation";
 /**
  * home user page which dispays adds and some product to the user.
  */
 document.title='Home';
 const Home=()=>{
-   
-    const location=useSelector(state=>state.UserLocation)
+   const [page,setPage]=useState(HOME)
+    const location=useSelector(state=>state.UserLocation);
+
+if(page===HOME)
     return(
         <>
         
@@ -21,6 +25,9 @@ const Home=()=>{
                 <h4>
                  My Location: {location.address}
                 </h4>
+                <h5 onClick={()=>setPage(CHANGE_LOCATION)} style={{ cursor: 'pointer',  textDecoration: 'underline'}}>
+                    change
+                    </h5>
            </Alert>)}
         
        
@@ -30,5 +37,10 @@ const Home=()=>{
         <ProductCards max={10}/>
         </>
     )
+    else{
+        return(
+            <SelectLocation changePage={setPage} location={location}/>
+        )
+    }
 }
 export default Home;

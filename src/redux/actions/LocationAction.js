@@ -18,3 +18,9 @@ export const getUserLocation=(dispatch)=>{
         dispatch({type:SET_CURRENT_LOCATION_FAILED})
     } 
 }
+
+export const changeUserLocation=(dispatch,address,location)=>{
+    dispatch({type:SET_CURRENT_LOCATION_SUCCESS,payload:location});
+    dispatch({type:SET_CURRENT_ADDRESS_SUCCESS,payload:address});
+    getNearbySeller(dispatch,location);
+}
