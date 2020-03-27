@@ -32,7 +32,7 @@ const Register = (props)=>{
       let cpassword=document.getElementById('cpassword');
 
       if(validateField(name) && validateField(email) && validateField(password)){
-         console.log('registering')
+
          if(password.value===cpassword.value){
             cpassword.classList.remove('is-invalid');
             cpassword.classList.add('is-valid');

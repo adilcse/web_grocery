@@ -2,11 +2,13 @@ import {  CHECKOUT,ORDER_PLACE_PENDING,ORDER_PLACE_FAILED,ORDER_PLACE_SUCCESS, E
 import { db } from "../../firebaseConnect";
 import firebase from 'firebase';
 import { PENDING, NOT_AVAILABLE } from "../../app/constants";
-export const CheckoutCart=(cart,total)=>({
-type:CHECKOUT,
-payload:cart,
-total:total
-})
+export const CheckoutCart=(dispatch,cart,total)=>{
+    dispatch({  
+        type:CHECKOUT,
+        payload:cart,
+        total:total,
+        })
+    }
 /**
  * Place order action places the user's order after confirming all the details
  * @param {*} address 
@@ -15,7 +17,7 @@ total:total
  * @param {'cart','item'} from from where the user is checking out
  */
 export const PlaceOrder=(dispatch,address,order,from,userId,cartIds,payMode,sellers)=>{
-    console.log(sellers)
+
     dispatch({type:ORDER_PLACE_PENDING});
     const sellerOrders=getSellerOrders(order,sellers);
     const sellerTotal=(item)=>{
@@ -38,7 +40,7 @@ export const PlaceOrder=(dispatch,address,order,from,userId,cartIds,payMode,sell
             ord.paymentMode=payMode;
             ord.orderedOn=firebase.firestore.FieldValue.serverTimestamp();
             ord.status=PENDING;
-            console.log(ord);
+     
             const docRef=db.collection("sellerOrders").doc();
             batch.set(docRef,ord);
         });
@@ -91,21 +93,23 @@ const getSellerOrders=(order,AllSellers)=>{
     return sellerOrders;
 }
 export const updateAddress=(dispatch,id,address)=>{
-    db.collection('user').doc(id).set({
-        address:address
-    })
-    .then(()=>{
-         dispatch({type:ADDRESS_UPDATED,payload:address})
-    }).catch((err)=>{
-        console.log(err)
-    })
+  if(address.updateAddress)
+        db.collection('user').doc(id).update({
+            address:address,
+            name:address.name   
+        })
+        .then(()=>{
+            dispatch({type:ADDRESS_UPDATED,payload:address})
+        }).catch((err)=>{
+            console.log(err)
+        })
 }
 /**
  * empty the cart
  * @param {*} id 
  */
 const emptyCart=(dispatch,userId,cartIds)=>{
-    console.log(userId,cartIds)
+
     var writeBatch = db.batch();
     cartIds.forEach(id=>{
         let documentReference = db.collection("user").doc(userId).collection('cart').doc(id);

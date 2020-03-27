@@ -15,12 +15,9 @@ import GpsAddress from '../components/checkout/GpsAddress';
 /**
  * it displays checkout page to user
  */
-let addressChanged=false;
 const Checkout=()=>{
 const [currentTab,setCurrentTab]=useState(LOGIN);
 const [addressTab,setAddressTab]=useState('gpsAddress');
-const [fullAddress,setFullAddress]=useState({data:'aaaa'});
-const [addressSet,setAddressSet]=useState(false);
 const dispatch=useDispatch();
 let {from}=useParams('from');
 const userName=useSelector(state=>state.userLogin.userName);
@@ -28,7 +25,8 @@ const userId=useSelector(state=>state.userLogin.userId);
 const details=useSelector(state=>state.CheckoutReducer);
 const cartIds=useSelector(state=>state.addItemsToCart.cart)
 let userAddress=useSelector(state=>state.userLogin.address);
-const sellers=useSelector(state=>state.sellers.ids)
+const sellers=useSelector(state=>state.sellers.ids);
+const [fullAddress,setFullAddress]=useState(userAddress);
 const sellersId=details.items.map(s=>{
     return s.sellerId;
 });
@@ -39,15 +37,6 @@ if(!userName &&currentTab!==LOGIN){
     setCurrentTab(LOGIN)
 }else if(userName && currentTab===LOGIN){
     setCurrentTab(ADDRESS);
-}
-//set user address
-
-if(!addressChanged && !addressSet){
-    console.log('seting address')
-    if(userAddress){
-        setAddressSet(true);
-        setFullAddress(userAddress);
-    }
 }
 
 /**
@@ -71,7 +60,6 @@ const CheckoutCard=(props)=>{
  */
 const validateAddress=(tab,address)=>{
     if(tab){
-     addressChanged=true;
      setFullAddress(address);
      setCurrentTab(PAYMENT);
      }
@@ -82,7 +70,7 @@ const validateAddress=(tab,address)=>{
  * @param {*} status 
  */
 const paymentStatus=(status)=>{
-    console.log(fullAddress)
+   
     Object.keys(fullAddress).forEach(key=>{
         if(!fullAddress[key])
             fullAddress[key]='';

@@ -9,44 +9,40 @@ let oldLocation=true;
  * get gps address
  * @param {*} props 
  */
+
 const GpsAddress=(props)=>{
     const [marker,setMarker]=useState(false);
-    
+    const [locationLoaded,setLocationLoaded]=useState(false);
     const[myAddress,setMyAddress]=useState(false);
     const [fullAddress,setFullAddress]=useState({});
-    const myLocation=useSelector(state=>state.UserLocation.location);
+    const {location,address}=useSelector(state=>state.UserLocation);
     const [center,setCenter]=useState({  lat:22.241497, lng: 84.861948});
-    const [gpsEnabled,setGpsEnabled]=useState(myLocation?true:false);
+    const [gpsEnabled,setGpsEnabled]=useState(location?true:false);
     const [activeMarker,setActiveMarker]=useState({});
     const [showingInfoWindow,setShowingInfoWindow]=useState(false);
     const [selectedPlace,setSelectedPlace]=useState({});
-    const [isPath,setIsPath]=useState(false);
     const [path,setPath]=useState([]);
-    const [currentLocation,setCurrentLocation]=useState(myLocation?{lat:myLocation.latitude,
-        lng:myLocation.longitude}:false)
-    if(oldLocation!==myLocation){
-       myLocation?setGpsEnabled(true):setGpsEnabled(false);
-       oldLocation=myLocation;
-       if(!myLocation)
+    const [currentLocation,setCurrentLocation]=useState(location?{lat:location.latitude,
+        lng:location.longitude}:false)
+    if(oldLocation!==location){
+       location?setGpsEnabled(true):setGpsEnabled(false);
+       oldLocation=location;
+       if(!location)
         return;
         setCenter(currentLocation)
     }
     
     const drawPolyline=(cord1,cord2=currentLocation)=>{
 
-        console.log(cord1,cord2)
-            getPath(cord1,cord2).then(res=>{
-                console.log(res)
-               setPath(res);
-               setPath(res);
-             
-            })          
-            setIsPath(true);
+            if(!(cord1.lat===cord2.lat && cord1.lng===cord2.lng))
+                getPath(cord1,cord2).then(res=>{
+                
+                setPath(res);
+                setPath(res);
+                })          
+           
         }
-    
-    if(!isPath && marker && currentLocation){
-        drawPolyline(props.sellers[0].position.geopoint);
-     }
+
     const buttonStyle={
         minHeight:'500px',
         height:'100%'
@@ -61,13 +57,13 @@ const GpsAddress=(props)=>{
        * get user's gps address when button is clicked.
        */
     const getLocation=()=>{
-        if (myLocation) {
-            const latLng={lat:myLocation.latitude,
-                lng:myLocation.longitude}
+        if (location) {
+            const latLng={lat:location.latitude,
+                lng:location.longitude}
             setCenter(latLng);
-            setMarker(myLocation);
-            getAddress(myLocation);
-         drawPolyline(props.sellers[0].position.geopoint,latLng);
+            setMarker(location);
+            getAddress(location);
+       //  drawPolyline(props.sellers[0].position.geopoint,latLng);
           } else { 
            console.log("Geolocation is not supported by this browser.");
           }
@@ -146,7 +142,6 @@ const GpsAddress=(props)=>{
     }
    
     const onMarkerClick=(props, marker, e)=>{
-        console.log(marker.position.lat())
         drawPolyline({lat:marker.position.lat(),lng:marker.position.lng()});
        setSelectedPlace(props)
        setActiveMarker(marker)
@@ -155,17 +150,22 @@ const GpsAddress=(props)=>{
     /**
      * dispay marker in map
      */
-   const MyLocation=()=>{
+   const LocationMarker=()=>{
+   
        let pos={
         lat:marker.latitude,
         lng:marker.longitude
        }
 
+
     if(marker){
         return(
             <Marker position={pos}
             draggable={true}
+            name='My Location'
+            address={address}
             onDragend={(t,map,coord)=>markerDraged(coord)}
+            onClick={onMarkerClick}
              />
         )
     }else{
@@ -176,30 +176,37 @@ const GpsAddress=(props)=>{
     if(!gpsEnabled){
         return <h2>Gps is not set</h2>
     } 
+    if(!locationLoaded){
+        getLocation();
+        setLocationLoaded(true);
+    }
 return(
     <div style={buttonStyle}>
-        <Button className='mt-4 mb-3'onClick={getLocation}>
-            Get My Location
+        <Button className='mt-4 mb-3'onClick={()=>drawPolyline(props.sellers[0].position.geopoint)}>
+            Get Path
         </Button>
         <div>
             {myAddress?<ViewAddress/>:<></>}
         </div>
         <Map
           google={props.google}
-          zoom={15}
+          zoom={13}
           style={mapStyles}
           center={center}
           initialCenter={center}
           panControl={true}
         >
             
-            {MyLocation()}
+          { LocationMarker()}
             { props.sellers.map((el,i)=>{
                     return <Marker
                             key={i}
                             name={el.name}
                             address={el.address}
-                           position={el._geoloc}
+                           position={{
+                            lat:el.position.geopoint.latitude,
+                            lng:el.position.geopoint.longitude
+                           }}
                            icon={{
                             url: "https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678111-map-marker-512.png",
                             anchor: new props.google.maps.Point(25,25),

@@ -57,7 +57,7 @@ const Cart =()=>{
        if(checkItems(cart,products)){
         setShowError(false);
         let obj=cardTotal();
-        dispatch(CheckoutCart(cart,obj));
+        CheckoutCart(dispatch,cart,obj);
         history.push('/checkout/cart');
     }else{
         setShowError(true);

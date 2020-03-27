@@ -54,7 +54,8 @@ export const GoogleLogin=(dispatch)=>{
     ValidateUser(dispatch,user,'google');
     // ...
   }).catch(function(error) {
-  console.log(error)
+  console.log(error);
+  dispatch({type:LOGIN_USER_FAILED,payload:{...error}});
     // ...
   });
 }

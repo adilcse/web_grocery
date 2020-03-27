@@ -21,7 +21,6 @@ const TrackMap=(props)=>{
     }
     const drawPolyline=(cord1,cord2=currentLocation)=>{
 
-        console.log(cord1,cord2)
             getPath(cord1,cord2).then(res=>{
                 
                setPath(res);

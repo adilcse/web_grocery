@@ -11,22 +11,22 @@ let {id} = useParams();
 const [searchItems,setSearchItems]=useState([]);
 const [loaded,setLoaded]=useState(false);
 let {results,updated}=useSelector(state=>state.searchProduct);
-console.log(oldId,id)
+
 if((!updated && !loaded )|| oldId!==id){
 searchProductInDb(id).then(res=>{
-    console.log('loading from db')
+
     oldId=id;
     setLoaded(true);
     setSearchItems(res);
   
 })
 }else if(updated && !loaded){
-    console.log('loading from store');
+ 
     setLoaded(true);
     setSearchItems(results);
   
 }
-console.log(searchItems );
+
 return(
     <div>
 <h2>Search result : {id}</h2>

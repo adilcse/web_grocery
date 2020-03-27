@@ -12,15 +12,12 @@ const geo = geofirex.init(firebase);
  */
 export const getNearbySeller=(dispatch,location)=>{
 dispatch({type:GET_SELLERS_PENDING})
-console.log('getting sellers')
 const sellers=db.collection('seller');
 const center = geo.point( location.latitude,location.longitude);
 const radius = RADIUS_IN_KM;
 const field = 'position';
 const query = geo.query(sellers).within(center, radius, field);
-console.log(query)
 geofirex.get(query).then(res=>{
-    console.log(res);
     const ids=[];
     res.forEach(el=>{
         ids.push(el.id

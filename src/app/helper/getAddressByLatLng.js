@@ -19,7 +19,6 @@ export const getAddressByLatLng=(latLng)=>{
         }
     })
     .catch(err=>{
-        console.log(err);
         return false;
     })
 }

@@ -27,7 +27,7 @@ const SearchBox=()=>{
      setIsLoading(true);
      if(products.length<1||value.length<1) return setIsLoading(false);
     let result=fuse.search(value)
-    console.log(result);
+
     let items=[];
     result.forEach(element=>{
       items.push({title:element.item.name,
@@ -36,7 +36,7 @@ const SearchBox=()=>{
                   price:element.item.price.toString(),
                   id:element.item.id});
     })
-    console.log(items);
+  
     setResults(items);
     setIsLoading(false);
    
@@ -45,7 +45,7 @@ const SearchBox=()=>{
   const   handleKeyPress = (e)=>{
    
     if(e.key === 'Enter'){
-      console.log(value);
+    
       dispatch(setSearchResults(results));
 
         history.push(`/Search/${value}`)

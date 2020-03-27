@@ -19,7 +19,7 @@ const Home=()=>{
         {location.addressPending?<h2>Loading.....</h2>:(location.addressError?<h2>something went wrong please refresh the page</h2>:
              <Alert variant='primary'>
                 <h4>
-                 you are in : {location.address}
+                 My Location: {location.address}
                 </h4>
            </Alert>)}
         

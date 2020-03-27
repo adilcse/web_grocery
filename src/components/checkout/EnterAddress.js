@@ -57,7 +57,8 @@ const EnterAddress=(props)=>{
   const [city,setCity]=useState(fullAddress?fullAddress.city:'')
   const [state,setState]=useState(fullAddress?fullAddress.state:'')
   const [landmark,setLandmark]=useState(fullAddress?fullAddress.landmark:'')
-  const [alternate,setAlternate]=useState(fullAddress?fullAddress.alternate:'')
+  const [alternate,setAlternate]=useState(fullAddress?fullAddress.alternate:'');
+  const [updateAddressCheckbox,setUpdateAddressCheckbox]=useState(false);
   const [updated,setUpdated]=useState(true);
   const [changed,setChanged]=useState(false);
   const [error,showError]=useState(false)
@@ -101,7 +102,8 @@ const EnterAddress=(props)=>{
         alternate:alternate,
         latLng:props.fullAddress?(props.fullAddress.latLng
               ?new firebase.firestore.GeoPoint(props.fullAddress.latLng.latitude,props.fullAddress.latLng.longitude):''):
-              ''
+              '',
+        updateAddress:updateAddressCheckbox              
       }
    
       props.setValidAddress(true,fullAddress);
@@ -370,6 +372,7 @@ return(
             />
              <Form.Control.Feedback type='invalid'>Enter valid number (Optional)</Form.Control.Feedback>
             </Form.Group>
+            <Form.Check type="checkbox" label="Update my address" id='updateAddress' value={updateAddressCheckbox} onChange={()=>setUpdateAddressCheckbox(!updateAddressCheckbox)}/>
           </Form.Row>
           <Button variant="warning" size='lg' onClick={handleSubmit}>{buttonText?buttonText:'Delever to this Address'}</Button>
           </Form>     
