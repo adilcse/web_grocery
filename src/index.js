@@ -8,7 +8,7 @@ import 'semantic-ui-css/semantic.min.css'
 import './index.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 const store=Store();
-ReactDOM.render(
+ReactDOM.render(     
     <Provider store = {store}>
         <App />
     </Provider>

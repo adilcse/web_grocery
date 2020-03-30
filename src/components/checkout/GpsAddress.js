@@ -24,6 +24,8 @@ const GpsAddress=(props)=>{
     const [path,setPath]=useState([]);
     const [currentLocation,setCurrentLocation]=useState(location?{lat:location.latitude,
         lng:location.longitude}:false)
+    const [locationFetched,setLocationFetched]=useState(false);
+    const [viewBounds,setViewBounds]=useState(false);
     if(oldLocation!==location){
        location?setGpsEnabled(true):setGpsEnabled(false);
        oldLocation=location;
@@ -32,6 +34,50 @@ const GpsAddress=(props)=>{
         setCenter(currentLocation)
     }
     
+         /**
+     * add search bar to map
+     * @param {*} mapProps 
+     * @param {*} map 
+     */
+   const  fetchPlaces=(mapProps, map)=> {
+    getLocation(locationFetched);
+    setLocationFetched(true);
+     if(viewBounds)
+         map.fitBounds(viewBounds);
+     const {google} = mapProps;
+     const input = document.getElementById('searchbox');
+     map.controls[google.maps.ControlPosition.TOP].push(input);
+     var circle = new google.maps.Circle(
+         {center: center, radius: 50*1000});
+       var searchBox = new google.maps.places.SearchBox(input, {
+         bounds: circle.getBounds(),
+         componentRestrictions: {country: 'in'}
+       });
+       searchBox.addListener('places_changed', function() {
+         var places = searchBox.getPlaces();
+         if (places.length === 0) {
+           return;
+         }
+         let bounds = new google.maps.LatLngBounds();
+         places.forEach(function(place) {
+             if (!place.geometry) {
+               console.log("Returned place contains no geometry");
+               return;
+             }
+             setCurrentLocation({lat:place.geometry.location.lat(),lng:place.geometry.location.lng()});
+              setMarker({latitude:place.geometry.location.lat(),longitude:place.geometry.location.lng()});
+              setAddress(place);
+               if (place.geometry.viewport) {
+                 // Only geocodes have viewport.
+                 bounds.union(place.geometry.viewport);
+               } else {
+                 bounds.extend(place.geometry.location);
+               }
+             });
+             setViewBounds(bounds);
+             map.fitBounds(bounds);
+     })
+ }
     const drawPolyline=(cord1,cord2=currentLocation)=>{
 
             if(!(cord1.lat===cord2.lat && cord1.lng===cord2.lng))
@@ -188,6 +234,7 @@ return(
         <div>
             {myAddress?<ViewAddress/>:<></>}
         </div>
+        <input type='text' id='searchbox' className='form-control col-md-4 mt-2' size="30" placeholder="Search place in map"/>
         <Map
           google={props.google}
           zoom={13}
@@ -195,6 +242,7 @@ return(
           center={center}
           initialCenter={center}
           panControl={true}
+          onReady={fetchPlaces}
         >
             
           { LocationMarker()}

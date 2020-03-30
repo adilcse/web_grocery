@@ -40,7 +40,7 @@ const regex={
   pin:/^[0-9]{6}$/,
   locality:/^[0-9a-zA-Z\-, ]{3,}$/,
   city:/^[a-zA-Z\-, ]{3,}$/,
-  alternate:/^[ ]{1}|[0-9]{10}$/,
+  alternate:/^[ ]{0}|[0-9]{10}$/,
   landmark:/^[a-zA-Z0-9\- ]{0,}$/
 }
 

@@ -8,11 +8,56 @@ import {changeUserLocation} from '../redux/actions/LocationAction'
 const SelectLocation=(props)=>{
     const {location,changePage}=props;
     const [marker,setMarker]=useState(location.location);
-
+    const [locationFetched,setLocationFetched]=useState(false);
+    const [viewBounds,setViewBounds]=useState(false);
     const [center,setCenter]=useState({ lat: location.location.latitude, lng:  location.location.longitude});
     const[myAddress,setMyAddress]=useState(location.address);
     const [loaded,setLoaded]=useState(false);
     const dispatch=useDispatch();
+
+       /**
+     * add search bar to map
+     * @param {*} mapProps 
+     * @param {*} map 
+     */
+   const  fetchPlaces=(mapProps, map)=> {
+    getLocation(locationFetched);
+    setLocationFetched(true);
+     if(viewBounds)
+         map.fitBounds(viewBounds);
+     const {google} = mapProps;
+     const input = document.getElementById('searchbox');
+     map.controls[google.maps.ControlPosition.TOP].push(input);
+     var circle = new google.maps.Circle(
+         {center: center, radius: 50*1000});
+       var searchBox = new google.maps.places.SearchBox(input, {
+         bounds: circle.getBounds(),
+         componentRestrictions: {country: 'in'}
+       });
+       searchBox.addListener('places_changed', function() {
+         var places = searchBox.getPlaces();
+         if (places.length === 0) {
+           return;
+         }
+         let bounds = new google.maps.LatLngBounds();
+         places.forEach(function(place) {
+             if (!place.geometry) {
+               console.log("Returned place contains no geometry");
+               return;
+             }
+              setMarker({latitude:place.geometry.location.lat(),longitude:place.geometry.location.lng()});
+              setAddress(place);
+               if (place.geometry.viewport) {
+                 // Only geocodes have viewport.
+                 bounds.union(place.geometry.viewport);
+               } else {
+                 bounds.extend(place.geometry.location);
+               }
+             });
+             setViewBounds(bounds);
+             map.fitBounds(bounds);
+     })
+ }
     const mapStyles = {
        position:'relative',
        width:'100%',
@@ -111,6 +156,7 @@ return(
         <div>
             {myAddress?<ViewAddress/>:<></>}
         </div>
+        <input type='text' id='searchbox' className='form-control col-md-4 mt-2' size="30" placeholder="Search place in map"/>
         <div>
         <Map
           google={props.google}
@@ -119,6 +165,7 @@ return(
           center={center}
           initialCenter={center}
           panControl={true}
+          onReady={fetchPlaces}
         >
             
             {MyLocation()}
