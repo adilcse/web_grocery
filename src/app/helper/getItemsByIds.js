@@ -22,7 +22,7 @@ export const getItemsByIdsFromDb=async(ids,col='sellerItems',key='id')=>{
  * @param {*} products list of prodict to be searched for item
  * @returns Promise with results
  */
-export const getItemsByIds=async(ids,products=[])=>{
+export const getItemsByIds=async(ids,products=[],catagory=[])=>{
     let toSearch=[];
     let result=[];
     ids.forEach(id=>{
@@ -35,8 +35,25 @@ export const getItemsByIds=async(ids,products=[])=>{
     if (toSearch.length>0){
 
         const fromDb=await getItemsByIdsFromDb(ids,'sellerItems',firebase.firestore.FieldPath.documentId())
-        return result.concat(fromDb)}
+        return setCatagory(result.concat(fromDb),catagory)
+    }
     else
-        return result;
+        return setCatagory(result,catagory);
 
+}
+
+const setCatagory=(items,catagory)=>{
+    let result=[];
+    if(catagory.length>0){
+        result=items.map(item=>{
+            const cat=item.catagory.map(cat=>{
+               return catagory.find(c=>c.data.catId===cat).data.name
+            });
+          
+            return {...item,catagory:cat}
+        })
+    }else
+        result=items;
+ 
+    return result;
 }

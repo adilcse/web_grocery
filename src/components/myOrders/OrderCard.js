@@ -15,6 +15,7 @@ const OrderCard=(props)=>{
     const{order}=props;
     const [loaded,setLoaded]=useState(false);
     const {products}=useSelector(state=>state.sellers);
+    const catagory=useSelector(state=>state.CatagoryReducer.item)
     const changePage=()=>{
         props.changePage(TRACK,order);
     }
@@ -27,7 +28,7 @@ const OrderCard=(props)=>{
     }
     if(!loaded ){ 
         let ids=getIds();
-        getItemsByIds(ids,products).then((res) => {
+        getItemsByIds(ids,products,catagory).then((res) => {
              let items=[];
              order.items.forEach((item)=>{
               let data= res.find((element)=>{
