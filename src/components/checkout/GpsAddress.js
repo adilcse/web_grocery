@@ -4,7 +4,9 @@ import { Map, GoogleApiWrapper, Marker, InfoWindow, Polyline } from 'google-maps
 import { getAddressByLatLng } from '../../app/helper/getAddressByLatLng';
 import { useSelector } from 'react-redux';
 import { getPath } from '../../app/helper/getPath';
-import './EditAddress.css'
+import './EditAddress.css';
+import {ERROR_ADDRESS_NOT_FOUND, ERROR_DISTANCE} from '../../app/constants';
+import { distanceByLatlng } from '../../app/helper/distanceByLatlng';
 let oldLocation=true;
 /**
  * get gps address
@@ -27,6 +29,7 @@ const GpsAddress=(props)=>{
         lng:location.longitude}:false)
     const [locationFetched,setLocationFetched]=useState(false);
     const [viewBounds,setViewBounds]=useState(false);
+    const [error,setError]=useState(false);
     if(oldLocation!==location){
        location?setGpsEnabled(true):setGpsEnabled(false);
        oldLocation=location;
@@ -110,7 +113,12 @@ const GpsAddress=(props)=>{
             setCenter(latLng);
             setMarker(location);
             getAddress(location);
-       //  drawPolyline(props.sellers[0].position.geopoint,latLng);
+            const dist=distanceByLatlng(latLng,props.sellers[0].position.geopoint,'K');
+            if(dist<20){
+                setError(false);
+            }
+            else
+                setError({type:ERROR_DISTANCE,message:'can not delever to this location'});
           } else { 
            console.log("Geolocation is not supported by this browser.");
           }
@@ -131,6 +139,10 @@ const GpsAddress=(props)=>{
      */
     const setAddress=(address)=>{
         let fullAddress={};
+        if(!address.address_components){
+            setError({type:ERROR_ADDRESS_NOT_FOUND,message:'INVALID LOCATION'});
+            return;
+        }
         address.address_components.forEach(element => {
             if(element.types.includes('locality')){
                 fullAddress.locality=element.long_name;
@@ -171,21 +183,42 @@ const GpsAddress=(props)=>{
      */
     const markerDraged=(cord)=>{
         const latLng={latitude:cord.latLng.lat(),longitude:cord.latLng.lng()};
-        setCurrentLocation({lat:latLng.latitude,lng:latLng.longitude});
+        const userLatlng={lat:latLng.latitude,lng:latLng.longitude};
+        const sellerLatlng=props.sellers[0].position.geopoint;
+        setCurrentLocation(userLatlng);
         setMarker(latLng);
-        getAddress(latLng);
-      drawPolyline(props.sellers[0].position.geopoint,{lat:latLng.latitude,lng:latLng.longitude});
+        const dist=distanceByLatlng(userLatlng,sellerLatlng,'K');
+        if(dist<20){
+            setError(false);
+            getAddress(latLng);
+            drawPolyline(sellerLatlng,userLatlng);
+        }
+        else
+            setError({type:ERROR_DISTANCE,message:'can not delever to this location'})
     }
     /**
      * dispay address and button
      */
     const ViewAddress=()=>{
-      
-    return <div>
-        <Button variant='info' onClick={()=>props.setAddress({...fullAddress,latLng:marker})}> Delever to this Location</Button>
-        <h2>{myAddress}</h2>
-    </div>
-    
+        if(error){
+            return (
+             <h3 className='text-danger'>
+            {error.message}
+        </h3>)
+
+        }else if(myAddress)
+        return (<div>
+            <Button variant='info' onClick={()=>props.setAddress({...fullAddress,latLng:marker})}> Delever to this Location</Button>
+            <h2>{myAddress}</h2>
+        </div>)
+    return(<></>)
+    }
+    const ErrorMessage=()=>{
+        return(
+            <div>
+                {error.message};
+            </div>
+        )
     }
    
     const onMarkerClick=(props, marker, e)=>{
@@ -203,9 +236,9 @@ const GpsAddress=(props)=>{
         lat:marker.latitude,
         lng:marker.longitude
        }
-
-
+ 
     if(marker){
+       
         return(
             <Marker position={pos}
             draggable={true}
@@ -233,7 +266,7 @@ return(
             Get Path
         </Button>
         <div>
-            {myAddress?<ViewAddress/>:<></>}
+            {<ViewAddress/>}
         </div>
         <input type='text' id='searchbox' className='form-control  col-md-4 mt-md-2 col-xs-3 mt-xs-5' size="30" placeholder="Search place in map"/>
         <Map
@@ -265,7 +298,7 @@ return(
                           
                            />
                           
-                            }
+                    }
             )}
              <InfoWindow
           marker={activeMarker}
