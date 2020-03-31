@@ -123,7 +123,7 @@ const LeftCard=()=>{
                     return(
                         <CheckoutCard>  
                                <Button block size='lg' onClick={()=>setCurrentTab(ADDRESS)}>Edit Address</Button>  
-                            <PaymentPage status={paymentStatus}/>
+                            <PaymentPage status={paymentStatus} address={fullAddress}/>
                         </CheckoutCard>
                     )
             default:
@@ -158,7 +158,7 @@ return(
         <ErrorMessage isError={details.isError} message={details.errorMessage}/>
     <div className='row'>
         <div className='col-md-8'>
-       <LeftCard/>
+       <LeftCard className='container'/>
         </div>
         <div className='col-md-4'>
         {details.total.countItems>=1?
