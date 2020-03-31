@@ -4,6 +4,7 @@ import { Map, GoogleApiWrapper, Marker, InfoWindow, Polyline } from 'google-maps
 import { getAddressByLatLng } from '../../app/helper/getAddressByLatLng';
 import { useSelector } from 'react-redux';
 import { getPath } from '../../app/helper/getPath';
+import './EditAddress.css'
 let oldLocation=true;
 /**
  * get gps address
@@ -234,7 +235,7 @@ return(
         <div>
             {myAddress?<ViewAddress/>:<></>}
         </div>
-        <input type='text' id='searchbox' className='form-control col-md-4 mt-2' size="30" placeholder="Search place in map"/>
+        <input type='text' id='searchbox' className='form-control  col-md-4 mt-md-2 col-xs-3 mt-xs-5' size="30" placeholder="Search place in map"/>
         <Map
           google={props.google}
           zoom={13}

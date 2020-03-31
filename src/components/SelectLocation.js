@@ -4,7 +4,8 @@ import { Map, GoogleApiWrapper, Marker } from 'google-maps-react';
 import { getAddressByLatLng } from '../app/helper/getAddressByLatLng';
 import { HOME } from '../app/constants';
 import { useDispatch } from 'react-redux';
-import {changeUserLocation} from '../redux/actions/LocationAction'
+import {changeUserLocation} from '../redux/actions/LocationAction';
+import './checkout/EditAddress.css'
 const SelectLocation=(props)=>{
     const {location,changePage}=props;
     const [marker,setMarker]=useState(location.location);
@@ -156,7 +157,7 @@ return(
         <div>
             {myAddress?<ViewAddress/>:<></>}
         </div>
-        <input type='text' id='searchbox' className='form-control col-md-4 mt-2' size="30" placeholder="Search place in map"/>
+        <input type='text' id='searchbox' className='form-control col-md-4 mt-md-2 col-xs-3 mt-xs-5' size="30" placeholder="Search place in map"/>
         <div>
         <Map
           google={props.google}
