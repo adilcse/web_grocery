@@ -3,7 +3,6 @@ import { Row,  Media, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
 const ItemCard=(props)=>{
 	const{items}=props;
-	console.log(items)
 	if(items && items.length>0)
 		return(
 			<ul className="list-unstyled">

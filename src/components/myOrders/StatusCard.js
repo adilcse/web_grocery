@@ -4,6 +4,7 @@ import {  ACCEPT, OUT_FOR_DELIVERY, PENDING, DELIVERED } from '../../app/constan
 import { changeStatusText } from '../../app/helper/changeStatusText';
 
 const StatusCard=(props)=>{
+   
     let trackButton=<Button onClick={props.track}>Track Now</Button>
     let StatusProgressBar=()=>{
         switch(props.status){
@@ -97,12 +98,12 @@ return(
                     ₹{props.total.deliveryCharges} 
                     </Col>   
                 </Row>
-                {props.total.cancledAmount>0?<Row>
+                {props.total.refundAmount>0?<Row>
                     <Col md='8' xs='8'>
                     Refund Amount : 
                     </Col>
                     <Col md='4' xs='4'>
-                    - ₹{props.total.cancledAmount} 
+                    - ₹{props.total.refundAmount} 
                     </Col>  
                 </Row>:<></>}
                 <Row className='border-top pt-3 h5'>
@@ -110,7 +111,7 @@ return(
                     Grand Total 
                     </Col>
                     <Col md='4' xs='4' className='d-flex'>
-                    ₹{props.total.cancledAmount?props.total.total-props.total.cancledAmount:props.total.total}
+                    ₹{props.total.refundAmount?props.total.total-props.total.refundAmount:props.total.total}
                     </Col>    
                 </Row>
 

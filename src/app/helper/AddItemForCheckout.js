@@ -9,7 +9,9 @@ export const AddItemForCheckout=(dispatch,source,quant)=>{
       deleveryCharges:0,
       countItems:quant,
     }
+    let MRP=(source.MRP*quant)+total.deleveryCharges;
     total.total=(source.price*quant)+total.deleveryCharges;
-   dispatch(CheckoutCart([{...source,quantity:quant}],total));
+     total.discount=MRP-total.total;
+   CheckoutCart(dispatch,[{...source,quantity:quant}],total);
   }
   

@@ -6,23 +6,21 @@ const TrackMap=(props)=>{
     const [activeMarker,setActiveMarker]=useState({});
     const [showingInfoWindow,setShowingInfoWindow]=useState(false);
     const [selectedPlace,setSelectedPlace]=useState({});
-    const [center,setCenter]=useState({lat:user.latLng.latitude,lng:user.latLng.longitude});
+    const center={lat:user.latLng.latitude,lng:user.latLng.longitude};
     const [path,setPath]=useState([]);
-    const [currentLocation,setCurrentLocation]=useState(center);
-    if(!seller[0] || (user.address && user.latLng)){
+    const currentLocation=center;
+    if(!seller || !(user.latLng)){
       return(<div> no seller available</div>)
     }
  
     const onMarkerClick=(props, marker, e)=>{
-        console.log(marker.position.lat())
-       // drawPolyline({lat:marker.position.lat(),lng:marker.position.lng()});
+
        setSelectedPlace(props)
        setActiveMarker(marker)
        setShowingInfoWindow(true);
     }
     const drawPolyline=(cord1,cord2=currentLocation)=>{
 
-        console.log(cord1,cord2)
             getPath(cord1,cord2).then(res=>{
                 
                setPath(res);
@@ -35,7 +33,7 @@ const TrackMap=(props)=>{
         height: '100%',
         minHeight:'5rem'
       };
-      if(!user.latLng || !seller[0]._geoloc){
+      if(!user.latLng || !seller.position.geopoint){
         return(
             <div>
                 Sorry!!! tracking is not available for this order.
@@ -46,38 +44,28 @@ const TrackMap=(props)=>{
 
 
 
-      if(center && seller[0]._geoloc && path.length===0 ){
-        drawPolyline(seller[0]._geoloc);
+      if(center && seller.position.geopoint && path.length===0 ){
+        drawPolyline(seller.position.geopoint);
       }
-    if(user.latLng && seller[0]._geoloc){
+    if(user.latLng && seller.position.geopoint){
 
         return(
               <Map
           google={props.google}
-          zoom={15}
+          zoom={12}
           style={mapStyles}
           center={center}
           panControl={true}
           initialCenter={center}
             >
                <Marker  name={user.name} address={user.address} position={currentLocation} onClick={onMarkerClick}  />
-            { seller.map((el,i)=>{
-                    return <Marker
-                            key={i}
-                            name={el.name}
-                            address={el.address}
-                           position={el._geoloc}
-                           icon={{
-                            url: "https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678111-map-marker-512.png",
-                            anchor: new props.google.maps.Point(25,25),
-                            scaledSize: new props.google.maps.Size(50,50)
-                          }}
-                          onClick={onMarkerClick}
-                          
-                           />
-                          
-                            }
-            )}
+           <Marker name={seller.name}
+                   address={seller.address}
+                   position={{lat:seller.position.geopoint.latitude,lng:seller.position.geopoint.longitude}}
+                  onClick={onMarkerClick}
+                  
+                    />
+    
              <InfoWindow
           marker={activeMarker}
           visible={showingInfoWindow}>

@@ -19,7 +19,7 @@ import { db } from '../../firebaseConnect';
 export const addToCart = (itemId,item,userId,quantity=1)=>dispatch=>{
     dispatch({ type: ADD_TO_CART_PENDING});
     if(userId){
-        console.log(item)
+      
         let items={
             id:itemId,
             sellerId:item.sellerId,
@@ -29,7 +29,7 @@ export const addToCart = (itemId,item,userId,quantity=1)=>dispatch=>{
     db.collection("user").doc(userId).collection('cart').doc(itemId).set(items)
     .then(function() {
         dispatch({ type: ADD_TO_CART_SUCCESS,payload:itemId,item:{...item,quantity:quantity}});
-        console.log("Document written");
+       
     })
     .catch(function(error) {
         dispatch({ type: ADD_TO_CART_FAILED});
@@ -41,7 +41,7 @@ export const addToCart = (itemId,item,userId,quantity=1)=>dispatch=>{
 export const removeFromCart=(userId,itemId, dispatch)=>{
     dispatch({type: REMOVE_FROM_CART_PENDING});
      db.collection("user").doc(userId).collection('cart').doc(itemId).delete().then(function() {
-        console.log("Document successfully deleted!");
+      
         dispatch({type: REMOVE_FROM_CART_SUCCESS,payload:itemId});
     }).catch(function(error) {
         console.error("Error removing document: ", error);

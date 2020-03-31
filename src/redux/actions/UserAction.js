@@ -15,7 +15,7 @@ import {
  import {firebase, db} from '../../firebaseConnect';
 import { getCatagories } from "../../app/helper/getCatagories";
 import { USER_TYPE_LOCAL, AVAILABLE, NOT_AVAILABLE } from "../../app/constants";
-import { getItemsByIds } from "../../app/helper/getItemsByIds";
+import {  getItemsByIdsFromDb } from "../../app/helper/getItemsByIds";
 /**
  * Tries to signin with given email and password
  * if verifies logsin the user
@@ -52,9 +52,11 @@ export const GoogleLogin=(dispatch)=>{
     // The signed-in user info.
     var user = result.user;
     ValidateUser(dispatch,user,'google');
+  
     // ...
   }).catch(function(error) {
-  console.log(error)
+  console.log(error);
+  dispatch({type:LOGIN_USER_FAILED,payload:{...error}});
     // ...
   });
 }
@@ -83,6 +85,7 @@ export const LoginStatus=(dispatch)=>{
   loadCatagory(dispatch);
   dispatch({ type: LOGIN_USER_PENDING});
   firebase.auth().onAuthStateChanged(function(user) {
+  
     if (user) {
       
      if(!token)
@@ -91,16 +94,12 @@ export const LoginStatus=(dispatch)=>{
 
     } else {
       // No user is signed in.
+ 
       dispatch({type:LOGIN_USER_FAILED})
 
     }
   });
 }
-
-export const LoginSuccess=(user)=>({
-type:LOGIN_USER_SUCCESS,
-payload : user
-})
 /**
  * logout user from app
  * @param {*} dispatch dispatch hook
@@ -129,14 +128,14 @@ const loadCart=(dispatch,userId)=>{
     return [...cart];
 }).then((crt)=>{
   let prod=[];
-  getItemsByIds(crt,'sellerItems',firebase.firestore.FieldPath.documentId()).then(res=>{
+  getItemsByIdsFromDb(crt,'sellerItems',firebase.firestore.FieldPath.documentId()).then(res=>{
     function merge(array1, array2, prop) {
       return array2.map(function (item2) {
           var item1 = array1.find(function (item1) {
 
               return item1[prop] === item2[prop];
           });
-          return Object.assign({}, item1, item2,{stock:(item2.stock>0?AVAILABLE:NOT_AVAILABLE)});
+          return Object.assign({}, item1, item2,{stock:(item2.stock>0?(item2.stock>10?AVAILABLE:item2.stock):NOT_AVAILABLE)});
       });
   }
     prod=merge(item,res,'id')

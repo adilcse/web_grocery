@@ -19,7 +19,6 @@ export const CheckoutReducer=(state=inititalState,action={})=>{
         case ORDER_PLACE_PENDING:
             return {...state,loading:true}
         case ORDER_PLACE_SUCCESS:
-            console.log(state)
             return {...state,
                 orderPlaced:true,
                 items:[],

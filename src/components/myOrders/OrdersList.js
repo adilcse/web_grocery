@@ -2,7 +2,6 @@ import React from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import OrderCard from "./OrderCard";
 const OrdersList=(props)=>{
-  console.log('list')
     if(props.orders.length>0){
     return(
         <Container>

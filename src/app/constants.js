@@ -37,3 +37,5 @@ export const ACCEPT='ACCEPTED';
 export const REJECT='REJECTED';
 export const OUT_FOR_DELIVERY='OUT_FOR_DELIVERY';
 export const DELIVERED='DELIVERED';
+export const HOME='HOME';
+export const CHANGE_LOCATION='CHANGE_LOCATION'
