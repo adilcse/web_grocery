@@ -100,7 +100,7 @@ if(newQuant>0&&newQuant<=MAX_ITEM_ALLOWED){
        
         <div>
            <ErrorMessage/> 
-        <div className="container itm mh-100">
+        <div className="container itm">
             <div className="row">
                 <div className="col-md-1 bkstyl" ></div>
             <div className="col-md-5">

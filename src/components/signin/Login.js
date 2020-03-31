@@ -6,7 +6,7 @@ import Loading from '../Loading';
 import { Button } from 'react-bootstrap';
 /**
  * displays login form to the user
- * @param {hideSignup} props to dide signup button
+ * @param {hideSignup} props to hide signup button
  */
 const Login = (props)=>{
     const dispatch = useDispatch();
