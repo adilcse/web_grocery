@@ -8,14 +8,17 @@ import {changeUserLocation} from '../redux/actions/LocationAction';
 import './checkout/EditAddress.css'
 const SelectLocation=(props)=>{
     const {location,changePage}=props;
-    const [marker,setMarker]=useState(location.location);
+    const defaultLocation={lat:22.241497,lng:84.861948}
+    const latLng=  location.location?{ lat: location.location.latitude, lng:  location.location.longitude}:defaultLocation;
+   
+    const [marker,setMarker]=useState({latitude:latLng.lat,longitude:latLng.lng});
     const [locationFetched,setLocationFetched]=useState(false);
     const [viewBounds,setViewBounds]=useState(false);
-    const [center,setCenter]=useState({ lat: location.location.latitude, lng:  location.location.longitude});
+    const [center,setCenter]=useState(latLng);
     const[myAddress,setMyAddress]=useState(location.address);
     const [loaded,setLoaded]=useState(false);
     const dispatch=useDispatch();
-
+   
        /**
      * add search bar to map
      * @param {*} mapProps 
@@ -73,7 +76,6 @@ const SelectLocation=(props)=>{
                 setCenter( {lat:pos.coords.latitude,
                     lng:pos.coords.longitude});
                 setMarker(pos.coords);
-                console.log('getting location')
                 getAddress({latitude:pos.coords.latitude,longitude:pos.coords.longitude});
 
                
@@ -104,7 +106,6 @@ const SelectLocation=(props)=>{
      * @param {*} cord cordinate of user's location
      */
     const markerDraged=(cord)=>{
-        console.log(cord);
         const latLng={latitude:cord.latLng.lat(),longitude:cord.latLng.lng()}
         setMarker(latLng)
         getAddress(latLng);
@@ -147,6 +148,9 @@ const SelectLocation=(props)=>{
     if(!loaded && !location.location){
         getLocation();
         setLoaded(true);
+        if(!myAddress){
+          getAddress(marker);
+        }
     }
    
    
