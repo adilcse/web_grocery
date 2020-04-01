@@ -43,6 +43,7 @@ return(
       <div className="App text-center">
      
         <Nav/>
+        <div style={{minHeight:'600px'}}>
           <Switch>
             <Suspense fallback={<Loading size={100}/>}>
                 <Route path='/Home' component={Home} />
@@ -58,6 +59,7 @@ return(
                 <Route path='/' exact={true} component={Home}/>
             </Suspense>
         </Switch> 
+        </div>
         <Footer/>
       </div>
  
