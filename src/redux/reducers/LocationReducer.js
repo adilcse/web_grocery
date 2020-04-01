@@ -13,13 +13,13 @@ export const UserLocation=(state=initialState,action={})=>{
         case SET_CURRENT_LOCATION_PENDING:
             return{...state,locationPending:true}
         case SET_CURRENT_LOCATION_SUCCESS:
-            return {...state,locationPending:false,location:action.payload}
+            return {...state,locationPending:false,location:action.payload,locationError:false}
         case SET_CURRENT_LOCATION_FAILED:
-            return{...state,locationPending:false,location:null,locationError:true}
+            return{...state,locationPending:false,location:null,locationError:action.payload}
         case SET_CURRENT_ADDRESS_PENDING:
             return{...state,addressPending:true}
         case SET_CURRENT_ADDRESS_SUCCESS:
-            return {...state,addressPending:false,address:action.payload}
+            return {...state,addressPending:false,address:action.payload,addressError:false,locationError:false}
         case SET_CURRENT_ADDRESS_FAILED:
             return{...state,addressPending:false,address:null,addressError:true}
         default:
