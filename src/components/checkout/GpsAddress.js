@@ -213,13 +213,7 @@ const GpsAddress=(props)=>{
         </div>)
     return(<></>)
     }
-    const ErrorMessage=()=>{
-        return(
-            <div>
-                {error.message};
-            </div>
-        )
-    }
+
    
     const onMarkerClick=(props, marker, e)=>{
         drawPolyline({lat:marker.position.lat(),lng:marker.position.lng()});
