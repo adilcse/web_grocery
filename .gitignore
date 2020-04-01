@@ -8,6 +8,7 @@
 .env
 # firebase
 /.firebase
+.cache
 #constants file
 /src/assets
 # testing
