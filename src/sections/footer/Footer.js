@@ -31,7 +31,7 @@ const Footer=()=>{
       title:'Follow ',
       url:'https://twitter.com/ItzAdil_Hussain?ref_src=twsrc%5Etfw',
       openExternal:true,
-      description:'@ItzAdil_Hussain'
+      description:'join in twitter'
     }]  
 },{
     title:'About',
@@ -54,6 +54,24 @@ const Footer=()=>{
     }
     ]
     
+},
+{
+title:'Team',
+items:[
+  {title: 'Adil Hussain',
+  },
+  {
+    title:'Albatross Mullick',
+
+  },
+  {
+    title:'Muhammad Kamran',
+  },
+{
+  title:'Vivek Sahoo',
+}
+
+]
 },
 {
     title:'Scroll',

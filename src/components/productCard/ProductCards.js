@@ -43,7 +43,6 @@ const ProductCards =(props)=>{
                 }}
             );      
            }
-           console.log(source)
            setAllItems(source.slice(0,max));
            setLoaded(true);
            setLoading(false)

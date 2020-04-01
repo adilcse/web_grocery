@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import CatagoryCard from './CatagoryCard';
 import { getCatagories } from '../../app/helper/getCatagories';
+import { Row } from 'react-bootstrap';
 let catagories=[];
 const CatagoryList=(props)=>{
     let [loaded,setLoaded]=useState(false);
@@ -13,11 +14,11 @@ const CatagoryList=(props)=>{
         })
     }
 return(
-    <>
+    <Row className='overflow-auto d-inline'>
     {catagories.map((item,index)=>{
-        return  <CatagoryCard item={item.data} key={index}/>
+        return  <CatagoryCard item={item.data} key={index} className={props.className}/>
     })}
-    </>
+    </Row>
 )
 }
 export default CatagoryList;
