@@ -76,7 +76,7 @@ const loadButton=()=>{
 
 return (
     <div className='mb-5'>
-        <CardList items={allItems}/>
+        <CardList items={allItems} loaded={sellers.productLoaded}/>
         {loading?<Loading size={100}/>:<></>}
       {loadButton()}
     </div>

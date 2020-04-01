@@ -49,14 +49,15 @@ return (
             </div>
         </div>
     )}
-    else{
-        
+    else if(props.loaded){
         return(
             <h1>
                 Sorry!!!
                 No Items Found.
             </h1>
         )
+    }else{
+        return(<h1>Loading...</h1>)
     }
  }   
 

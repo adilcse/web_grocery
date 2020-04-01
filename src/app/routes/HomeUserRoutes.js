@@ -9,6 +9,10 @@ import {
 import { Logout as LogoutAction} from "../../redux/actions/UserAction";
 import Nav from "../../sections/header/Nav";
 import { getUserLocation } from "../../redux/actions/LocationAction";
+
+ import Footer from "../../sections/footer/Footer";
+
+import 'rc-footer/assets/index.css'; 
 const Catagory=lazy(()=>import('../../containers/Catagory'));
 const Home = lazy(() => import('../../containers/Home'));
 const SearchPage=lazy(()=>import('../../containers/SearchPage'));
@@ -27,6 +31,8 @@ const HomeUserRoutes=()=>{
     getUserLocation(dispatch);
     
   }
+
+
     const Logout=()=>{
         LogoutAction(dispatch);
         return <Redirect to='/Home'/>
@@ -35,7 +41,7 @@ const HomeUserRoutes=()=>{
 return(
 
       <div className="App text-center">
-       
+     
         <Nav/>
           <Switch>
             <Suspense fallback={<Loading size={100}/>}>
@@ -51,7 +57,8 @@ return(
                 <Route path='/catagories/:cat' component={Catagory}/>
                 <Route path='/' exact={true} component={Home}/>
             </Suspense>
-        </Switch>  
+        </Switch> 
+        <Footer/>
       </div>
  
 )
