@@ -29,7 +29,7 @@ if(page===HOME)
              </Alert>
              :<Alert variant='primary'>
                 <h4>
-                 My Location: {location.address}
+                <span style={{color:'black',fontWeight:'bold'}}> My Location:</span>  {location.address}
                 </h4>
                 <h5 onClick={()=>setPage(CHANGE_LOCATION)} style={{ cursor: 'pointer',  textDecoration: 'underline'}}>
                     change
@@ -39,7 +39,7 @@ if(page===HOME)
         
        
         <Slider/>
-        <CatagoryList className='mt-3'/>
+        <CatagoryList className='my-3 mx-1'/>
         <h2 className='text-left'>Catagory : ALL</h2>
         <ProductCards max={10}/>
         </>
