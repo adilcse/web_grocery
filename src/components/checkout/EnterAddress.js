@@ -4,7 +4,7 @@ import './EditAddress.css'
 import { Form, Col, InputGroup, Button } from 'react-bootstrap';
 import {INPUT_NUMBER, INPUT_NAME, INPUT_PIN, INPUT_LANDMARK, INPUT_LOCALITY, INPUT_ADDRESS, INPUT_CITY, INPUT_STATE, INPUT_ALTERNATE} from '../../app/constants';
 import ErrorMessage from '../../app/helper/ErrorMessage';
-import { firebase } from '../../firebaseConnect';
+
 
 //keeps track of thee field touched
 let touched={

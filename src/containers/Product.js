@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { useParams } from 'react-router';
 import Loading from '../components/Loading';
 import Item from '../components/item/Item';
-import _ from 'lodash'
 import { useSelector } from 'react-redux';
 let previousId;
 document.title='product';
