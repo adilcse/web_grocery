@@ -7,14 +7,15 @@ import { useSelector } from 'react-redux';
 let previousId;
 document.title='product';
  const Product=()=>{
-   const {id}=useParams();
+   let {id}=useParams();
    const [loaded,setLoaded]=useState(false);
    const [loading,setLoading]=useState(true)
    const [item,setItem]=useState({})
    const sellers=useSelector(state=>state.sellers);
-
+   id=parseInt(id);
    const getProduct=(itemId)=>{
-   let prod=_.find(sellers.products, function(obj) { return obj.id===itemId});
+       console.log(itemId);
+   let prod=sellers.products.find(obj=> obj.id===itemId);
    setItem(prod);
     setLoaded(true);
    }

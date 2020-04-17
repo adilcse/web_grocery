@@ -4,7 +4,6 @@ import {  ACCEPT, OUT_FOR_DELIVERY, PENDING, DELIVERED } from '../../app/constan
 import { changeStatusText } from '../../app/helper/changeStatusText';
 
 const StatusCard=(props)=>{
-   
     let trackButton=<Button onClick={props.track}>Track Now</Button>
     let StatusProgressBar=()=>{
         switch(props.status){
@@ -64,7 +63,7 @@ return(
                    Seller  Address 
                     </Col>
                     <Col md='8' xs='6' className='text-truncate'>
-                    {props.sellerDetails.address}
+                    {props.sellerDetails.locality}
                     </Col>   
                 </Row>
                 <Row className='h5'>

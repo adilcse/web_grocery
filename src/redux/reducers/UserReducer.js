@@ -15,7 +15,7 @@ import {
  } from "../../app/constants";
  let initialState={
      userId:null,
-     userName:null,
+     email:null,
      name:null,
      loggedIn:false,
      userType:null,
@@ -33,14 +33,16 @@ export const userLogin=(state=initialState,action={})=>{
          case LOGIN_USER_SUCCESS:
             
             return{...state,
-                userId:action.payload.uid,
-                userName:action.payload.email,
+                userId:action.payload.userData.uid,
+                    email:action.payload.userData.email,
                 loggingIn:false,
                 loggedIn:true,
                 guest:false,
-                name:action.payload.name,
-                userType:action.payload.userType,
+                name:action.payload.userData.name,
+                userType:action.payload.userData.user_type,
                 address:action.payload.address,
+                id:action.payload.userData.id,
+                user:action.payload.user,
                 error:false
             } 
        

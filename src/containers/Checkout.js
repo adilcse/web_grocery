@@ -20,15 +20,16 @@ const [currentTab,setCurrentTab]=useState(LOGIN);
 const [addressTab,setAddressTab]=useState('gpsAddress');
 const dispatch=useDispatch();
 let {from}=useParams('from');
-const userName=useSelector(state=>state.userLogin.userName);
-const userId=useSelector(state=>state.userLogin.userId);
+const userName=useSelector(state=>state.userLogin.name);
+const user=useSelector(state=>state.userLogin.user);
 const details=useSelector(state=>state.CheckoutReducer);
 const cartIds=useSelector(state=>state.addItemsToCart.cart)
 let userAddress=useSelector(state=>state.userLogin.address);
 const sellers=useSelector(state=>state.sellers.ids);
 const [fullAddress,setFullAddress]=useState(userAddress);
+
 const sellersId=details.items.map(s=>{
-    return s.sellerId;
+    return s.seller_id;
 });
 const sellerLocations=sellersId.map(el=>{
   return sellers.find(element=>element.id===el)
@@ -76,7 +77,7 @@ const paymentStatus=(status)=>{
             fullAddress[key]='';
     })
     if(status){
-       PlaceOrder(dispatch,fullAddress,details,from,userId,cartIds,PAYMENT_METHOD_COD,sellers);
+       PlaceOrder(dispatch,fullAddress,details,from,user,cartIds,PAYMENT_METHOD_COD);
     }
 }
 /**

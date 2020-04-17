@@ -4,10 +4,11 @@
  */
 export const getItemsByTime=(products,limit)=>{
     let promise= new Promise((resolved,reject)=>{
-        let mostRecentDate= products.map(function(e) { return e.addedOn.seconds; }).sort().reverse();
+      console.log(products);
+        let mostRecentDate= products.map(function(e) { return e.created_at.seconds; }).sort().reverse();
          var mostRecentObject =[]
           products.forEach(element => {
-            var d = element.addedOn.seconds; 
+            var d = element.created_at.seconds; 
             mostRecentObject[mostRecentDate.indexOf(d)]=element;
           });
         resolved(mostRecentObject.slice(0,limit))

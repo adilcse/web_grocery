@@ -16,7 +16,7 @@ import {  useHistory } from 'react-router-dom';
 const Cart =()=>{
     document.title='my Cart';
     let history = useHistory();
-    const userId=useSelector(state=>state.userLogin.userId);
+    const user=useSelector(state=>state.userLogin.user);
     const cart=useSelector(state=>state.addItemsToCart.item);
     const products=useSelector(state=>state.sellers.products); 
     const [available,setAvailable]=useState([]);
@@ -33,7 +33,7 @@ const Cart =()=>{
     const checkItems=(cartItems=cart,product=products)=>{
         let av=[];
         cartItems.forEach(el=>{
-            let item=product.find(item=>item.id===el.id);
+            let item=product.find(item=>item.id===el.item_id);
            if(item)
             av.push(item.id);
         });
@@ -95,8 +95,8 @@ const Cart =()=>{
 const removeItem=(id,index)=>{
     cart.splice(index,1);
     setCartUpdated(!cartUpdated);
-    if(userId)
-        removeFromCart(userId,id, dispatch)
+    if(user)
+        removeFromCart(dispatch,user,id)
     else
         dispatch(removeFromGuestCart(id))
 }
@@ -128,7 +128,8 @@ else
                 <div className='col-md-8' style={{overflowY:"scroll",maxHeight:'100vh'}}>
                     {showError?<Alert variant='danger'>One or more item is unavailable . Remove to continue.</Alert>:<></>}
                 <CartList item={cart} 
-                user={userId} 
+                user={user} 
+                dispatch={dispatch}
                 removeItem={removeItem}
                 updateQuantity={updateQuantity}
                 available={available}

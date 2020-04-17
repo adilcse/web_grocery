@@ -47,7 +47,7 @@ const setCatagory=(items,catagory)=>{
     if(catagory.length>0){
         result=items.map(item=>{
             const cat=item.catagory.map(cat=>{
-               return catagory.find(c=>c.data.catId===cat).data.name
+               return catagory.find(c=>c.id===cat).name
             });
           
             return {...item,catagory:cat}

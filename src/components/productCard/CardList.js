@@ -10,15 +10,14 @@ import { Alert } from 'react-bootstrap';
  */
 const CardList =(props)=>{
     const dispatch = useDispatch();
-    const userid=useSelector(state=>state.userLogin.userId)
+    const user=useSelector(state=>state.userLogin)
     const [showMsg,setShowMessage]=useState(false); 
     const source=props.items;
-   
- const onItemAdded = (itemId,item,quant,userId=userid) => {
-      if(userId)
-        dispatch(addToCart(itemId,item,userId,quant));
+ const onItemAdded = (itemId,item,quant) => {
+      if(user.id)
+        addToCart(dispatch,itemId,item,user,quant);
     else
-    dispatch(addToGuestCart(itemId,item,quant));
+    addToGuestCart(dispatch,itemId,{...item,item_id:item.id},quant);
        
   }
   /**

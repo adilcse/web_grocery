@@ -1,22 +1,13 @@
-import React, { useState } from 'react';
+import React from 'react';
 import CatagoryCard from './CatagoryCard';
-import { getCatagories } from '../../app/helper/getCatagories';
 import { Row } from 'react-bootstrap';
-let catagories=[];
+import { useSelector } from 'react-redux';
 const CatagoryList=(props)=>{
-    let [loaded,setLoaded]=useState(false);
-    if(!loaded){
-        getCatagories().then(res=>{
-            catagories=res;
-            setLoaded(true);
-        }).catch(res=>{
-            setLoaded(true);
-        })
-    }
+    const cats=useSelector(state=>state.CatagoryReducer.item)
 return(
     <Row className='overflow-auto d-inline'>
-    {catagories.map((item,index)=>{
-        return  <CatagoryCard item={item.data} key={index} className={props.className}/>
+    {cats.map((item,index)=>{
+        return  <CatagoryCard item={item} key={index} className={props.className}/>
     })}
     </Row>
 )

@@ -3,13 +3,14 @@ import { GoogleApiWrapper, Map, Marker, InfoWindow, Polyline } from 'google-maps
 import { getPath } from '../../app/helper/getPath';
 const TrackMap=(props)=>{
     const{user,seller}=props.details;
+    console.log(user,seller)
     const [activeMarker,setActiveMarker]=useState({});
     const [showingInfoWindow,setShowingInfoWindow]=useState(false);
     const [selectedPlace,setSelectedPlace]=useState({});
-    const center={lat:user.latLng.latitude,lng:user.latLng.longitude};
+    const center={lat:user.lat,lng:user.lng};
     const [path,setPath]=useState([]);
     const currentLocation=center;
-    if(!seller || !(user.latLng)){
+    if(!seller || !user.lat || !user.lng){
       return(<div> no seller available</div>)
     }
  
@@ -33,7 +34,7 @@ const TrackMap=(props)=>{
         height: '100%',
         minHeight:'5rem'
       };
-      if(!user.latLng || !seller.position.geopoint){
+      if(!user.lat || !seller.lat){
         return(
             <div>
                 Sorry!!! tracking is not available for this order.
@@ -44,10 +45,10 @@ const TrackMap=(props)=>{
 
 
 
-      if(center && seller.position.geopoint && path.length===0 ){
-        drawPolyline(seller.position.geopoint);
+      if(center && seller.lat && path.length===0 ){
+        drawPolyline({lat:seller.lat,lng:seller.lng});
       }
-    if(user.latLng && seller.position.geopoint){
+    if(user.lat && seller.lat){
 
         return(
               <Map
@@ -61,7 +62,7 @@ const TrackMap=(props)=>{
                <Marker  name={user.name} address={user.address} position={currentLocation} onClick={onMarkerClick}  />
            <Marker name={seller.name}
                    address={seller.address}
-                   position={{lat:seller.position.geopoint.latitude,lng:seller.position.geopoint.longitude}}
+                   position={{lat:seller.lat,lng:seller.lng}}
                   onClick={onMarkerClick}
                   
                     />

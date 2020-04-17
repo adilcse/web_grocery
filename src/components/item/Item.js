@@ -15,7 +15,7 @@ import UpdateQuantitybutton from '../UpdateQuantityButtons';
 const Item =(props)=>{
     const {name,price,description,image,quantity,catagory}=props.item;
     const itemId=props.id;
-    const userId=useSelector(state=>state.userLogin.userId);
+    const user=useSelector(state=>state.userLogin.user);
     const [newItems,setNewItems]=useState(null);
     const [showMsg,setShowMessage]=useState(false); 
     const dispatch = useDispatch();
@@ -44,10 +44,10 @@ if(newQuant>0&&newQuant<=MAX_ITEM_ALLOWED){
 }
 }
       const addItem = () => {
-        if(userId)
-        dispatch(addToCart(itemId,props.item,userId));
+        if(user)
+        addToCart(dispatch,itemId,props.item,user);
     else
-    dispatch(addToGuestCart(itemId,props.item));
+    addToGuestCart(dispatch,itemId,{...props.item,item_id:props.item.id});
     }
     const ErrorMessage= ()=>{
         if(showMsg)
@@ -70,7 +70,7 @@ if(newQuant>0&&newQuant<=MAX_ITEM_ALLOWED){
             if(!newItems){
              getItemsByTime(products,7).then(res=>{
           setNewItems(res);    
-        }
+         }
         )
         .catch(()=>setNewItems(true));
         return(<></>)

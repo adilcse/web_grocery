@@ -5,7 +5,6 @@ const OrdersList=(props)=>{
     if(props.orders.length>0){
     return(
         <Container>
-        {/* Stack the columns on mobile by making one full-width and the other half-width */}
         <Row  className="justify-content-md-center">
           <Col xs={12} md={10}>
             {props.orders.map((item,index)=>{

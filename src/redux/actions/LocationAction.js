@@ -6,7 +6,7 @@ export const getUserLocation=(dispatch)=>{
     if (navigator.geolocation) {
         dispatch({type:SET_CURRENT_LOCATION_PENDING});
         navigator.geolocation.getCurrentPosition(position=>{
-                getNearbySeller(dispatch,position.coords)
+               getNearbySeller(dispatch,position.coords)
                 dispatch({type:SET_CURRENT_LOCATION_SUCCESS,payload:position.coords});
                 dispatch({type:SET_CURRENT_ADDRESS_PENDING});
                 getAddressByLatLng(position.coords).then(address=>{   

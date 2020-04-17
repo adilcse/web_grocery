@@ -6,13 +6,15 @@ import { useSelector } from 'react-redux';
 const Catagory=()=>{
     const catagory=useSelector(state=>state.CatagoryReducer.item)
     let cat=useParams('cat');
-    cat=cat?cat.cat:'all';
-    document.title=cat;
-    const catagories=catagory.length>0?catagory.find(el=>el.data.catId===cat).data.name:cat;
+    cat=cat?parseInt(cat.cat):'all';
+    const catagories=catagory.length>0?catagory.find(el=>{
+        return el.id===cat
+    }):cat;
+    
 
 return(
     <Container>
-        <h1 className='text-left'>Catagory : {catagories}</h1>
+        <h1 className='text-left'>Catagory : {catagories.name}</h1>
       <ProductCards catagory={[cat]}/>
     </Container>
 )

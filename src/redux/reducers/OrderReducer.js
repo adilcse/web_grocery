@@ -11,7 +11,10 @@ switch(action.type){
    case GET_ORDERS_PENDING:
        return{...state,loading:true,loaded:false}
     case GET_ORDERS_SUCCESS:
-        return{...state,loading:false,loaded:true,orders:action.payload}
+        return{...state,
+            loading:false,
+            loaded:true,
+            orders:action.payload.order}
     case GET_ORDERS_FAILED:
         return{...state,isError:true,error:action.payload,loaded:false,loading:false}
     case ORDER_PLACE_SUCCESS:

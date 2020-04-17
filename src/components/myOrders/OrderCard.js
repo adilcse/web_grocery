@@ -11,51 +11,40 @@ import { arrayMergeByObject } from '../../app/helper/arrayMergeByObject';
 import { useSelector } from 'react-redux';
 
 const OrderCard=(props)=>{
-    const [displayItems,setDisplayitems]=useState(props.order.items)
     const{order}=props;
+    const sellers=useSelector(state=>state.sellers.ids);
+    const [sellerDetails,setSellerDetails]=useState({});
     const [loaded,setLoaded]=useState(false);
-    const {products}=useSelector(state=>state.sellers);
-    const catagory=useSelector(state=>state.CatagoryReducer.item)
+    if(sellers.length>0 && !loaded){
+        const seller=sellers.find(el=>el.id===order.seller_id);
+        if(seller)
+            setSellerDetails(seller);
+        setLoaded(true);
+    }
     const changePage=()=>{
         props.changePage(TRACK,order);
     }
-    const getIds=()=>{
-        let ids=[];
-        order.items.forEach(element => {
-        ids.push(element.id)
-        });
-        return ids;
-    }
-    if(!loaded ){ 
-        let ids=getIds();
-        getItemsByIds(ids,products,catagory).then((res) => {
-             let items=[];
-             order.items.forEach((item)=>{
-              let data= res.find((element)=>{
-               return item.id===element.id
-               });
-                items.push({...data,...item})
-             })   
-             return items;
-        }).then((items)=>{
-            setDisplayitems(items);
-            setLoaded(true)});
-    }
-    if(order && loaded ){
+  
+    if(order){
         return (
             <CardDeck className='rounded mb-3'>
             <Card>
                 <Card.Header>
-                    <HeaderCard orderedOn={order.orderedOn}
-                                deleveredOn={order.deleveredOn} 
-                                sellerName={order.sellerDetails.name}/>
+                    <HeaderCard orderedOn={order.created_at}
+                                deleveredOn={order.delivered_at} 
+                                sellerName={order.seller_name}
+                                />
                 </Card.Header>
             <Card.Body>
-            <ItemCard items={arrayMergeByObject(displayItems,order.items,'id')} />
-            <StatusCard address={order.address} 
-                        sellerDetails={order.sellerDetails}
-                        paymentMode={order.paymentMode} 
-                        total={order.total}
+            <ItemCard items={order.items} />
+            <StatusCard address={order.delivery_address} 
+                        sellerDetails={sellerDetails}
+                        paymentMode={order.payment_mode} 
+                            total={{"total": order.total_amount,
+                                "refundAmount": order.refund_amount,
+                                "deliveryCharges": order.delivery_amount,
+                                "total_items": order.total_items,
+                                "rejected_items": order.rejected_items}}
                         status={order.status}   
                         track={changePage}
                         />
@@ -64,8 +53,6 @@ const OrderCard=(props)=>{
         </CardDeck>
         )
        
-       }else if(!loaded){
-           return(<Loading size={100}/>)
        }
     else{
         return(

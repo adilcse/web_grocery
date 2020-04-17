@@ -1,9 +1,9 @@
 /**
  * all the other constants user throughout the app
  */
-export const USER_TYPE_LOCAL='1';
-export const USER_TYPE_MARCHANT='2';
-export const USER_TYPE_ADMIN='3';
+export const USER_TYPE_LOCAL=1;
+export const USER_TYPE_MARCHANT=2;
+export const USER_TYPE_ADMIN=3;
 //USERD IN CHECKOUT PAGE FOR CURRENT TAB
 export const LOGIN='LOGIN';
 export const ADDRESS='ADDRESS';
@@ -29,7 +29,7 @@ export const ALGOLIA_SELLER_INDEX='sellers';
 export const AVAILABLE='AVAILABLE';
 export const NOT_AVAILABLE='NOT_AVAILABLE';
 
-export const RADIUS_IN_KM=30;
+export const RADIUS_IN_KM=300;
 export const MAX_ITEM_ALLOWED=5;
 
 export const PENDING='PENDING';
@@ -42,3 +42,6 @@ export const CHANGE_LOCATION='CHANGE_LOCATION';
 
 export const ERROR_ADDRESS_NOT_FOUND='ERROR_ADDRESS_NOT_FOUND';
 export const ERROR_DISTANCE='ERROR_DISTNCE';
+
+export const LARAVEL_API_URL='http://localhost:8000';
+export const ORDER_PER_PAGE=5;

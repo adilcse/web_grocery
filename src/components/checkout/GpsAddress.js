@@ -5,7 +5,7 @@ import { getAddressByLatLng } from '../../app/helper/getAddressByLatLng';
 import { useSelector } from 'react-redux';
 import { getPath } from '../../app/helper/getPath';
 import './EditAddress.css';
-import {ERROR_ADDRESS_NOT_FOUND, ERROR_DISTANCE} from '../../app/constants';
+import {ERROR_ADDRESS_NOT_FOUND, ERROR_DISTANCE, RADIUS_IN_KM} from '../../app/constants';
 import { distanceByLatlng } from '../../app/helper/distanceByLatlng';
 let oldLocation=true;
 /**
@@ -113,8 +113,12 @@ const GpsAddress=(props)=>{
             setCenter(latLng);
             setMarker(location);
             getAddress(location);
-            const dist=distanceByLatlng(latLng,props.sellers[0].position.geopoint,'K');
-            if(dist<20){
+            // console.log(props);
+            const dist=distanceByLatlng(latLng,
+                                        {latitude:props.sellers[0].lat,longitude:props.sellers[0].lng}
+                                        ,'K');
+        
+            if(dist<RADIUS_IN_KM){
                 setError(false);
             }
             else
@@ -184,11 +188,11 @@ const GpsAddress=(props)=>{
     const markerDraged=(cord)=>{
         const latLng={latitude:cord.latLng.lat(),longitude:cord.latLng.lng()};
         const userLatlng={lat:latLng.latitude,lng:latLng.longitude};
-        const sellerLatlng=props.sellers[0].position.geopoint;
+        const sellerLatlng={latitude:props.sellers[0].lat,longitude:props.sellers[0].lng};
         setCurrentLocation(userLatlng);
         setMarker(latLng);
         const dist=distanceByLatlng(userLatlng,sellerLatlng,'K');
-        if(dist<20){
+        if(dist<RADIUS_IN_KM){
             setError(false);
             getAddress(latLng);
             drawPolyline(sellerLatlng,userLatlng);
@@ -256,7 +260,7 @@ const GpsAddress=(props)=>{
     }
 return(
     <div style={buttonStyle}>
-        <Button className='mt-4 mb-3'onClick={()=>drawPolyline(props.sellers[0].position.geopoint)}>
+        <Button className='mt-4 mb-3'onClick={()=>drawPolyline({lat:props.sellers[0].lat,lng:props.sellers[0].lng})}>
             Get Path
         </Button>
         <div>
@@ -280,8 +284,8 @@ return(
                             name={el.name}
                             address={el.address}
                            position={{
-                            lat:el.position.geopoint.latitude,
-                            lng:el.position.geopoint.longitude
+                            lat:el.lat,
+                            lng:el.lng
                            }}
                            icon={{
                             url: "https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678111-map-marker-512.png",

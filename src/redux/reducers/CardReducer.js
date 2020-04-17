@@ -9,9 +9,11 @@ import {
     ADD_TO_GUEST_CART,
     REMOVE_FROM_GUEST_CART,
     EMPTY_CART,
-    CATAGORIES_LOADED
+    CATAGORIES_LOADED,
+    REMOVE_FROM_CART_FAILED,
+    UPDATE_CART_FAILED,
+    UPDATE_CART_SUCCESS
     } from '../../app/ActionConstants';
-
 
 const initialState={
    cart:new Set(),
@@ -47,6 +49,25 @@ export const addItemsToCart = (state=initialState,action={})=>{
              Ncart.delete(action.payload);
              return {...state,cart:Ncart,loading:false,cartLoaded:false} ;
             }
+        case REMOVE_FROM_CART_FAILED:{
+            return {...state}
+        }
+        case UPDATE_CART_SUCCESS:{
+            const sItem=[...state.item];
+            const item=sItem.map(el=>{
+                if(el.item_id===action.payload.item_id){
+                    return {...el,quantity:action.payload.quantity}
+                }else{
+                    return el;
+                }
+            })
+            return {...state,item:item}
+        }
+            
+        case UPDATE_CART_FAILED:{
+            return {...state}
+        }
+
         case LOGOUT_USER_SUCCESS:
             return {...state,...initialState};
         case ADD_TO_GUEST_CART:
@@ -63,7 +84,7 @@ export const addItemsToCart = (state=initialState,action={})=>{
                 Ncart.delete(action.payload);
                 let Nitem=[...state.item];
                 Nitem.forEach((element,index)=>{
-                    if(element.id===action.payload){
+                    if(element.item_id===action.payload){
                         Nitem.splice(index,1)
                     }
                 })
@@ -86,7 +107,7 @@ export const CatagoryReducer=(state=initialCatagory,action={})=>{
     switch(action.type){
         case CATAGORIES_LOADED:
             return{...state,
-                item:action.payload
+                item:action.payload.catagory
             }
         default:
             return{...state}

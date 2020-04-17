@@ -9,7 +9,7 @@ import { firebase } from '../../firebaseConnect';
 //keeps track of thee field touched
 let touched={
   name:false,
-  mobile:false,
+  number:false,
   pin:false,
   locality:false,
   address:false,
@@ -22,7 +22,7 @@ let touched={
 //keeps track of the feilds having error
 let errors={
   name:true,
-  mobile:true,
+  number:true,
   pin:true,
   locality:true,
   address:true,
@@ -35,7 +35,7 @@ let errors={
 //rex for all fields
 const regex={
   name:/^[a-zA-Z ]{3,20}$/,
-  mobile:/^[0-9]{10}$/,
+  number:/^[0-9]{10}$/,
   address:/^[0-9a-zA-Z\-,\/\\ \n]{3,}$/,
   pin:/^[0-9]{6}$/,
   locality:/^[0-9a-zA-Z\-, ]{3,}$/,
@@ -47,10 +47,11 @@ const regex={
 const EnterAddress=(props)=>{
   const{buttonText}=props;
   let {fullAddress}=props;
+  console.log(fullAddress);
   if(fullAddress)
     fullAddress = Object.keys(fullAddress).length === 0 ? null : fullAddress;
   const [name,setName]=useState(fullAddress?fullAddress.name:'');
-  const [number,setNumber]=useState(fullAddress?fullAddress.mobile:'')
+  const [number,setNumber]=useState(fullAddress?fullAddress.number:'')
   const [pin,setPin]=useState(fullAddress?fullAddress.pin:'')
   const [locality,setLocality]=useState(fullAddress?fullAddress.locality:'')
   const [address,setAddress]=useState(fullAddress?fullAddress.address:'')
@@ -92,7 +93,7 @@ const EnterAddress=(props)=>{
     const saveAddress=()=>{
       let fullAddress={
         name:name,
-        mobile:number,
+        number:number,
         locality:locality,
         pin:pin,
         address:address,
@@ -100,9 +101,12 @@ const EnterAddress=(props)=>{
         state:state,
         landmark:landmark,
         alternate:alternate,
-        latLng:props.fullAddress?(props.fullAddress.latLng
-              ?new firebase.firestore.GeoPoint(props.fullAddress.latLng.latitude,props.fullAddress.latLng.longitude):''):
+        lat:props.fullAddress?(props.fullAddress.latLng
+              ?props.fullAddress.latLng.latitude:''):
               '',
+        lng:props.fullAddress?(props.fullAddress.latLng
+          ?props.fullAddress.latLng.longitude:''):
+          '',
         updateAddress:updateAddressCheckbox              
       }
    
@@ -134,7 +138,7 @@ const EnterAddress=(props)=>{
           validate('name',val,setName);
           break;
         case INPUT_NUMBER:
-          validate('mobile',val,setNumber)
+          validate('number',val,setNumber)
           break;
         case INPUT_PIN:
           validate('pin',val,setPin)
@@ -167,7 +171,7 @@ const EnterAddress=(props)=>{
     if(!changed && fullAddress){
       validate('name',fullAddress.name,setName);
       validate('address',fullAddress.address,setAddress);
-      validate('mobile',fullAddress.mobile,setNumber);
+      validate('number',fullAddress.number,setNumber);
       validate('pin',fullAddress.pin,setPin);
       validate('locality',fullAddress.locality,setLocality);
       validate('city',fullAddress.city,setCity);
@@ -209,8 +213,8 @@ return(
               value={number}
               onChange={handleChange}
               aria-describedby="inputGroupPrepend"
-              isValid={touched.mobile && !errors.mobile}
-              isInvalid={touched.mobile && errors.mobile}
+              isValid={touched.number && !errors.number}
+              isInvalid={touched.number && errors.number}
               maxLength={10}
             
               required

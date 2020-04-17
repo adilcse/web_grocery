@@ -6,15 +6,17 @@ import Loading from '../Loading';
  * @param {*} props list of items present in cart
  */
 const CartList=(props)=>{
-    const {item,user}=props;    
+    const {item,user}=props;  
+  console.log(item);
     if(item)
         return(
             <div>
             {
                 item.map((data,index) =>{    
                     return <CartCard item={data}  
-                                    key={data.id}
-                                    userId={user}
+                                    key={data.item_id}
+                                    user={user}
+                                    dispatch={props.dispatch}
                                     index={index} 
                                     removeItem={props.removeItem}
                                     updateQuantity={props.updateQuantity}

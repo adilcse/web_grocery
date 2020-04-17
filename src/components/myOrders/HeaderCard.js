@@ -1,8 +1,8 @@
 import React from 'react';
 import { Row, Col } from 'react-bootstrap';
 const  HeaderCard=(props)=>{
-    const ordered=props.orderedOn?props.orderedOn.toDate().toLocaleString():null;
-    const delevered=props.deleveredOn?props.deleveredOn.toDate().toLocaleString():null;
+    const ordered=props.orderedOn?props.orderedOn.toLocaleString():null;
+    const delevered=props.deleveredOn?props.deleveredOn.toLocaleString():null;
     
     return(
     <Row>

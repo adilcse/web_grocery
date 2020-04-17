@@ -3,7 +3,6 @@ import { Row,  Media, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
 const ItemCard=(props)=>{
 	const{items}=props;
-	
 	if(items && items.length>0)
 		return(
 			<ul className="list-unstyled">
@@ -22,7 +21,6 @@ const ItemCard=(props)=>{
 								<Row>
 									<Col md='5' xs='12'>
 									<h5><Link to={`/Product/${item.id}`}>{item.name}</Link></h5>
-									<h6 className='text-muted'>Catagory : {item.catagory.join()}</h6>
 									</Col>
 									<Col md='2' xs='12'>
 

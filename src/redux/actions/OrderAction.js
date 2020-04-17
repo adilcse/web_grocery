@@ -1,18 +1,25 @@
 import { db } from "../../firebaseConnect"
 import { GET_ORDERS_PENDING, GET_ORDERS_SUCCESS, GET_ORDERS_FAILED } from "../../app/ActionConstants";
+import { getOrdersAPI } from "../../app/helper/laravelAPI";
 
-export const getOrder=(dispatch,userId)=>{
+export const getOrder=(dispatch,user,page=1)=>{
     dispatch({type:GET_ORDERS_PENDING});
-    db.collection("sellerOrders").where("userId", "==", userId).orderBy("orderedOn", "desc").limit(10)
-    .onSnapshot(function(querySnapshot) {
-        var orders = [];
-        querySnapshot.forEach(function(doc) {
-            orders.push(doc.data());
-        });
-        dispatch({type:GET_ORDERS_SUCCESS,payload:orders});
-    },function(error) {
-        console.log(error)
-        dispatch({type:GET_ORDERS_FAILED,payload:error});
-    });
+    getOrdersAPI(user,page)
+    .then(order=>{
+        dispatch({type:GET_ORDERS_SUCCESS,payload:order});
+    }).catch(err=>{
+        dispatch({type:GET_ORDERS_FAILED,payload:err});
+    })
+    // db.collection("sellerOrders").where("userId", "==", userId).orderBy("orderedOn", "desc").limit(10)
+    // .onSnapshot(function(querySnapshot) {
+    //     var orders = [];
+    //     querySnapshot.forEach(function(doc) {
+    //         orders.push(doc.data());
+    //     });
+    //     dispatch({type:GET_ORDERS_SUCCESS,payload:orders});
+    // },function(error) {
+    //     console.log(error)
+    //     dispatch({type:GET_ORDERS_FAILED,payload:error});
+    // });
 
 }

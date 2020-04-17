@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 import OrdersList from '../components/myOrders/OrdersList';
 import { ORDER } from '../app/constants';
 import TrackDetais from '../components/myOrders/TrackDetails';
+import { Button } from 'react-bootstrap';
 const MyOrders=()=>{
     const dispatch=useDispatch();
     const allOrders=useSelector(state=>state.getOrders);
@@ -19,12 +20,12 @@ const MyOrders=()=>{
     }
     if(user.loggedIn){
         if(!allOrders.loaded && !allOrders.loading && !allOrders.isError){
-            getOrder(dispatch,user.userId)
+            getOrder(dispatch,user.user)
         }else if(allOrders.loading){
             return(
                 <Loading size={100}/>
             )
-        }else if(allOrders.orders.length<=0){
+        }else if(allOrders.length<=0){
             return(
                 <>
                 <ErrorMessage isError={true} message={"SORRY!! no Items Found"}/>
@@ -32,9 +33,13 @@ const MyOrders=()=>{
                 </>
             )
         }else{
+         
             if(currentPage===ORDER && allOrders.loaded)
            return (
+               <>
+               <Button onClick={()=>getOrder(dispatch,user.user)}>Refresh</Button>
            <OrdersList orders={allOrders.orders} changePage={changePage}/>
+           </>
            )
            else
             return(<TrackDetais changePage={changePage} details={trackDetails}/>)

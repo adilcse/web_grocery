@@ -4,16 +4,16 @@ import { ORDER } from '../../app/constants';
 import { useSelector } from 'react-redux';
 import TrackMap from './TrackMap';
 const TrackDetais=(props)=>{
-    const {sellerId}=props.details;
+    const {seller_id}=props.details;
     let sellersDetails={};
     const sellers=useSelector(state=>state.sellers.ids);
-    if(sellerId){
-        sellersDetails=sellers.find(element=>element.id===sellerId);
+    if(seller_id){
+        sellersDetails=sellers.find(element=>element.id===seller_id);
     }
     return(
         <>
         <Button onClick={()=>props.changePage(ORDER)}>Back</Button>
-        <TrackMap details={{user:props.details.address,seller:sellersDetails}}/>
+        <TrackMap details={{user:props.details.delivery_address,seller:sellersDetails}}/>
         </>
     )
 }
