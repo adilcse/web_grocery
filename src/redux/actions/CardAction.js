@@ -40,9 +40,14 @@ export const addToCart = (dispatch,itemId,item,user,quantity=1)=>{
 }
     
 }
+/**
+ * remove an item from a cart
+ * @param {*} dispatch dispach object
+ * @param {*} user user object for 
+ * @param {*} item_id item id to remove from cart
+ */
 export const removeFromCart=(dispatch,user,item_id)=>{
     dispatch({type: REMOVE_FROM_CART_PENDING});
-  //   db.collection("user").doc(userId).collection('cart').doc(itemId).delete()
   removeFromCartAPI(user,item_id)
      .then(res=> {
         if(res.status===1)
@@ -55,7 +60,13 @@ export const removeFromCart=(dispatch,user,item_id)=>{
     });
     
 }
-//guest cart
+/**
+ * if user is not signed in then item is added to a guest user cart which is local 
+ * @param {*} dispatch 
+ * @param {*} itemId id of item to be loaded
+ * @param {*} item item object having name, price and image
+ * @param {*} quantity quantity of item to be added
+ */
 export const addToGuestCart=(dispatch,itemId,item,quantity=1)=>{
     dispatch(
         {type:ADD_TO_GUEST_CART,
@@ -64,13 +75,20 @@ export const addToGuestCart=(dispatch,itemId,item,quantity=1)=>{
         }
     )
 }
-//remove from guest cart
+/**
+ * remove item from guest cart
+ * @param {*} itemId id of item to be removed
+ */
 export const removeFromGuestCart=(itemId)=>({
     type:REMOVE_FROM_GUEST_CART,
     payload:itemId
 })
 
-
+/**
+ * fetch user cart from database
+ * @param {*} dispatch 
+ * @param {*} user 
+ */
 export const getUserCart=(dispatch,user)=>{
     getUserCartFromAPI(user).then(res=>{
         dispatch({})
@@ -81,7 +99,13 @@ export const getUserCart=(dispatch,user)=>{
         dispatch({type:LOAD_CART_FAILED});
     })
 }
-
+/**
+ * update quantity of item in the cart
+ * @param {*} dispatch 
+ * @param {*} user 
+ * @param {*} item_id 
+ * @param {*} quantity 
+ */
 export const updateQuantityInDB=(dispatch,user,item_id,quantity)=>{
     dispatch({type:UPDATE_CART_PENDING});
     updateQuantityAPI(user,{item_id:item_id,quantity:quantity})

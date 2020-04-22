@@ -47,7 +47,6 @@ const regex={
 const EnterAddress=(props)=>{
   const{buttonText}=props;
   let {fullAddress}=props;
-  console.log(fullAddress);
   if(fullAddress)
     fullAddress = Object.keys(fullAddress).length === 0 ? null : fullAddress;
   const [name,setName]=useState(fullAddress?fullAddress.name:'');

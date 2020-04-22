@@ -14,6 +14,11 @@ const initialState={
     productLoading:false,
     productLoaded:false
 }
+/**
+ * seller reducer handle seller action
+ * @param {*} state 
+ * @param {*} action 
+ */
 export const sellers=(state=initialState,action={})=>{
 switch(action.type){
     case GET_SELLERS_PENDING:

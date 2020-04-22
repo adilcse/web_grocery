@@ -4,6 +4,10 @@ import {Register as RegisterWithFirebase } from '../../redux/actions/UserAction'
 import { Redirect } from 'react-router';
 import Loading from '../Loading';
 import ErrorMessage from '../../app/helper/ErrorMessage';
+/**
+ * register user component
+ * @param {*} props 
+ */
 const Register = (props)=>{
    const dispatch=useDispatch();
    const user=useSelector(state=>state.userLogin);

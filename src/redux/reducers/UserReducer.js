@@ -26,6 +26,11 @@ import {
 
 
  }
+ /**
+  * user reducer handles user's action
+  * @param {*} state 
+  * @param {*} action 
+  */
 export const userLogin=(state=initialState,action={})=>{
      switch(action.type){
          case LOGIN_USER_PENDING:

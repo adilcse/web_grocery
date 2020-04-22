@@ -1,5 +1,8 @@
 import React from 'react';
 import LoginRegister from '../components/signin/LoginRegister';
+/**
+ * signin option for a user
+ */
 const Signin=()=>{ 
       document.title='Signin';
 return(

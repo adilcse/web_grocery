@@ -1,3 +1,10 @@
+/**
+ * calculates distance by location
+ * @param {{lat:number,lng:number}} userLatlng users location
+ * @param {{latitude:number,longitude:number}} sellerLatlng seller location
+ * @param {'K','N'} unit kilometer or miles
+ * @returns distance between two points
+ */
 export const distanceByLatlng=(userLatlng, sellerLatlng, unit)=> {
     const lat1=userLatlng.lat;
     const lon1=userLatlng.lng;

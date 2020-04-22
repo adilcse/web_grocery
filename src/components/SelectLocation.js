@@ -6,6 +6,10 @@ import { HOME } from '../app/constants';
 import { useDispatch } from 'react-redux';
 import {changeUserLocation} from '../redux/actions/LocationAction';
 import './checkout/EditAddress.css'
+/**
+ * select location to fetch nearby sellers and products
+ * @param {*} props 
+ */
 const SelectLocation=(props)=>{
     const {location,changePage}=props;
     const defaultLocation={lat:22.241497,lng:84.861948}

@@ -8,6 +8,11 @@ const inititalState={
     isError:false,
     errorMessage:''
 }
+/**
+ * chackout reducer handle checkout action
+ * @param {*} state 
+ * @param {*} action 
+ */
 export const CheckoutReducer=(state=inititalState,action={})=>{
     switch (action.type){
         case CHECKOUT:

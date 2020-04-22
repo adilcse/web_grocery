@@ -1,5 +1,9 @@
 import React, { useState }  from 'react';
 import { Carousel } from 'react-bootstrap';
+/**
+ * display slider images
+ * @param {*} props 
+ */
 const Slider=(props)=>{
     const [index, setIndex] = useState(0);
   const [direction, setDirection] = useState(null);

@@ -6,6 +6,9 @@ import CardList from "../components/productCard/CardList";
 import Loading from "../components/Loading";
 let oldId=null;
 document.title='Search';
+/**
+ * search page display the search item results
+ */
 const SearchPage=()=>{
 
 let {id} = useParams();

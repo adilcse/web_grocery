@@ -110,6 +110,11 @@ export const Logout=(dispatch)=>{
         dispatch({LOGOUT_USER_FAILED});
       });
 }
+/**
+ * load a user cart to redux store
+ * @param {*} dispatch 
+ * @param {*} cartLoaded user's cart
+ */
 const loadCart=(dispatch,cartLoaded=null)=>{
   let cart=new Set();
   cartLoaded.forEach(element => {
@@ -137,26 +142,7 @@ export const ValidateUser=(dispatch,user,by='email')=>{
     dispatch({type:LOGIN_USER_FAILED,payload:{code:'user not exist'}});
     Logout(dispatch);
   });
-  //   db.collection("user").doc(user.uid).get().then(function(doc) {
-  //     if (doc.exists) {
-  //       dispatch({type:LOGIN_USER_SUCCESS,payload:{...user,...doc.data(),token:user.getIdToken()}});
-  //       token=null;
-  //       loadCart(dispatch,user.uid);
-  //     } else {
-  //         // doc.data() will be undefined in this case
-  //         console.log("use not exist...");
-  //         if(by==='google'){
-          
-  //           addUserToDb(dispatch,user.uid,user.email,user.displayName);
-  //         }else{
-  //           dispatch({type:LOGIN_USER_FAILED,payload:{code:'user not exist'}});
-  //           Logout(dispatch);
-  //         }
-
-  //     }
-  // }).catch(function(error) {
-  //     console.log("Error getting document:", error);
-  // });
+  
 }
 
 
@@ -185,7 +171,11 @@ console.log(res)
       // An error happened.
     });
 }).finally(()=>token=null);
-}
+} 
+/**
+ * load catagory from database
+ * @param {*} dispatch 
+ */
 export const loadCatagory=(dispatch)=>{
     getCatagoriesFromAPI().then(res=>{
      dispatch({type:CATAGORIES_LOADED,payload:res})

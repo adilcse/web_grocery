@@ -14,6 +14,11 @@ const initialState={
     locationPending:false,
     addressPending:false
 }
+/**
+ * user location handle user's action
+ * @param {*} state 
+ * @param {*} action 
+ */
 export const UserLocation=(state=initialState,action={})=>{
     switch(action.type){
         case SET_CURRENT_LOCATION_PENDING:

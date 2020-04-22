@@ -1,16 +1,20 @@
 import React from 'react';
 import { Col, Row, Form, Button } from 'react-bootstrap';
 import { AiFillCaretRight } from 'react-icons/ai';
+/**
+ * display profile of the user
+ * @param {*} props 
+ */
 const ViewProfile=(props)=>{
 
-    const {address,city,locality,mobile,state,pin}=props.fullAddress;
+    const {address,city,locality,number,state,pin}=props.fullAddress;
 
 return(
     <Col className="border" lg="5">
     <Row>
     <Form className="text-left pl-3">
       <Form.Label>Mobile no.</Form.Label>
-      <Form.Control style={{marginBottom:"20px"}} className="border-bottom" plaintext readOnly value={mobile?mobile:'Uknown'} ></Form.Control>
+      <Form.Control style={{marginBottom:"20px"}} className="border-bottom" plaintext readOnly value={number?number:'Uknown'} ></Form.Control>
       <Form.Label>Pincode</Form.Label>
       <Form.Control style={{marginBottom:"20px"}} className="border-bottom" plaintext readOnly value={pin?pin:'unknown'} ></Form.Control>
       <Form.Label>Locality</Form.Label>

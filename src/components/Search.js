@@ -4,6 +4,9 @@ import {useHistory} from 'react-router-dom';
 import { setSearchResults } from '../redux/actions/SearchAction';
 import { useDispatch, useSelector } from 'react-redux';
 import { searchProductInDb } from '../app/helper/searchProductInDb';
+/**
+ * search box component to search different items
+ */
 const SearchBox=()=>{
    const dispatch=useDispatch();
     let history = useHistory();

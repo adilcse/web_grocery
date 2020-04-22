@@ -5,9 +5,11 @@ import { useSelector, useDispatch } from 'react-redux';
 import {updateAddress} from '../redux/actions/CheckoutAction';
 import ViewProfile from '../components/profile/ViewProfile';
 import ErrorMessage from '../app/helper/ErrorMessage';
-document.title='Profile';
+/**
+ * prodfile container display profile and address of a user
+ */
 const Profile=()=>{
-
+  document.title='Profile';
   const [showPayment, setShowPayment] = useState(false);
   const [currentTab,setCurrentTab]=useState('viewAddress')
   const user=useSelector(state=>state.userLogin);
@@ -21,14 +23,15 @@ const Profile=()=>{
   }
   const dispatch=useDispatch();
   const setValidAddress=(type,address)=>{
-    updateAddress(user.userId,address,dispatch);
-
+    updateAddress(dispatch,user.user,address);
+    setCurrentTab('viewAddress');
   }
   const viewPayment=()=>{
     if(showPayment){
       return(
         <>
-        This is Payment
+        Cash on delivery<br/>
+        Other mode comming soon...
         </>
       )}
       else{

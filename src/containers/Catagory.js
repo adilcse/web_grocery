@@ -3,7 +3,11 @@ import ProductCards from '../components/productCard/ProductCards';
 import { useParams } from 'react-router';
 import { Container } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
+/**
+ * catagory contaier display products catagory wise
+ */
 const Catagory=()=>{
+    document.title='Catagory';
     const catagory=useSelector(state=>state.CatagoryReducer.item)
     let cat=useParams('cat');
     cat=cat?parseInt(cat.cat):'all';
@@ -15,7 +19,7 @@ const Catagory=()=>{
 return(
     <Container>
         <h1 className='text-left'>Catagory : {catagories.name}</h1>
-      <ProductCards catagory={[cat]}/>
+      <ProductCards catagory={cat}/>
     </Container>
 )
 }

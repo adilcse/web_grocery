@@ -103,11 +103,16 @@ export const addItemsToCart = (state=initialState,action={})=>{
 const initialCatagory={
     item:[]
 };
+/**
+ * catagory reducer handles catagory  action
+ * @param {*} state state object
+ * @param {*} action action performed
+ */
 export const CatagoryReducer=(state=initialCatagory,action={})=>{
     switch(action.type){
         case CATAGORIES_LOADED:
             return{...state,
-                item:action.payload.catagory
+                item:action.payload.catagory?action.payload.catagory:[]
             }
         default:
             return{...state}

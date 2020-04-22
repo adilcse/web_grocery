@@ -3,6 +3,10 @@ import {useSelector} from 'react-redux';
 import { Redirect } from 'react-router';
 import Login from './Login';
 import Register from './Register';
+/**
+ * display login or register page based on current page state
+ * @param {*} props 
+ */
 const LoginRegister=(props)=>{
     const [page,setPage]=useState('login');
     let current;

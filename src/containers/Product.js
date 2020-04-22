@@ -4,8 +4,11 @@ import Loading from '../components/Loading';
 import Item from '../components/item/Item';
 import { useSelector } from 'react-redux';
 let previousId;
-document.title='product';
+/**
+ * product container display details of a product and option to place order or add to cart
+ */
  const Product=()=>{
+    document.title='product';
    let {id}=useParams();
    const [loaded,setLoaded]=useState(false);
    const [loading,setLoading]=useState(true)

@@ -3,7 +3,11 @@ const initialState={
     results : [],
     updated:false
 }
-
+/**
+ * search reducer handles search action 
+ * @param {*} state 
+ * @param {*} action 
+ */
 export const searchProduct = (state=initialState,action={})=>{
 switch(action.type){
     case CHANGE_SEARCH_FIELD:

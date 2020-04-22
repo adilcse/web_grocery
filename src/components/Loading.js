@@ -1,5 +1,9 @@
 import React from 'react';
 import './Loading.css';
+/**
+ * display wheel loading component 
+ * @param {*} prop 
+ */
 const Loading=(prop)=>{
     let border=prop.size/10;
     let load={

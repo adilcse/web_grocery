@@ -1,3 +1,8 @@
+/**
+ * gets address of given location by calling google API
+ * @param {{latitude:number,longitude:number}} latLng location to be found
+ * @returns address of location
+ */
 export const getAddressByLatLng=(latLng)=>{
     return fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=
     ${latLng.latitude+','+latLng.longitude}

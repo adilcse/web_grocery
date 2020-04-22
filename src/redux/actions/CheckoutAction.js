@@ -1,6 +1,12 @@
 import {  CHECKOUT,ORDER_PLACE_PENDING,ORDER_PLACE_FAILED,ORDER_PLACE_SUCCESS, EMPTY_CART,ADDRESS_UPDATED } from "../../app/ActionConstants";
 import { PENDING, NOT_AVAILABLE } from "../../app/constants";
-import { placeOrderAPI} from "../../app/helper/laravelAPI";
+import { placeOrderAPI, updateAddressAPI} from "../../app/helper/laravelAPI";
+/**
+ * add items from cart to checkout
+ * @param {*} dispatch 
+ * @param {*} cart 
+ * @param {*} total 
+ */
 export const CheckoutCart=(dispatch,cart,total)=>{
     dispatch({  
         type:CHECKOUT,
@@ -31,18 +37,13 @@ export const PlaceOrder=(dispatch,address,order,from,user,cartIds,payMode)=>{
             };
     }
     if(sellerOrders){
-        //const batch=db.batch();
         const myOrders=[];
         sellerOrders.forEach(ord=>{
             ord.total=sellerTotal(ord.items);
-            // ord.address=address;
             ord.paymentMode=payMode;
             ord.status=PENDING;
-            // ord.from=from;
             myOrders.push(ord);
         });
-
-        //batch.commit()
         placeOrderAPI(user,{order:myOrders,address:address,from:from})
         .then(res=>{
             dispatch({type:ORDER_PLACE_SUCCESS,payload:res});
@@ -70,7 +71,6 @@ const getSellerOrders=(order)=>{
         if(value.stock===NOT_AVAILABLE){
             return false;
            } 
-           console.log(value);
            const it={
             id:value.id,
             quantity:value.quantity,
@@ -91,10 +91,22 @@ const getSellerOrders=(order)=>{
     }
     return sellerOrders;
 }
-export const updateAddress=(dispatch,address)=>{
+/**
+ * update address in redux store
+ * @param {*} dispatch 
+ * @param {*} address 
+ */
+export const updateAddress=(dispatch,user,address)=>{
+    updateAddressAPI(user,address)
+    .then(res=>{
+        if(res.status)
             dispatch({type:ADDRESS_UPDATED,payload:address})
+        })
 }
-
+/**
+ * when order is placed empty cart in redux store
+ * @param {*} dispatch 
+ */
 const emptyCart=(dispatch)=>{
        dispatch({type:EMPTY_CART})
 }

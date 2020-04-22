@@ -8,12 +8,21 @@ import OrdersList from '../components/myOrders/OrdersList';
 import { ORDER } from '../app/constants';
 import TrackDetais from '../components/myOrders/TrackDetails';
 import { Button } from 'react-bootstrap';
+/**
+ * order container display the orders of a user
+ */
 const MyOrders=()=>{
+    document.title='Orders';
     const dispatch=useDispatch();
     const allOrders=useSelector(state=>state.getOrders);
     const user=useSelector(state=>state.userLogin);
     const [currentPage,setCurrentPage]=useState(ORDER);
     const [trackDetails,setTrackDetails]=useState();
+    /**
+     * 
+     * @param {ORDER,DETAILS} page current page
+     * @param {*} details details to be displayed 
+     */
     const changePage=(page,details=null)=>{
         setTrackDetails(details);
         setCurrentPage(page);

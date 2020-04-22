@@ -116,7 +116,11 @@ export const removeFromCartAPI=async(user,item)=>{
       });
 
 }
-
+/**
+ * update quantity of an item in database by calling API
+ * @param {*} user user object
+ * @param {*} item item to be updated
+ */
 export const updateQuantityAPI=async(user,item)=>{
     const token=await user.getIdToken();
     const data=new FormData();
@@ -129,7 +133,11 @@ export const updateQuantityAPI=async(user,item)=>{
     .then(res=>res.json());
 
 }
-
+/**
+ * place order by calling API
+ * @param {*} user 
+ * @param {*} order order to be placed 
+ */
 export const placeOrderAPI=async(user,order)=>{
     const token=await user.getIdToken();
     const data=new FormData();
@@ -142,7 +150,11 @@ export const placeOrderAPI=async(user,order)=>{
     .then(res=>res.json());
 
 }
-
+/**
+ * update users address 
+ * @param {*} user 
+ * @param {*} address new address
+ */
 export const updateAddressAPI=async(user,address)=>{
     const token=await user.getIdToken();
     const data=new FormData();
@@ -152,9 +164,24 @@ export const updateAddressAPI=async(user,address)=>{
         body:data
     }).then(res=>res.json())
 }
-
+/**
+ * get user's orders
+ * @param {*} user 
+ * @param {*} page 
+ */
 export const getOrdersAPI=async(user,page=1)=>{
     const token=await user.getIdToken();
    return fetch(`${LARAVEL_API_URL}/user/getOrders/${ORDER_PER_PAGE}?page=${page}&api_token=${token}`)
     .then(res=>res.json())
+}
+
+export const addressUpdateAPI=async(user,address)=>{
+    const token=await user.getIdToken();
+    const data=new FormData();
+    data.append('json',JSON.stringify(address));
+    return fetch(`${LARAVEL_API_URL}/user/updateAddress/?api_token=${token}`,{
+        method:'POST',
+        body:data
+    })
+     .then(res=>res.json())
 }

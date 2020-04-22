@@ -1,14 +1,13 @@
 import React,{useState} from 'react';
 
 import Loading from '../Loading';
-import _ from 'lodash';
 import CardList from './CardList';
 import { useSelector } from 'react-redux';
 import { Button } from 'react-bootstrap';
 let type=null;
 /**
  * display numbers of item in the screen by catagory
- * @param {'all','vegetables','fruits','oil','masala'} props catagory of items
+ * @param {*} props catagory of items
  */
 let oldProductSize=0;
 
@@ -19,7 +18,7 @@ const ProductCards =(props)=>{
     const sellers=useSelector(state=>state.sellers);
     const products=useSelector(state=>state.sellers.products);
     const [allItems,setAllItems]=useState([])
-    const [loadMore,setLoadMore]=useState(true);
+    const [loadMore,setLoadMore]=useState(false);
     const [loading,setLoading]=useState(false);
   /**
    * loads item from database
@@ -32,18 +31,16 @@ const ProductCards =(props)=>{
            if(!catagory){
             source=products;
            }else{
-               source=[];
-                products.forEach(element => {
-                let found=_.intersection(catagory,element.catagory);
-                if(found.length>0){
-                    source.push(element);
+               source=products.filter(el=>el.catagory_id===catagory);
+                if(source.length>max){
+                    source = source.slice(0,max);
                     setLoadMore(true);
                 }else{
                     setLoadMore(false);
-                }}
-            );      
+                }
+                
            }
-           setAllItems(source.slice(0,max));
+           setAllItems(source);
            setLoaded(true);
            setLoading(false)
       }

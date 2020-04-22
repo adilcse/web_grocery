@@ -1,5 +1,10 @@
 import React from 'react';
 import { Row } from 'react-bootstrap';
+/**
+ * quantity button to be used to displat and update quantity.
+ * to update the number of items
+ * @param {*} props 
+ */
 const UpdateQuantitybutton=(props)=>{
     const {quant,updateQuant}=props;
 return(

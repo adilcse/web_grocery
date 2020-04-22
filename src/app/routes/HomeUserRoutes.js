@@ -23,6 +23,10 @@ const Checkout=lazy(()=>import('../../containers/Checkout'));
 const MyOrders=lazy(()=>import('../../containers/MyOrders'));
 const Profile=lazy(()=>import('../../containers/Profile'));
 let loaded=false;
+/**
+ * router component loaded add the container which is needed
+ * it user lazy loader for loading the components
+ */
 const HomeUserRoutes=()=>{
     const dispatch=useDispatch();
     document.title='welcome';

@@ -6,6 +6,11 @@ const initialState={
     loaded:false,
     isError:false
 }
+/**
+ * order reducer handle order action
+ * @param {*} state 
+ * @param {*} action 
+ */
 export const getOrders=(state=initialState,action={})=>{
 switch(action.type){
    case GET_ORDERS_PENDING:

@@ -1,21 +1,9 @@
-import { db } from "../../firebaseConnect"
-import { LARAVEL_API_URL } from "../constants";
-export const getCatagories=()=>{
-    let query=db.collection('catagories');
-   return query.get()
-        .then(function(querySnapshot) {
-            var items=[];
-            querySnapshot.forEach(function(doc) {
-                items.push({...doc.data(),id:doc.id});
-            });
-            return items;
-        })
-        .catch(function(error) {
-            console.log("Error getting documents: ", error);
-            return false;
-        });  
-}
 
+import { LARAVEL_API_URL } from "../constants";
+
+/**
+ * get catagories available from database bu calling api
+ */
 export const getCatagoriesFromAPI=()=>{
    return fetch(`${LARAVEL_API_URL}/getCatagory`)
    .then(res=>{
