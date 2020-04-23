@@ -21,7 +21,7 @@ export const CheckoutCart=(dispatch,cart,total)=>{
  * @param {*} dispatch 
  * @param {'cart','item'} from from where the user is checking out
  */
-export const PlaceOrder=(dispatch,address,order,from,user,cartIds,payMode)=>{
+export const PlaceOrder=(dispatch,address,order,from,user,payMode)=>{
     console.log(order,address);
     dispatch({type:ORDER_PLACE_PENDING});
     const sellerOrders=getSellerOrders(order);
@@ -47,7 +47,7 @@ export const PlaceOrder=(dispatch,address,order,from,user,cartIds,payMode)=>{
         placeOrderAPI(user,{order:myOrders,address:address,from:from})
         .then(res=>{
             dispatch({type:ORDER_PLACE_SUCCESS,payload:res});
-             if(address.updateAddress)
+            if(address.updateAddress)
                 updateAddress(dispatch,address);
             if(from==='cart')
                 emptyCart(dispatch);
@@ -70,24 +70,24 @@ const getSellerOrders=(order)=>{
         const value=order.items[i];
         if(value.stock===NOT_AVAILABLE){
             return false;
-           } 
-           const it={
-            id:value.id,
+            } 
+            const it={
+            id:value.id?value.id:value.item_id,
             quantity:value.quantity,
             price:value.price,
             confirmed:true
         }
         if(sellers.includes(value.seller_id)){
             let index=sellerOrders.findIndex(element=>element.seller_id===value.seller_id);
-             sellerOrders[index].items.push(it);
-         }else{
-             let ord={
-                 seller_id:value.seller_id,   
-                 items:[it]
-             }
-             sellers.push(value.seller_id);
-             sellerOrders.push(ord);
-         }
+            sellerOrders[index].items.push(it);
+        }else{
+            let ord={
+                seller_id:value.seller_id,   
+                items:[it]
+            }
+            sellers.push(value.seller_id);
+            sellerOrders.push(ord);
+        }
     }
     return sellerOrders;
 }

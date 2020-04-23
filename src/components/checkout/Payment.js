@@ -1,6 +1,10 @@
 import React from 'react';
 import { Button } from 'react-bootstrap';
 import { Row } from 'react-bootstrap';
+/**
+ * payment component dispay payment option for an order
+ * @param {*} props 
+ */
 const Payment =(props)=>{
     const {address}=props;
     let styleContainer={

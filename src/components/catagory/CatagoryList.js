@@ -2,6 +2,10 @@ import React from 'react';
 import CatagoryCard from './CatagoryCard';
 import { Row } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
+/**
+ * render list of catagory 
+ * @param {*} props 
+ */
 const CatagoryList=(props)=>{
     const cats=useSelector(state=>state.CatagoryReducer.item)
 return(

@@ -7,7 +7,6 @@ import Loading from '../Loading';
  */
 const CartList=(props)=>{
     const {item,user}=props;  
-  console.log(item);
     if(item)
         return(
             <div>

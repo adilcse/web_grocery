@@ -9,7 +9,6 @@ const CartTotal=(props)=>{
         return(<></>);
     }
     const{countItems,total,deleveryCharges,discount}=props.item;
-
 const inRupee=(amount)=>{
     return new Intl.NumberFormat('en-IN').format(amount)
 }

@@ -23,7 +23,6 @@ let {from}=useParams('from');
 const userName=useSelector(state=>state.userLogin.name);
 const user=useSelector(state=>state.userLogin.user);
 const details=useSelector(state=>state.CheckoutReducer);
-const cartIds=useSelector(state=>state.addItemsToCart.cart)
 let userAddress=useSelector(state=>state.userLogin.address);
 const sellers=useSelector(state=>state.sellers.ids);
 const [fullAddress,setFullAddress]=useState(userAddress);
@@ -77,7 +76,7 @@ const paymentStatus=(status)=>{
             fullAddress[key]='';
     })
     if(status){
-       PlaceOrder(dispatch,fullAddress,details,from,user,cartIds,PAYMENT_METHOD_COD);
+       PlaceOrder(dispatch,fullAddress,details,from,user,PAYMENT_METHOD_COD);
     }
 }
 /**

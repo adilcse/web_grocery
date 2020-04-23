@@ -4,15 +4,14 @@ import { LARAVEL_API_URL, RADIUS_IN_KM, ORDER_PER_PAGE } from "../constants";
  * @param {*} user user object
  */
 export const validateUserFromAPI=async(user)=>{
-  const token= await user.getIdToken();
-  return fetch(`${LARAVEL_API_URL}/user/login/${user.uid}?api_token=${token}`)
-  .then(res=>{
-    if(res.status===200)
-        return res.json();
-    else 
-        throw res.json();
-  })
-  
+    const token= await user.getIdToken();
+    return fetch(`${LARAVEL_API_URL}/user/login?api_token=${token}`)
+        .then(res=>{
+        if(res.status===200)
+            return res.json();
+        else 
+            throw res.json();
+        })
 }
 
 /**
@@ -35,23 +34,21 @@ export const registerWithAPI=(user,name)=>{
             body:data
         })
         .then(res=>{
-          if(res.ok && res.status===200){
-
-              const data= res.body.getReader().read().then(({done,value})=>{
-                  if(done)
-                    return value;
-                else return null;
-              });
-             return data.then(res=>{
-                 return res;
-             })
-          }
-              
-          else 
-              throw res.json().then(resp=>resp).catch(err=>err);
-          })
+            if(res.ok && res.status===200){
+                const data= res.body.getReader().read().then(({done,value})=>{
+                    if(done)
+                        return value;
+                    else 
+                        return null;
+                });
+                return data.then(res=>{
+                    return res;
+                })
+            }  
+            else 
+                throw res.json().then(resp=>resp).catch(err=>err);
+        })
     })  
-   
 }
 /**
  * loads user cart in redux store
@@ -64,11 +61,10 @@ export const  getUserCartFromAPI=async(user)=>{
         .then(res=>{
             let cart=new Set();
             res.forEach(element => {
-              cart.add(element.item_id);
+                cart.add(element.item_id);
             });
             return({cart:cart,item:res});
         })
-   
 }
 /**
  * get nearby seller and product from database
@@ -77,7 +73,6 @@ export const  getUserCartFromAPI=async(user)=>{
 export const getSellerAndItemsAPI=async(location)=>{
     const lat=location.latitude;
     const lng=location.longitude;
-
     return fetch(`${LARAVEL_API_URL}/nearbySellers?lat=${lat}&lng=${lng}&radius=${RADIUS_IN_KM}`)
     .then(res=>res.json())
 }
@@ -107,14 +102,13 @@ export const removeFromCartAPI=async(user,item)=>{
     const token=await user.getIdToken();
     return fetch(`${LARAVEL_API_URL}/user/removeFromCart/${item}/delete?api_token=${token}`,{
         method:'get'
-    })
-    .then(res=>{
-      if(res.status===200)
-          return res.json();
-      else 
-          throw res.json();
-      });
-
+        })
+        .then(res=>{
+            if(res.status===200)
+                return res.json();
+            else 
+                throw res.json();
+        });
 }
 /**
  * update quantity of an item in database by calling API
@@ -171,7 +165,7 @@ export const updateAddressAPI=async(user,address)=>{
  */
 export const getOrdersAPI=async(user,page=1)=>{
     const token=await user.getIdToken();
-   return fetch(`${LARAVEL_API_URL}/user/getOrders/${ORDER_PER_PAGE}?page=${page}&api_token=${token}`)
+    return fetch(`${LARAVEL_API_URL}/user/getOrders/${ORDER_PER_PAGE}?page=${page}&api_token=${token}`)
     .then(res=>res.json())
 }
 
@@ -183,5 +177,5 @@ export const addressUpdateAPI=async(user,address)=>{
         method:'POST',
         body:data
     })
-     .then(res=>res.json())
+    .then(res=>res.json())
 }
