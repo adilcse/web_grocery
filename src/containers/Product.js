@@ -36,13 +36,19 @@ let previousId;
             <Loading size={120}/>
         ) 
     }
+    else if(sellers.error){
+        return(
+            <h1>
+                Something went wrong.
+            </h1>
+        )
+    }
    else{
        if(item){
         document.title=item.name?item.name:'product';
         return(
         <Item item={item} id={id}/>
     ) }
-    else
     return(
         <h2>
             Sorry !! Item Not Found!!!

@@ -69,7 +69,13 @@ const loadButton=()=>{
     return <></>
 }
 }
-
+if(sellers.error){
+    return(
+        <h1>
+            Something went wrong...
+        </h1>
+    )
+}
 return (
     <div className='mb-5'>
         <CardList items={allItems} loaded={sellers.productLoaded}/>
