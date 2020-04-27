@@ -28,7 +28,7 @@ export const registerWithAPI=(user,name)=>{
         }
         const  data = new FormData();
         data.append("json", JSON.stringify( userData));
-        return fetch(`${LARAVEL_API_URL}/user/userRegister?api_token=${token}`,{
+        return fetch(`${LARAVEL_API_URL}/user/register?api_token=${token}`,{
             method:'post',
             mode:'cors',
             body:data
