@@ -5,10 +5,11 @@ import { useSelector, useDispatch } from 'react-redux';
 import {updateAddress} from '../redux/actions/CheckoutAction';
 import ViewProfile from '../components/profile/ViewProfile';
 import ErrorMessage from '../app/helper/ErrorMessage';
+import CreditCard from '../components/profile/CreditCard';
 document.title='Profile';
 const Profile=()=>{
 
-  const [showPayment, setShowPayment] = useState(false);
+  const [showPayment, setShowPayment] = useState(true);
   const [currentTab,setCurrentTab]=useState('viewAddress')
   const user=useSelector(state=>state.userLogin);
   const emptyAddress={
@@ -24,19 +25,11 @@ const Profile=()=>{
     updateAddress(user.userId,address,dispatch);
 
   }
+
   const viewPayment=()=>{
-    if(showPayment){
-      return(
-        <>
-        This is Payment
-        </>
-      )}
-      else{
-        return(
-          <></>
-        )
-      }
-    
+    return(
+      <CreditCard className="mt-3"/>
+    )
   }
   
   if(user.loggingIn){
