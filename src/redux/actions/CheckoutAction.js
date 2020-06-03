@@ -48,7 +48,7 @@ export const PlaceOrder=(dispatch,address,order,from,user,payMode)=>{
         .then(res=>{
             dispatch({type:ORDER_PLACE_SUCCESS,payload:res});
             if(address.updateAddress)
-                updateAddress(dispatch,address);
+                updateAddress(dispatch,user,address);
             if(from==='cart')
                 emptyCart(dispatch);
         }).catch(error=>{

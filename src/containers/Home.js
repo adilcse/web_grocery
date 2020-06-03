@@ -20,7 +20,7 @@ if(page===HOME)
         <>
         {location.addressPending?<h2>Loading.....</h2>:(location.addressError?<h2>something went wrong please refresh the page</h2>:
             (location.locationError?<Alert variant='danger'>
-                <h4>{location.locationError.code===1?'PLEASE ENABLE GPS':location.locationError.message}</h4>
+                <h4>{location.locationError}</h4>
                 <h5 onClick={()=>setPage(CHANGE_LOCATION)} style={{ cursor: 'pointer',  textDecoration: 'underline'}}>
                 set Location
                 </h5>

@@ -13,7 +13,7 @@ import {
     CATAGORIES_LOADED
  } from "../../app/ActionConstants";
  import {firebase} from '../../firebaseConnect';
-import {getCatagoriesFromAPI } from "../../app/helper/getCatagories";
+import {getCatagoriesFromAPI } from "../../app/helper/laravelAPI";
 import { validateUserFromAPI, registerWithAPI } from "../../app/helper/laravelAPI";
 /**
  * Tries to signin with given email and password
@@ -155,10 +155,8 @@ export const ValidateUser=(dispatch,user,by='email')=>{
  * @param {*} name name of the user
  */
 const addUserToDb=(dispatch,user,name)=>{
-registerWithAPI(user,name).then(res=>{
-console.log(res)
-})
-.then(function() {
+registerWithAPI(user,name)
+.then(res=> {
    dispatch({type:REGISTER_USER_SUCCESS,payload:{uid:user.uid,email:user.email,name:name}});
 
 })

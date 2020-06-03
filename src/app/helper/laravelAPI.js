@@ -1,11 +1,33 @@
 import { LARAVEL_API_URL, RADIUS_IN_KM, ORDER_PER_PAGE } from "../constants";
+export const getCatagoriesFromAPI=()=>{
+    return fetch(`${LARAVEL_API_URL}/getCatagory`,{
+        method:'GET',
+        mode:'cors',
+        headers:{
+            'accept':'application/json',
+            
+        }
+    })
+            .then(res=>{
+                return res.json()})
+            .then(data=>{
+                return data;
+            })
+            .catch(err=>{
+                console.log(err)
+                return [];
+            });
+}
 /**
  * validate user with mysql database
  * @param {*} user user object
  */
 export const validateUserFromAPI=async(user)=>{
     const token= await user.getIdToken();
-    return fetch(`${LARAVEL_API_URL}/user/login?api_token=${token}`)
+    return fetch(`${LARAVEL_API_URL}/user/login?api_token=${token}`,{
+        mode:'cors',
+        method:'GET',
+    })
         .then(res=>{
         if(res.status===200)
             return res.json();
@@ -19,8 +41,8 @@ export const validateUserFromAPI=async(user)=>{
  * @param {*} user user object to register in tatablase
  * @param {*} name name of user
  */
-export const registerWithAPI=(user,name)=>{
-    return user.getIdToken().then(token=>{
+export const registerWithAPI=async(user,name)=>{
+    const token=await user.getIdToken();
         const userData={
             name: name, 
             uid: user.uid, 
@@ -33,22 +55,11 @@ export const registerWithAPI=(user,name)=>{
             mode:'cors',
             body:data
         })
-        .then(res=>{
-            if(res.ok && res.status===200){
-                const data= res.body.getReader().read().then(({done,value})=>{
-                    if(done)
-                        return value;
-                    else 
-                        return null;
-                });
-                return data.then(res=>{
-                    return res;
-                })
-            }  
-            else 
-                throw res.json().then(resp=>resp).catch(err=>err);
-        })
-    })  
+        .then(res=>res.json())
+        .then(res=>{console.log(res);
+            return res})
+        .catch(err=>{console.log(err)});
+    
 }
 /**
  * loads user cart in redux store
