@@ -22,8 +22,8 @@ const Profile=()=>{
   }
   const dispatch=useDispatch();
   const setValidAddress=(type,address)=>{
-    updateAddress(user.userId,address,dispatch);
-
+    updateAddress(dispatch,user.userId,address);
+    setCurrentTab('viewAddress');
   }
 
   const viewPayment=()=>{
@@ -50,23 +50,21 @@ const Profile=()=>{
   }
   return (
       <Container>
-         <Tabs defaultActiveKey="viewAdress" id="addressTab" activeKey={currentTab} onSelect={k=>setCurrentTab(k)}>
+        <Tabs defaultActiveKey="viewAdress" id="addressTab" activeKey={currentTab} onSelect={k=>setCurrentTab(k)}>
             <Tab eventKey="viewAddress" title="View Address">
-             
             <Row >
               <Col className="border" lg="3">
                 <Row className="justify-content-center">
               <Image  src="https://image.shutterstock.com/image-photo/colorful-flower-on-dark-tropical-260nw-721703848.jpg" style={{ height:"100px", width: "100px"}} alt="Image" roundedCircle />
               </Row>
               <Row className="justify-content-center"><h3>{user.name}</h3></Row>
-  <Row className="justify-content-center"><h4>{user.userName}</h4></Row>
+              <Row className="justify-content-center"><h4>{user.userName}</h4></Row>
               </Col>
             <ViewProfile showPayment={setShowPayment} status={showPayment} fullAddress={user.address?user.address:emptyAddress}/>
               <Col className="border" lg="4">
                 {viewPayment()}
               </Col>
             </Row>
-         
             </Tab>
             <Tab eventKey="enterAddress" title="Enter Address">
             <EnterAddress fullAddress={user.address} setValidAddress={setValidAddress} buttonText='Update Address' />

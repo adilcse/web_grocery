@@ -2,8 +2,7 @@ export const paymentStyle={
     body:{
     borderRadius: "25px",
     padding: "20px",
-    width: "350px",
-    height: "200px",
+    MarginBottom:"75%",
     background:"linear-gradient(135deg, #bd6772, #53223f)"
     },
     logo:{
@@ -26,8 +25,8 @@ export const paymentStyle={
     color: "white",
     marginTop: "10px",
     letterSpacing: "4px",
-    fontWeight: "600",
-    fontSize: "20px"
+    // fontWeight: "600",
+    // fontSize: "20px"
     },
     expireText:{
         color:"white",

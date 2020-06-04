@@ -1,6 +1,5 @@
 import React from 'react';
-import { Col, Row, Form, Button } from 'react-bootstrap';
-import { AiFillCaretRight } from 'react-icons/ai';
+import { Col, Row, Form } from 'react-bootstrap';
 const ViewProfile=(props)=>{
     const details=[
       {
@@ -34,17 +33,14 @@ return(
     <Form className="col pl-3">
       {details.map((element,i)=>{
         return(
-          <div key={i}>
+          <Row key={i}>
             <Form.Label>{element.label}</Form.Label>
             <Form.Control style={{marginBottom:"20px"}} className="border-bottom text-center" plaintext readOnly value={element.data?element.data:'Uknown'} />
-          </div>
+          </Row>
         )
       })
       }
     </Form>
-    </Row>
-    <Row className="text-left" style={{marginBottom:"20px"}}>
-    <Button variant="secondary" size="lg" block onClick={()=>props.showPayment(!props.status)}>Payment Option <AiFillCaretRight/></Button>
     </Row>
   </Col>
 )
