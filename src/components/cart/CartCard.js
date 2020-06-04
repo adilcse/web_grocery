@@ -53,17 +53,25 @@ const CartCard=(props)=>{
  }
 return(        
     <div className="row no-gutters">
-      <div className="col-md-4" style={{maxHeight:'200px'}}>
+      <div className="col-md-4 col-sm-10" style={{height:'18rem'}}>
         <img src={item.image} className="card-img img-thumbnail rounded mh-100"  alt={item.name}/>
       </div>
       <div className="col-md-8">
         <div className="card-body" align="left">
-        <Link to={`/Product/${id}`}>  <h4 className="card-title">{item.name} </h4> </Link>
-        {!av?<h3>This item is not deleverable, Please remove to continue</h3>:<></>}
-          <h4> ₹ {item.price}  only   </h4> 
-          Quantity : <UpdateQuantitybutton quant={quant} updateQuant={updateQuant}>
-           <button className="btn btn-warning ml-3" onClick={()=>props.removeItem(id,props.index)}>Remove</button> 
-            </UpdateQuantitybutton>
+          <Link to={`/Product/${id}`}>  <h4 className="card-title">{item.name} </h4> </Link>
+          {!av?<h3>This item is not deleverable, Please remove to continue</h3>:<></>}
+          <h4><i><small><strike className="text-muted">MRP ₹{item.MRP}</strike></small> </i> ₹ {item.price}  /- only   </h4> 
+          <div className="d-inline h5">
+            Quantity :
+            </div>
+            <UpdateQuantitybutton className="d-inline" quant={quant} updateQuant={updateQuant}>
+              <button className="btn btn-warning ml-2" onClick={()=>props.removeItem(id,props.index)}>Remove</button> 
+          </UpdateQuantitybutton>
+         
+          
+            
+          <br/>
+          <span className="h4 mt-2">Item Total : ₹{item.price} x {quant} = ₹ {item.price*quant} /-</span>
         </div>
       </div> 
     </div>

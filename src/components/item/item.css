@@ -95,7 +95,6 @@ background-image: linear-gradient(120deg, #70f523 0%, #eff307 100%);
   .gFont2{
     font-family: 'Simonetta' ;
     font-size: 18px;
-    font-weight: bold;
     text-overflow: clip;
     overflow-y: auto;
   }

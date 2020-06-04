@@ -13,7 +13,7 @@ import { MAX_ITEM_ALLOWED } from '../../app/constants';
 import UpdateQuantitybutton from '../UpdateQuantityButtons';
 
 const Item =(props)=>{
-    const {name,price,description,image,quantity,catagory}=props.item;
+    const {name,price,description,image,quantity,catagory,MRP}=props.item;
     const itemId=props.id;
     const userId=useSelector(state=>state.userLogin.userId);
     const [newItems,setNewItems]=useState(null);
@@ -110,7 +110,7 @@ if(newQuant>0&&newQuant<=MAX_ITEM_ALLOWED){
                             <span className="gFont1 h3">{name}  {quantity}</span>
                         </div>
                         <div className="row">
-                            <span className="gFont1 h3">Price : ₹ {price}</span>
+                            <span className="gFont1 h3"><i><small><strike>MRP ₹{MRP}</strike></small> </i> ₹{price} /- only</span>
                         </div>
                         <div className=" b text-center mt-3">
                             <UpdateQuantitybutton className="m-auto" quant={quant} updateQuant={updateQuant}/>
@@ -127,8 +127,8 @@ if(newQuant>0&&newQuant<=MAX_ITEM_ALLOWED){
                 </div>
             </div>
             <Container className=" text-left h-50 mw-75">
-                <span className="  mh-75 text-justify h4">
-                <h2>Description :</h2> {description}</span>
+                <span className="  mh-75 text-justify h4 gFont2">
+                <span className="h2">Description :</span> {description}</span>
             </Container>
             <NewArival/>
             <div className="alert alert-dark cntnt"><h3>Shop More</h3></div>
