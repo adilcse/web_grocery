@@ -16,7 +16,8 @@
 firebaseConfig.js
 # production
 /build
-
+Dockerfile
+.dockerignore
 # misc
 .DS_Store
 .env.local

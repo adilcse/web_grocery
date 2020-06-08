@@ -5,7 +5,7 @@ const UpdateQuantitybutton=(props)=>{
     const updateQuant=(target,value)=>{
         let newQuant=quant+value;
         if(newQuant>0 && newQuant<=MAX_ITEM_ALLOWED){
-            if(isNaN(stock) || (!isNaN(stock) && stock>newQuant)){
+            if(isNaN(stock) || (!isNaN(stock) && stock>=newQuant)){
                 setQuant(newQuant);
             }
         }
