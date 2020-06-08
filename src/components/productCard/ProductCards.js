@@ -21,63 +21,69 @@ const ProductCards =(props)=>{
     const [allItems,setAllItems]=useState([])
     const [loadMore,setLoadMore]=useState(true);
     const [loading,setLoading]=useState(false);
+    const [source,setSource]=useState([])
   /**
    * loads item from database
    * @param {catagory} catagory to dispay
    */
-    const loadItem=(catagory)=>{  
+    const loadItem=(catagory,maximum=max)=>{  
         setLoading(true);
-        let source=[]; 
+        let Nsource=[]; 
         if(!sellers.productLoading && sellers.productLoaded){
-           if(!catagory){
-            source=products;
-           }else{
-               source=[];
+            if(!catagory) {
+            Nsource=products;
+            } else {
+                Nsource=[];
                 products.forEach(element => {
-                let found=_.intersection(catagory,element.catagory);
-                if(found.length>0){
-                    source.push(element);
-                    setLoadMore(true);
-                }else{
-                    setLoadMore(false);
-                }}
-            );      
-           }
-           setAllItems(source.slice(0,max));
-           setLoaded(true);
-           setLoading(false)
-      }
-      
+                    let found=_.intersection(catagory,element.catagory);
+                    if(found.length>0){
+                        Nsource.push(element);
+                        setLoadMore(true);
+                    }else{
+                        setLoadMore(false);
+                    }
+                });
+                setSource([...Nsource]);      
+            }
+            displayItems(Nsource,maximum)
+            setLoaded(true);
+            setLoading(false)
+        }
+    }
+    //display items
+    const displayItems=(Nsource=source,maximum=max)=>{
+        setAllItems(Nsource.slice(0,maximum));
     }
     //if catagory is changed it loads the data
     if(type!==props.catagory && sellers.loaded){
         type=props.catagory;
         loadItem(props.catagory); 
     }
-   if((sellers.productLoaded && !loaded)||oldProductSize!==products.length ){
-    loadItem(props.catagory);
-    oldProductSize=products.length;
-    return(
-       <Loading size={120}/>
-    )
-}
-
-const loadButton=()=>{
-    if(sellers.loaded && products.length>allItems.length && loadMore)
-    {return <Button variant="primary" onClick={()=>{
-        setMax(max+5);
+    if((sellers.productLoaded && !loaded)||oldProductSize!==products.length ){
         loadItem(props.catagory);
-    }}>Load more</Button>
-}else{
-    return <></>
-}
+        oldProductSize=products.length;
+        return(
+            <Loading size={120}/>
+        )
+    }
+const LoadButton=()=>{
+    if(sellers.loaded && source.length>allItems.length && loadMore)
+        {
+            return <Button variant="primary" onClick={()=>{
+                const Nmax=max+5;
+                displayItems(source,Nmax);
+                setMax(Nmax);
+            }}>Load more</Button>
+    } else {
+        return <></>
+    }
 }
 
 return (
     <div className='mb-5'>
         <CardList items={allItems} loaded={sellers.productLoaded}/>
         {loading?<Loading size={100}/>:<></>}
-      {loadButton()}
+        {<LoadButton/>}
     </div>
     )
 }

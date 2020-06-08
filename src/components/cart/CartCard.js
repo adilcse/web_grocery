@@ -20,18 +20,13 @@ const CartCard=(props)=>{
     setChecked(true);
   }
  //allow to add only quantity between 1 to 5
- const updateQuant=(element,num)=>{
-   if((quant>=5 && num===1)||(quant<=1 && num===-1))
-      return;
-   else {
-     let newQuant=quant+num;
-     setQuant(newQuant);
-     props.updateQuantity(props.index,newQuant);
-     //if user exist then only update user's cart
-     if(userId)
-        updateQuantityInDB(newQuant,num);
-    }
- }
+ const updateQuant=(newQuant)=>{
+    setQuant(newQuant);
+    props.updateQuantity(props.index,newQuant);
+    //if user exist then only update user's cart
+    if(userId)
+      updateQuantityInDB(newQuant);
+  }
  /**
   * it updates the quantity of items in the database
   * @param {*} q new quantity to update
@@ -48,7 +43,7 @@ const CartCard=(props)=>{
 })
 .catch(function(error) {
     console.error("Error writing document: ", error);
-     setQuant(quant-num);
+    
 });
  }
 return(        
@@ -64,7 +59,7 @@ return(
           <div className="d-inline h5">
             Quantity :
             </div>
-            <UpdateQuantitybutton className="d-inline" quant={quant} updateQuant={updateQuant}>
+            <UpdateQuantitybutton className="d-inline" quant={quant} stock={item.stock} setQuant={updateQuant}>
               <button className="btn btn-warning ml-2" onClick={()=>props.removeItem(id,props.index)}>Remove</button> 
           </UpdateQuantitybutton>
          

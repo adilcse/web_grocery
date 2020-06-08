@@ -9,11 +9,10 @@ import { addToCart,addToGuestCart } from '../../redux/actions/CardAction';
 import { AddItemForCheckout } from '../../app/helper/AddItemForCheckout';
 import {Redirect, Link } from 'react-router-dom';
 import { getItemsByTime } from '../../app/helper/getItemsByTime';
-import { MAX_ITEM_ALLOWED } from '../../app/constants';
 import UpdateQuantitybutton from '../UpdateQuantityButtons';
 
 const Item =(props)=>{
-    const {name,price,description,image,quantity,catagory,MRP}=props.item;
+    const {name,price,description,image,quantity,catagory,MRP,stock}=props.item;
     const itemId=props.id;
     const userId=useSelector(state=>state.userLogin.userId);
     const [newItems,setNewItems]=useState(null);
@@ -37,12 +36,7 @@ const Item =(props)=>{
        addToCartButton.disabled= true;
        addToCartButton.text = 'Added to Cart';
       }
-const updateQuant=(target,value)=>{
-let newQuant=quant+value;
-if(newQuant>0&&newQuant<=MAX_ITEM_ALLOWED){
-  setQuant(newQuant);
-}
-}
+
       const addItem = () => {
         if(userId)
         dispatch(addToCart(itemId,props.item,userId,quant));
@@ -112,8 +106,9 @@ if(newQuant>0&&newQuant<=MAX_ITEM_ALLOWED){
                         <div className="row">
                             <span className="gFont1 h3"><i><small><strike>MRP ₹{MRP}</strike></small> </i> ₹{price} /- only</span>
                         </div>
+                        {isNaN(stock)?<></>:<div className="text-danger h6">Hurry!! only {stock} items left</div>}
                         <div className=" b text-center mt-3">
-                            <UpdateQuantitybutton className="m-auto" quant={quant} updateQuant={updateQuant}/>
+                            <UpdateQuantitybutton stock={props.item.stock} className="m-auto" quant={quant} setQuant={setQuant}/>
                             <div className="mt-2 text-center">
                                     <Button variant="primary card-btn d-inline" size="lg" onClick={checkout} > Buy</Button>
                                     <Button size="lg" variant={addToCartButton.style + " card-btn d-inline"+addToCartButton.active} 
