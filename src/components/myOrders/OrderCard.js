@@ -45,7 +45,7 @@ const OrderCard=(props)=>{
             <Card>
                 <Card.Header>
                     <HeaderCard orderedOn={order.orderedOn}
-                        deleveredOn={order.deleveredOn} 
+                        deliveredOn={order.deliveredOn} 
                         sellerName={order.sellerDetails.name}/>
                 </Card.Header>
             <Card.Body>

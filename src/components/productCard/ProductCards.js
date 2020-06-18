@@ -21,31 +21,31 @@ const ProductCards =(props)=>{
     const [allItems,setAllItems]=useState([])
     const [loadMore,setLoadMore]=useState(true);
     const [loading,setLoading]=useState(false);
-    const [source,setSource]=useState([])
+    const [source,setSource]=useState([]);
+    const [loadItems,setLoadItems]=useState(false);
   /**
    * loads item from database
    * @param {catagory} catagory to dispay
    */
     const loadItem=(catagory,maximum=max)=>{  
         setLoading(true);
-        let Nsource=[]; 
         if(!sellers.productLoading && sellers.productLoaded){
             if(!catagory) {
-            Nsource=products;
+            setSource(products);
             } else {
-                Nsource=[];
-                products.forEach(element => {
-                    let found=_.intersection(catagory,element.catagory);
+                setSource(products.filter(el=>{
+                    const found=_.intersection(catagory,el.catagory);
                     if(found.length>0){
-                        Nsource.push(element);
                         setLoadMore(true);
+                        return true;
                     }else{
                         setLoadMore(false);
+                        return false;
                     }
-                });
-                setSource([...Nsource]);      
+                }));   
             }
-            displayItems(Nsource,maximum)
+            setLoadItems(true);
+            displayItems(source,maximum)
             setLoaded(true);
             setLoading(false)
         }
@@ -66,6 +66,12 @@ const ProductCards =(props)=>{
             <Loading size={120}/>
         )
     }
+
+    if(loadItems) {
+        displayItems();
+        setLoadItems(false);
+    }
+
 const LoadButton=()=>{
     if(sellers.loaded && source.length>allItems.length && loadMore)
         {

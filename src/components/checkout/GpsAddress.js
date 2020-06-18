@@ -5,7 +5,7 @@ import { getAddressByLatLng } from '../../app/helper/getAddressByLatLng';
 import { useSelector } from 'react-redux';
 import { getPath } from '../../app/helper/getPath';
 import './EditAddress.css';
-import {ERROR_ADDRESS_NOT_FOUND, ERROR_DISTANCE} from '../../app/constants';
+import {ERROR_ADDRESS_NOT_FOUND, ERROR_DISTANCE, MAX_DELIVERY_DISTANCE} from '../../app/constants';
 import { distanceByLatlng } from '../../app/helper/distanceByLatlng';
 let oldLocation=true;
 /**
@@ -114,11 +114,11 @@ const GpsAddress=(props)=>{
             setMarker(location);
             getAddress(location);
             const dist=distanceByLatlng(latLng,props.sellers[0].position.geopoint,'K');
-            if(dist<20){
+            if(dist<MAX_DELIVERY_DISTANCE){
                 setError(false);
             }
             else
-                setError({type:ERROR_DISTANCE,message:'can not delever to this location'});
+                setError({type:ERROR_DISTANCE,message:'can not deliver to this location'});
           } else { 
            console.log("Geolocation is not supported by this browser.");
           }
@@ -194,7 +194,7 @@ const GpsAddress=(props)=>{
             drawPolyline(sellerLatlng,userLatlng);
         }
         else
-            setError({type:ERROR_DISTANCE,message:'can not delever to this location'})
+            setError({type:ERROR_DISTANCE,message:'can not deliver to this location'})
     }
     /**
      * dispay address and button
@@ -208,7 +208,7 @@ const GpsAddress=(props)=>{
 
         }else if(myAddress)
         return (<div>
-            <Button variant='info' onClick={()=>props.setAddress({...fullAddress,latLng:marker})}> Delever to this Location</Button>
+            <Button variant='info' onClick={()=>props.setAddress({...fullAddress,latLng:marker})}> Deliver to this Location</Button>
             <h2>{myAddress}</h2>
         </div>)
     return(<></>)
@@ -256,7 +256,7 @@ const GpsAddress=(props)=>{
     }
 return(
     <div style={buttonStyle}>
-        <Button className='mt-4 mb-3'onClick={()=>drawPolyline(props.sellers[0].position.geopoint)}>
+        <Button className='mt-4 mb-3'onClick={()=>drawPolyline(props.sellers[0].position.geopoint)} disabled={error}>
             Get Path
         </Button>
         <div>

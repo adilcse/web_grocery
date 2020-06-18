@@ -22,7 +22,7 @@ const Payment =(props)=>{
             </Col>
             <Divider/>
 
-            <Button variant="info" size="lg" className="mt-3 mb-3"  onClick={()=>props.status(true)} > Cash On Delevery</Button>
+            <Button variant="info" size="lg" className="mt-3 mb-3"  onClick={()=>props.status(true)} > Cash On Delivery</Button>
         </div>
     )
 }

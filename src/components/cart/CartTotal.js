@@ -8,7 +8,7 @@ const CartTotal=(props)=>{
     if(!props){
         return(<></>);
     }
-    const{countItems,total,deleveryCharges,discount}=props.item;
+    const{countItems,total,deliveryCharges,discount}=props.item;
 
 const inRupee=(amount)=>{
     return new Intl.NumberFormat('en-IN').format(amount)
@@ -21,7 +21,7 @@ return(
             <div>Price ({countItems} {countItems===1?' item':' items'})</div><span> ₹{inRupee(total)}</span></div>
                 <div className="hJYgKM">
                     <div>Delivery Fee</div>
-                <span><span className="_27kB8M _3Oa-sk">{deleveryCharges===0?'Free':inRupee(deleveryCharges)}</span></span>
+                <span><span className="_27kB8M _3Oa-sk">{deliveryCharges===0?'Free':inRupee(deliveryCharges)}</span></span>
                 </div>
                 <div className="_3xFQAD">
                     <div className="hJYgKM">

@@ -342,7 +342,7 @@ const EnterAddress=(props)=>{
                 </Form.Group>
                 <Form.Check type="checkbox" label="Update my address" id='updateAddress' value={updateAddressCheckbox} onChange={()=>setUpdateAddressCheckbox(!updateAddressCheckbox)}/>
               </Form.Row>
-              <Button variant="warning" size='lg' onClick={handleSubmit}>{buttonText?buttonText:'Delever to this Address'}</Button>
+              <Button variant="warning" size='lg' onClick={handleSubmit}>{buttonText?buttonText:'Deliver to this Address'}</Button>
               </Form>     
         </div>
     </div>     

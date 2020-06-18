@@ -70,18 +70,18 @@ const Cart =()=>{
    const cardTotal=()=>{
     const countItems=cart.length;
     let total=0;
-    let deleveryCharges=0;
+    let deliveryCharges=0;
     let MRPTotal=0;
     cart.forEach(element => {
         total+=(element.price*element.quantity);
         MRPTotal+=(element.MRP*element.quantity);
     });
     let discount=MRPTotal-total;
-    total+=deleveryCharges;
+    total+=deliveryCharges;
   let cardTotalObj={
         countItems:countItems,
         total:total,
-        deleveryCharges:deleveryCharges,
+        deliveryCharges:deliveryCharges,
         discount:discount
     }
     return cardTotalObj;
