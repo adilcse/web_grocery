@@ -3,6 +3,9 @@ import './Loading.css';
 const Loading=(prop)=>{
     let border=prop.size/10;
     let load={
+        position: 'absolute',
+        top: '40%',
+        left: '45%',
         border: border+'px solid #f3f3f3', /* Light grey */
         borderTop: border+'px solid #3498db',/* Blue */
         borderRadius: '50%',

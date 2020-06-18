@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import './Cart.css';
 import { db } from '../../firebaseConnect';
 import UpdateQuantitybutton from '../UpdateQuantityButtons';
+import { Row } from 'react-bootstrap';
 /**
  * display cart items
  * @param {*} props takes item which is on cart
@@ -32,10 +33,10 @@ const CartCard=(props)=>{
   * @param {*} q new quantity to update
   * @param {*} num the numbers increased
   */
- const updateQuantityInDB=(q,num)=>{
+ const updateQuantityInDB=(q)=>{
 
   db.collection("user").doc(userId).collection('cart').doc(id).update({
-   quantity:q
+  quantity:q
 })
 .then(function() {
     console.log("Document successfully written!");
@@ -54,19 +55,17 @@ return(
       <div className="col-md-8">
         <div className="card-body" align="left">
           <Link to={`/Product/${id}`}>  <h4 className="card-title">{item.name} </h4> </Link>
-          {!av?<h3>This item is not deleverable, Please remove to continue</h3>:<></>}
-          <h4><i><small><strike className="text-muted">MRP ₹{item.MRP}</strike></small> </i> ₹ {item.price}  /- only   </h4> 
+          {!av?<span className="text-danger h4">This item is not deleverable, Please remove to continue</span>:<></>}
+          <h4 class="row p-2"> ₹ {item.price}  /- only   </h4> 
           <div className="d-inline h5">
             Quantity :
             </div>
             <UpdateQuantitybutton className="d-inline" quant={quant} stock={item.stock} setQuant={updateQuant}>
-              <button className="btn btn-warning ml-2" onClick={()=>props.removeItem(id,props.index)}>Remove</button> 
-          </UpdateQuantitybutton>
-         
-          
-            
+              <button className="btn btn-warning ml-4" onClick={()=>props.removeItem(id,props.index)}>Remove</button> 
+          </UpdateQuantitybutton>   
           <br/>
-          <span className="h4 mt-2">Item Total : ₹{item.price} x {quant} = ₹ {item.price*quant} /-</span>
+          {parseInt(item.stock)<=quant?<Row className="text-danger mt-2">Only {item.stock} items left</Row>:<></>}
+          <span className="d-flex h4 mt-4">Item Total : ₹{item.price} x {quant} = ₹ {item.price*quant} /-</span>
         </div>
       </div> 
     </div>
