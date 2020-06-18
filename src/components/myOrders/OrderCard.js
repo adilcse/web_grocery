@@ -3,9 +3,7 @@ import { CardDeck, Card} from 'react-bootstrap';
 import ItemCard from './ItemCard';
 import StatusCard from './StatusCard';
 import { getItemsByIds } from '../../app/helper/getItemsByIds';
-import Loading from '../Loading';
 import HeaderCard from './HeaderCard';
-
 import { TRACK } from '../../app/constants';
 import { arrayMergeByObject } from '../../app/helper/arrayMergeByObject';
 import { useSelector } from 'react-redux';
