@@ -117,7 +117,7 @@ return(
 
             </Col>
         </Row>
-        <Row className='justify-content-center'>
+        <Row className='justify-content-center mt-2'>
         {(props.status===ACCEPT ||props.status===OUT_FOR_DELIVERY)?trackButton:<></>}
         </Row>
     </Container>

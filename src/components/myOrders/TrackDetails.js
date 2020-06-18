@@ -12,7 +12,7 @@ const TrackDetais=(props)=>{
     }
     return(
         <>
-        <Button onClick={()=>props.changePage(ORDER)}>Back</Button>
+        <Button className="my-2" onClick={()=>props.changePage(ORDER)}>Back</Button>
         <TrackMap details={{user:props.details.address,seller:sellersDetails}}/>
         </>
     )
