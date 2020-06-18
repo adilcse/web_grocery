@@ -1,0 +1,74 @@
+[debug] [2020-06-18T08:27:43.832Z] ----------------------------------------------------------------------
+[debug] [2020-06-18T08:27:43.833Z] Command:       /home/adilh/.nvm/versions/node/v12.16.3/bin/node /usr/local/bin/firebase deploy
+[debug] [2020-06-18T08:27:43.834Z] CLI Version:   7.15.1
+[debug] [2020-06-18T08:27:43.834Z] Platform:      linux
+[debug] [2020-06-18T08:27:43.834Z] Node Version:  v12.16.3
+[debug] [2020-06-18T08:27:43.834Z] Time:          Thu Jun 18 2020 13:57:43 GMT+0530 (India Standard Time)
+[debug] [2020-06-18T08:27:43.834Z] ----------------------------------------------------------------------
+[debug] [2020-06-18T08:27:43.834Z] 
+[debug] [2020-06-18T08:27:43.840Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2020-06-18T08:27:43.841Z] > authorizing via signed-in user
+[debug] [2020-06-18T08:27:43.841Z] [iam] checking project my-grocery-ap for permissions ["firebase.projects.get","firebasehosting.sites.update"]
+[debug] [2020-06-18T08:27:43.843Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/my-grocery-ap:testIamPermissions  
+
+[debug] [2020-06-18T08:27:45.705Z] <<< HTTP RESPONSE 200
+[debug] [2020-06-18T08:27:45.709Z] >>> HTTP REQUEST GET https://firebase.googleapis.com/v1beta1/projects/my-grocery-ap  
+ 
+[debug] [2020-06-18T08:27:46.724Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Deploying to 'my-grocery-ap'...
+[info] 
+[info] i  deploying hosting
+[debug] [2020-06-18T08:27:46.728Z] >>> HTTP REQUEST POST https://firebasehosting.googleapis.com/v1beta1/sites/my-grocery-ap/versions  
+
+[debug] [2020-06-18T08:27:50.004Z] <<< HTTP RESPONSE 200
+[info] i  hosting[my-grocery-ap]: beginning deploy...
+[info] i  hosting[my-grocery-ap]: found 93 files in build
+[debug] [2020-06-18T08:27:50.909Z] [hosting] hash cache [YnVpbGQ] stored for 93 files
+[debug] [2020-06-18T08:27:50.909Z] [hosting][hash queue][FINAL]
+[debug] [2020-06-18T08:27:50.909Z] >>> HTTP REQUEST POST https://firebasehosting.googleapis.com/v1beta1/sites/my-grocery-ap/versions/72283403186364d8:populateFiles  
+ <request body omitted>
+[debug] [2020-06-18T08:27:53.278Z] <<< HTTP RESPONSE 200
+[debug] [2020-06-18T08:27:53.284Z] [hosting][populate queue][FINAL]
+[debug] [2020-06-18T08:27:53.284Z] [hosting] uploads queued: 12
+[debug] [2020-06-18T08:28:06.796Z] [hosting][upload queue][FINAL]
+[info] ✔  hosting[my-grocery-ap]: file upload complete
+[debug] [2020-06-18T08:28:06.798Z] [hosting] deploy completed after 16792ms
+[debug] [2020-06-18T08:28:07.357Z] [
+  {
+    "config": {
+      "public": "build",
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ],
+      "rewrites": [
+        {
+          "source": "**",
+          "destination": "/index.html"
+        }
+      ],
+      "site": "my-grocery-ap"
+    },
+    "site": "my-grocery-ap",
+    "version": "sites/my-grocery-ap/versions/72283403186364d8"
+  }
+]
+[info] i  hosting[my-grocery-ap]: finalizing version...
+[debug] [2020-06-18T08:28:07.358Z] >>> HTTP REQUEST PATCH https://firebasehosting.googleapis.com/v1beta1/sites/my-grocery-ap/versions/72283403186364d8?updateMask=status  
+
+[debug] [2020-06-18T08:28:09.253Z] <<< HTTP RESPONSE 200
+[debug] [2020-06-18T08:28:09.254Z] [hosting] finalized version for my-grocery-ap:
+[info] ✔  hosting[my-grocery-ap]: version finalized
+[info] i  hosting[my-grocery-ap]: releasing new version...
+[debug] [2020-06-18T08:28:09.257Z] >>> HTTP REQUEST POST https://firebasehosting.googleapis.com/v1beta1/sites/my-grocery-ap/releases?version_name=sites/my-grocery-ap/versions/72283403186364d8  
+
+[debug] [2020-06-18T08:28:11.300Z] <<< HTTP RESPONSE 200
+[debug] [2020-06-18T08:28:11.300Z] [hosting] release:
+[info] ✔  hosting[my-grocery-ap]: release complete
+[info] 
+[info] ✔  Deploy complete!
+[info] 
+[info] Project Console: https://console.firebase.google.com/project/my-grocery-ap/overview
+[info] Hosting URL: https://my-grocery-ap.firebaseapp.com

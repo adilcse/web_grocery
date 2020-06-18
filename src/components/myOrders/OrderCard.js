@@ -27,14 +27,14 @@ const OrderCard=(props)=>{
     if(!loaded ){ 
         let ids=getIds();
         getItemsByIds(ids,products,catagory).then((res) => {
-             let items=[];
-             order.items.forEach((item)=>{
-              let data= res.find((element)=>{
-               return item.id===element.id
-               });
+            let items=[];
+            order.items.forEach((item)=>{
+            let data= res.find((element)=>{
+                return item.id===element.id
+            });
                 items.push({...data,...item})
-             })   
-             return items;
+            })   
+            return items;
         }).then((items)=>{
             setDisplayitems(items);
             setLoaded(true)});
@@ -45,8 +45,8 @@ const OrderCard=(props)=>{
             <Card>
                 <Card.Header>
                     <HeaderCard orderedOn={order.orderedOn}
-                                deleveredOn={order.deleveredOn} 
-                                sellerName={order.sellerDetails.name}/>
+                        deleveredOn={order.deleveredOn} 
+                        sellerName={order.sellerDetails.name}/>
                 </Card.Header>
             <Card.Body>
             <ItemCard items={arrayMergeByObject(displayItems,order.items,'id')} />

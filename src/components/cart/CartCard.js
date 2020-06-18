@@ -55,7 +55,7 @@ return(
       <div className="col-md-8">
         <div className="card-body" align="left">
           <Link to={`/Product/${id}`}>  <h4 className="card-title">{item.name} </h4> </Link>
-          {!av?<span className="text-danger h4">This item is not deleverable, Please remove to continue</span>:<></>}
+          {!av?<span className="text-danger h4">This item is not deliverable, Please remove to continue</span>:<></>}
           <h4 class="row p-2"> ₹ {item.price}  /- only   </h4> 
           <div className="d-inline h5">
             Quantity :

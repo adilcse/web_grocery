@@ -14,7 +14,7 @@ export const getNearbySeller=(dispatch,location)=>{
 dispatch({type:GET_SELLERS_PENDING})
 const sellers=db.collection('seller');
 const center = geo.point( location.latitude,location.longitude);
-const radius = RADIUS_IN_KM;
+const radius =parseInt(RADIUS_IN_KM);
 const field = 'position';
 const query = geo.query(sellers).within(center, radius, field);
 geofirex.get(query).then(res=>{

@@ -156,7 +156,7 @@ const SelectLocation=(props)=>{
    
 return(
     <div className='text-center'>
-           <Button className="btn-warning mb-3" onClick={()=>changePage(HOME)}>Back</Button>
+           <Button className="btn-warning mb-3 mt-2" onClick={()=>changePage(HOME)}>Back</Button>
         <div>
             {myAddress?<ViewAddress/>:<></>}
         </div>
