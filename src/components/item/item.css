@@ -38,7 +38,7 @@
 .flexcss{
    border-bottom: 2px dashed grey;
    border-top: 2px dashed grey;
-  height: 50vh;
+  height: 70vh;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -95,7 +95,6 @@ background-image: linear-gradient(120deg, #70f523 0%, #eff307 100%);
   .gFont2{
     font-family: 'Simonetta' ;
     font-size: 18px;
-    font-weight: bold;
     text-overflow: clip;
     overflow-y: auto;
   }
@@ -224,7 +223,7 @@ h3{
  margin:20px  ;  
 }
 .flexcss{
- height: 38vh;
+ height: 70vh;
  max-height: 40%;
  width: 100%;
 overflow-x: scroll;

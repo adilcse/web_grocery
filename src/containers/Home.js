@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import ProductCards from "../components/productCard/ProductCards";
-import Slider from "../components/Slider";
+
 import CatagoryList from "../components/catagory/CatagoryList";
 
 import { useSelector } from "react-redux";
@@ -19,26 +19,23 @@ const Home=()=>{
 if(page===HOME)
     return(
         <>
-        
         {location.addressPending?<h2>Loading.....</h2>:(location.addressError?<h2>something went wrong please refresh the page</h2>:
-             (location.locationError?<Alert variant='danger'>
-                 <h4>{location.locationError.code===1?'PLEASE ENABLE GPS':location.locationError.message}</h4>
-                 <h5 onClick={()=>setPage(CHANGE_LOCATION)} style={{ cursor: 'pointer',  textDecoration: 'underline'}}>
+            (location.locationError?<Alert variant='danger'>
+                <h4>{location.locationError.code===1?'PLEASE ENABLE GPS':location.locationError.message}</h4>
+                <h5 onClick={()=>setPage(CHANGE_LOCATION)} style={{ cursor: 'pointer',  textDecoration: 'underline'}}>
                     set Location
                     </h5>
-             </Alert>
-             :<Alert variant='primary'>
+            </Alert>
+            :<Alert variant='primary'>
                 <h4>
                 <span style={{color:'black',fontWeight:'bold'}}> My Location:</span>  {location.address}
                 </h4>
                 <h5 onClick={()=>setPage(CHANGE_LOCATION)} style={{ cursor: 'pointer',  textDecoration: 'underline'}}>
                     change
                     </h5>
-           </Alert>)
-           )}
+        </Alert>)
+        )}
         
-       
-        <Slider/>
         <CatagoryList className='my-3 mx-1'/>
         <h2 className='text-left'>Catagory : ALL</h2>
         <ProductCards max={10}/>

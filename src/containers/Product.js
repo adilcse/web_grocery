@@ -6,7 +6,7 @@ import _ from 'lodash'
 import { useSelector } from 'react-redux';
 let previousId;
 document.title='product';
- const Product=()=>{
+ const Product=(props)=>{
    const {id}=useParams();
    const [loaded,setLoaded]=useState(false);
    const [loading,setLoading]=useState(true)
